@@ -1,0 +1,110 @@
+<odoo>
+
+
+    <!-- addons/hr_final_settlement/views/report_final_settlement_letter.xml -->
+    <template id="report_final_settlement_letter">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+                    <p style="text-align:right">
+                        Date:
+                        <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                    </p>
+
+                    <p>To,
+                        <br/>
+                        <br/>
+                        <strong>
+                            <strong>Mr/Ms.</strong>
+                            <t t-esc="doc.name.name"/>
+                        </strong>
+                        <br/>
+                        <br/>
+                        City: <t t-esc="doc.name.private_city"/>
+                    </p>
+
+                    <p>
+                        Subject:<strong>&#160;&#160;&#160;&#160;Final Settlement Letter</strong>
+                    </p>
+
+                    <p style="font-size: 16pt;">
+                        We would like to take this opportunity to formally acknowledge and confirm the
+                        final
+                        <br/>
+                        settlement of your dues following the cessation of your employment with
+                        M/S the
+                        <br/>
+                        Monal Group as a
+                        <t t-esc="doc.designation"/>
+                        and last working date is&#160;
+                        <t t-esc="doc.last_working_date"/>.
+                    </p>
+
+                    <p style="font-size: 16pt;">After careful review, we have calculated the final settlement amount based on the following:</p>
+
+                    <div style="margin-bottom: 10px;font-size: 16pt;">
+                        <div>Net Salary:&#8195;&#8195; 19999
+                            <!--                            <t t-esc="doc.net_salary_amount"/>-->
+                        </div>
+                        <div>Bonus:&#8195;&#8195;&#8195;&#8194;&#160;&#160; 19999
+                            <!--                            <t t-esc="doc.net_salary_amount"/>-->
+                        </div>
+                        <div>Gratuity:&#8195;&#8195;&#8194;&#160;&#160; 19999
+                            <!--                            <t t-esc="doc.net_salary_amount"/>-->
+                        </div>
+                        <div>Deductions:&#8195;&#8194; 19999</div>
+                    </div>
+
+                    <p style="font-size: 16pt;">The above‑mentioned amount is paid to you in presence of witnesses.
+                        <br/>
+                        We kindly ask you to confirm your agreement with this final settlement by signing below.
+                    </p>
+
+                    <p style="font-size: 16pt;">Yours sincerely,
+                        <br/>
+                        <br/>
+                        <strong>HR Department</strong>
+                        <br/>
+                        M/S the Monal Group&#160;&#160;&#160;&#160;&#160;&#160;
+                        <span style="float:right">Employee Signature: __________________</span>
+                    </p>
+
+                    <p style="padding: 15px;">Witness: ______________________&#160;&#160;&#160;&#160;&#160;
+                        <span style="float:right">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Witness: _______________________</span>
+                    </p>
+
+<!--                    <hr style="border-top:1px dashed #000"/>-->
+
+                    <h4 style="text-align:center;">Acknowledgment</h4>
+                    <p style="font-size: 16pt;">
+                        I, <strong><t t-esc="doc.name.name"/></strong>, hereby confirm the receipt of the final settlement amount
+                        as detailed above and acknowledge that no further dues are outstanding from the
+                        Monal Group in any shape.
+                    </p>
+
+                    <p>
+                        Signature: ______________________
+                        <br/>
+                        Date: <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                    </p>
+
+                    <p>Witness: ______________________&#160;&#160;&#160;&#160;&#160;
+                        <span style="float:right">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Witness: ______________________</span>
+                    </p>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="report_employee_final_settlement" model="ir.actions.report">
+        <field name="name">Print Final Settlement</field>
+        <field name="model">employee.final.settlement</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">monal_employee_final_settelment.report_final_settlement_letter</field>
+        <field name="report_file">monal_employee_final_settelment.report_final_settlement_letter</field>
+        <field name="binding_model_id" ref="model_employee_final_settlement"/>
+        <field name="binding_type">report</field>
+        <!--        <field name="paperformat_id" ref="skans_interview_evaluation_form.interview_evaluation_paperformat"/>-->
+    </record>
+
+</odoo>

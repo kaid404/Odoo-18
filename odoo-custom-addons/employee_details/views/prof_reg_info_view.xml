@@ -1,0 +1,54 @@
+<odoo>
+    <data>
+        <record id="view_professional_registration_info" model="ir.ui.view">
+            <field name="name">hr.employee.registration.info</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='hr_settings']" position="after">
+                    <page string="Professional Registration Information" name="professional_registration">
+
+
+                        <group string="Professional Registration">
+                            <field name="reg_id" widget="form"
+                                   context="{'form_view_ref': 'employee_details.prof_reg_info_form'}"
+                                   options="{'no_create_edit': False, 'no_create': False}"/>
+                        </group>
+
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="prof_reg_info_form" model="ir.ui.view">
+            <field name="name">employee.registration.info.form</field>
+            <field name="model">employee.registration.info</field>
+            <field name="arch" type="xml">
+                <form string="Verification">
+                    <group>
+                        <field name="reg_body"/>
+                        <field name="reg_no"/>
+                        <field name="reg_date"/>
+                        <field name="valid_upto"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="prof_reg_info_list" model="ir.ui.view">
+            <field name="name">employee.registration.info.list</field>
+            <field name="model">employee.registration.info</field>
+            <field name="arch" type="xml">
+                <list string="Verification">
+                    <field name="reg_body"/>
+                    <field name="reg_no"/>
+                    <field name="reg_date"/>
+                    <field name="valid_upto"/>
+                </list>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

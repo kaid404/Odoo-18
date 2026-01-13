@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_time_table_report_faculty,access_time_table_report_faculty,model_time_table_report,,1,1,1,1

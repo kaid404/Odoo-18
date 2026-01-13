@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_op_admission_tree_inherit" model="ir.ui.view">
+        <field name="name">op.admission.tree.inherit</field>
+        <field name="model">op.admission</field>
+        <field name="inherit_id" ref="gxs_admission.view_op_admission_tree"/> <!-- Adjust as needed -->
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="campus_id"/>
+                <field name="application_number"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,164 @@
+<odoo>
+    <data>
+
+        <template id="leave_register_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div style="margin-top:10px;margin-bottom:10px; text-align: left;border-bottom:1px solid black;">
+                            <h2 style="padding-bottom: 10px;padding-left: 10px;">Employee Leave Register</h2>
+                        </div>
+                        <div style="font-size:12px; padding:0 10px 10px 10px; white-space:nowrap;">
+                            <span>
+                                <strong>Company:</strong>
+                                <t t-esc="company_name"/>
+                            </span>
+                            <span style="margin-left:20px;">
+                                <strong>Register:</strong>
+                                Employee Leave
+                            </span>
+                            <span style="margin-left:20px;">
+                                <strong>Leave Nature:</strong>
+                                Full Day
+                            </span>
+                            <span style="margin-left:20px;">
+                                <strong>Req From:</strong>
+                                <t t-esc="req_date_from_display"/>
+                            </span>
+                            <span style="margin-left:10px;">
+                                <strong>To:</strong>
+                                <t t-esc="req_date_to_display"/>
+                            </span>
+                            <span style="margin-left:20px;">
+                                <strong>App From:</strong>
+                                <t t-esc="app_date_from_display"/>
+                            </span>
+                            <span style="margin-left:10px;">
+                                <strong>To:</strong>
+                                <t t-esc="app_date_to_display"/>
+                            </span>
+                        </div>
+                        <table class="table table-bordered table-sm"
+                               style="width:100%; border-collapse:collapse; font-size:13px; font-family:Helvetica, sans-serif; margin-top:20px;">
+                            <thead>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">Doc #</th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">Emp Code</th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">Emp Name</th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">Father Name</th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">CNIC</th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">DOB</th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">Department</th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">Designation</th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">req From Date
+                                </th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">Req Days</th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">Req To Date</th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">App From Date
+                                </th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">App Days</th>
+                                <th style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">App To Date</th>
+                            </thead>
+                            <tbody>
+                                <t t-set="sr" t-value="0"/>
+                                <t t-foreach="leaves" t-as="leave">
+                                    <t t-set="sr" t-value="sr + 1"/>
+                                    <tr>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">
+                                            <t t-esc="sr"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;">
+                                            <t t-esc="leave['code']"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;text-align: left;">
+                                            <t t-esc="leave['name']"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;text-align: left;">
+                                            <t t-esc="leave['father_name']"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;text-align: center;">
+                                            <t t-esc="leave['cnic']"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;text-align: center;">
+                                            <t t-esc="leave['dob']"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;text-align: left;">
+                                            <t t-esc="leave['department']"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;text-align: left;">
+                                            <t t-esc="leave['job']"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;text-align: center;">
+                                            <t t-esc="leave['req_date_from']"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;text-align: center;">
+                                            <t t-esc="leave['req_days']"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;text-align: center;">
+                                            <t t-esc="leave['req_date_to']"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;text-align: center;">
+                                            <t t-esc="leave['approve_date_from']"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;text-align: center;">
+                                            <t t-esc="leave['approve_days']"/>
+                                        </td>
+                                        <td style="padding:3px 6px; border:1px solid #ccc; white-space:nowrap;text-align: center;">
+                                            <t t-esc="leave['approve_date_to']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <div class="footer"
+                             style="width:100%; margin-top:20px; font-size:12px; border-top:1px solid #ccc; padding-top:5px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <span>
+                                        <strong>App User:</strong>
+                                        <t t-esc="user.name"/>
+                                    </span>
+                                    <span style="margin-left:20px;">
+                                        <!--                                        <strong>Date & Time:</strong>-->
+                                        <t t-esc="date"/>
+                                    </span>
+                                </div>
+                                <div style="text-align:right;">
+                                    <span>Page
+                                        <span class="page"/>
+                                        of
+                                        <span class="topage"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <!--        <record id="paperformat_leave_register_report" model="report.paperformat">-->
+        <!--            <field name="name">Leave Register Paperformat</field>-->
+        <!--            <field name="default" eval="False"/>-->
+        <!--            <field name="orientation">Portrait</field>-->
+        <!--            <field name="format">A4</field>-->
+        <!--            <field name="margin_top">5</field>-->
+        <!--            <field name="margin_bottom">10</field>-->
+        <!--            <field name="margin_left">5</field>-->
+        <!--            <field name="margin_right">5</field>-->
+        <!--            <field name="header_spacing">55</field>-->
+        <!--            <field name="dpi">90</field>-->
+        <!--        </record>-->
+
+
+        <record id="action_leave_register_report" model="ir.actions.report">
+            <field name="name">Leave Register Report</field>
+            <field name="model">leave.register.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">leave_register_report.leave_register_report_template</field>
+            <field name="report_file">leave_register_report.leave_register_report_template</field>
+            <field name="print_report_name">'Leave_Register_Report_' + (object.date_from or '')</field>
+            <!--            <field name="paperformat_id" ref="leave_register_report.paperformat_leave_register_report"/>-->
+        </record>
+
+    </data>
+</odoo>

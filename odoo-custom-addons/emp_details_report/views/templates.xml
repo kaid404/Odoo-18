@@ -1,0 +1,362 @@
+<odoo>
+    <data>
+        <template id="employee_details_report_template">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;" class="row">
+                        <div style="width: 20%; text-align: center; border: 1px solid black; padding: 5px; font-size: 11px;">
+                            <t t-if="doc.image_1920">
+                                <img t-att-src="'data:image/png;base64,%s' % doc.image_1920.decode('utf-8')"
+                                     style="width:143px; height:190px;"/>
+                            </t>
+                            <t t-elif="True">
+                                Attach Recent
+                                <br/>
+                                Passport Size
+                                <br/>
+                                Picture (with blue
+                                <br/>
+                                background)
+                            </t>
+                        </div>
+                        <div style="width: 60%; text-align: center;">
+                            <strong>
+                                <h3 style="margin: 0; font-weight: bold; font-family: Arial Black, Gadget, sans-serif;">
+                                    EMPLOYMENT CONTRACT
+                                </h3>
+                                <h4 style="margin: 0; padding-top: 15px; font-weight: bold; font-family: Arial Black, Gadget, sans-serif;">
+                                    <t t-esc="doc.company_id.name"/>
+                                </h4>
+                                <p style="margin: 0; padding-top: 15px; font-weight: bold; font-family: Arial Black, Gadget, sans-serif;">
+                                    Session:
+                                </p>
+                                <p style="margin: 0; padding-top: 15px; font-weight: bold; font-family: Arial Black, Gadget, sans-serif;">
+                                    Campus:
+                                </p>
+                            </strong>
+                        </div>
+                        <div style="width: 20%; text-align: right; font-size: 11px;">
+                            (Attach CNIC Copy)
+                        </div>
+                    </div>
+                    <p colspan='12' style="text-align: center;">
+                        <strong>&#8195; &#8195; &#8195; &#8195; &#8195; &#8195;&#8195; &#8195; &#8195; &#8195; &#8195;
+                            Principal’s Remarks:
+                        </strong>
+                        __________________________________________________________________________
+                    </p>
+                    <p>
+                        __________________________________________________________________________________________________________________________________
+                    </p>
+                    <p>
+                        __________________________________________________________________________________________________________________________________
+                    </p>
+
+                    <h4 style="margin-top: 15px;">Personal Information:</h4>
+                    <table class="table table-bordered" style="width: 100%; font-size: 12px;">
+                        <tr>
+                            <td style="width: 20%;">
+                                <strong>Full Name</strong>
+                            </td>
+                            <td colspan="3" style="width: 80%;">
+                                <t t-esc="doc.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Phone/Cell</strong>
+                            </td>
+                            <td>
+                                <strong>(1)&#8195;</strong>
+                                <t t-esc="doc.work_phone"/>
+                            </td>
+                            <td>
+                                <strong>(2)&#8195;</strong>
+                                <t t-esc="doc.work_phone"/>
+                            </td>
+                            <td>
+                                <strong>(3)&#8195;</strong>
+                                <t t-esc="doc.work_phone"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Permanent Address</strong>
+                            </td>
+                            <td colspan="3">
+                                <t t-esc="doc.address_id.street"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Date of Birth</strong>
+                            </td>
+                            <td colspan="3">
+                                <t t-esc="doc.birthday"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Father’s / Husb. Name</strong>
+                            </td>
+                            <td colspan="3">
+                                <t t-esc="doc.name or '__________'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Profession &amp; Contract #</strong>
+                            </td>
+                            <td colspan="3">
+                                <t t-esc="doc.job_title or '__________'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Religion</strong>
+                            </td>
+                            <td>
+                                <t t-esc="doc.gender or ''"/>
+                            </td>
+                            <td>
+                                <strong>Marital Status:</strong>
+                            </td>
+                            <td>
+                                <t t-esc="doc.marital or ''"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <h4 style="margin-top:15px;">Educational Record:</h4>
+                    <table class="table table-sm" style="width: 100%; border-collapse: collapse;" border="1">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center; font-weight: bold;">Qualifications</th>
+                                <th style="text-align: center; font-weight: bold;">Name of Institute</th>
+                                <th style="text-align: center; font-weight: bold;">Year</th>
+                                <th style="text-align: center; font-weight: bold;">Board / University</th>
+                                <th style="text-align: center; font-weight: bold;">Marks Obtained</th>
+                                <th style="text-align: center; font-weight: bold;">CGPA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.professional_details_ids" t-as="edu">
+                                <td>
+                                    <t t-esc="edu.emp_name_in_personal_qualification"/>
+                                </td>
+                                <td>
+                                    <t t-esc="edu.emp_institute_name"/>
+                                </td>
+                                <td>
+                                    <t t-esc="edu.emp_to_date and edu.emp_to_date.year"/>
+                                </td>
+                                <td>
+                                    <t t-esc="edu.emp_board_uni"/>
+                                </td>
+                                <td>
+                                    <t t-esc="edu.emp_obt_marks"/>
+                                </td>
+                                <td>
+                                    <t t-esc="edu.emp_cgpa"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div style="width:50%;">
+                            <strong>Salary (as of date):</strong>
+                        </div>
+                        <div style="width:50%;">
+                            <strong>Date Of Joining:</strong>
+                        </div>
+                    </div>
+
+                    <div style="padding-top: 10px; font-size: 13pt; line-height: 1.4;">
+                        <p style="text-align: left; font-weight: bold;">
+                            Contract Agreement for the year 2025-26
+                        </p>
+                        <p>
+                            This agreement is made between <u>______________________________</u> and <strong>City High
+                            School</strong>. By signing below, the employee agrees to continue their employment under
+                            the terms and
+                            conditions outlined in this contract, including but not limited to responsibilities,
+                            compensation,
+                            working hours, and code of conduct.
+                        </p>
+
+                        <p style="margin-top: 5px;">Terms and Conditions:</p>
+
+                        <p>
+                            <strong>(1) Probation Period (For New Recruitments):</strong>
+                            <br/>
+                            After job confirmation, the employee will undergo a one-month probation period. Continuation
+                            of
+                            employment will depend on performance and suitability for the position.
+                        </p>
+
+                        <p>
+                            <strong>(2) Security Deposit:</strong>
+                        </p>
+                        <p style="text-decoration: underline;">
+                            Teachers are required to submit a cash security deposit in equal installments. The deposit
+                            will only be refunded after the completion of the contract. Female staff may claim their
+                            deposit with one
+                            month's notice in case of marriage (total amount: Rs. 25,000).
+                        </p>
+
+                        <p>
+                            <strong>(3) Attendance &amp; Class Management:</strong>
+                            <br/>
+                            Sign the attendance register immediately upon arrival. Collect necessary teaching materials
+                            (class diary, personal diary, duster, etc.). Assemble classes in the assembly area, ensuring
+                            discipline.
+                            Accompany students back to classrooms after assembly in an orderly manner.
+                        </p>
+
+                        <p>
+                            <strong>(4) Classroom Responsibilities:</strong>
+                            <br/>
+                            Ensure students’ uniforms, hygiene, and discipline are maintained. Record any discrepancies
+                            in students’
+                            diaries and report to the Vice Principal if required. Maintain classroom cleanliness and
+                            organization. Regularly
+                            teach moral lessons to instill good manners.
+                        </p>
+
+                        <p>
+                            <strong>(5) Student Attendance:</strong>
+                            <br/>
+                            Conduct roll calls carefully and maintain accurate attendance registers. Mark latecomers as
+                            ‘PL’ and close
+                            registers at the end of each month.
+                        </p>
+
+                        <p>
+                            <strong>(6) Punctuality:</strong>
+                            <br/>
+                            Teachers must be in classrooms immediately after the bell. Unattended classes may result in
+                            disciplinary
+                            action.
+                        </p>
+
+                        <p>
+                            <strong>(7) Leave Policy:</strong>
+                            <br/>
+                            Each staff member is entitled to 10 annual leaves (one per month). Leaves must be approved
+                            beforehand.
+                            Telephonic or verbal leave requests will not be entertained. Two days’ salary will be
+                            deducted for unapproved
+                            absences.
+                        </p>
+
+                        <p>
+                            <strong>(8) Short Leave Policy:</strong></p>
+                        <p style="text-decoration: underline;">
+                            3 short leaves or late arrivals will count as one full leave. Short leaves are limited to 60
+                            minutes and cannot be
+                            availed at the start or end of the day.
+                        </p>
+
+                        <p>
+                            <strong>(9) Professional Conduct:</strong>
+                            <br/>
+                            Teachers must arrive at school 15 minutes before start time. Cell phones and personal guests
+                            are not allowed
+                            during school hours without prior permission. Teachers must teach while standing and refrain
+                            from eating in
+                            classrooms.
+                        </p>
+
+                        <p>
+                            <strong>(10) Dress Code:</strong>
+                            <br/>
+                            Teachers must wear neat, professional, and presentable attire suitable for a learning
+                            environment.
+                        </p>
+
+                        <p>
+                            <strong>(11) Language Usage:</strong>
+                            <br/>
+                            Teachers must communicate in English with students and colleagues to maintain a professional
+                            standard.
+                        </p>
+
+                        <p>
+                            <strong>(12) Corporal Punishment:</strong></p>
+                        <p style="text-decoration: underline;">
+                            Corporal punishment is strictly prohibited.
+                        </p>
+
+                        <p>
+                            <strong>(13) Additional Responsibilities:</strong>
+                            <br/>
+                            Teachers may be assigned extra duties, inside or outside the classroom, to support school
+                            operations.
+                        </p>
+
+                        <p>
+                            <strong>(14) Termination Policy:</strong>
+                            <br/>
+                            Employment may be terminated at any time without prior notice if deemed necessary by the
+                            Chief Executive.
+                            Termination may also occur for involvement in illegal or illicit activities, and such
+                            decisions are final and non-contestable in court.
+                        </p>
+
+                        <p>
+                            <strong>(15) Experience Certificate:</strong>
+                            <br/>
+                            Issued only after three years of service and proper clearance. Not issued for employees
+                            terminated on
+                            disciplinary grounds.
+                        </p>
+
+                        <p style="margin-top: 30px;">
+                            <strong>Employee’s Signature:</strong>
+                            _______________________ &#8195;&#8195;&#8195;&#8195;&#8195;
+                            <strong>Chief Executive’s Signature:</strong>
+                            _______________________
+                        </p>
+
+                        <p style="margin-top: 15px;">
+                            Please ensure compliance with all terms and conditions outlined above. Thank you.
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="employee_details_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="emp_details_report.employee_details_report_template"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="paperformat_employment_contract" model="report.paperformat">
+            <field name="name">Employment Contract Format</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_employee_details" model="ir.actions.report">
+            <field name="name">Employee Details Report</field>
+            <field name="model">hr.employee</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">emp_details_report.employee_details_report</field>
+            <field name="report_file">emp_details_report.employee_details_report</field>
+            <field name="binding_model_id" ref="hr.model_hr_employee"/>
+            <field name="paperformat_id" ref="emp_details_report.paperformat_employment_contract"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

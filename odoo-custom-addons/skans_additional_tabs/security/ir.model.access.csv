@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_disciplinary_action,disciplinary.action,model_disciplinary_action,base.group_user,1,1,1,1
+access_additional_duties,additional.duties,model_additional_duties,base.group_user,1,1,1,1
+access_action_type,action.type,model_action_type,base.group_user,1,1,1,1
+access_emp_records,emp.records,model_emp_records,base.group_user,1,1,1,1

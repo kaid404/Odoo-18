@@ -1,0 +1,273 @@
+<odoo>
+    <data>
+
+        <template id="receipts_summary_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+
+                        <div height="10px">
+                            <div class="col-12" align="center">
+                                <img t-if="company_logo" t-att-src="company_logo" alt="logo 2" width="84px"
+                                     height="84px" style="margin-top:8px;"/>
+                            </div>
+                            <div class="row" style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+                                <div class="col-12">
+                                    <p>
+                                        <strong>
+                                            RECEIPTS AND PAYMENTS FROM:&#160;
+                                        </strong>
+                                        <t t-esc="date_from"/>&#160;
+                                        <strong>TO:&#160;</strong>
+                                        <t t-esc="date_to"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-6" style="padding-right: 20px;">
+                                <div class="col-5">
+                                    <h2 style="border-bottom: 1px dotted black; margin-bottom: 10px;">
+                                        Receipts
+                                    </h2>
+                                </div>
+                                <h2 style="border-bottom: 1px dotted black; width: 100%; color: transparent; height: 1px;">
+                                    Ghost Header
+                                </h2>
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="border: 1px solid white !important;">
+                                            <th style="font-weight: bold;  text-align: left; width: 20%;">Code</th>
+                                            <th style="font-weight: bold; text-align: left; width: 60%;">Description
+                                            </th>
+                                            <th style="font-weight: bold; text-align: right; width: 20%;">Amount</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <div style="border-bottom: 1px dotted black; width: 100%; height: 2px;"></div>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="receipts_total_amount" t-value="0"/>
+                                        <t t-foreach="receipt_data" t-as="rc">
+
+                                            <t t-set="receipts_total_amount"
+                                               t-value="receipts_total_amount + rc['receipt_total']"/>
+
+
+                                            <tr style="border: none !important; border: 1px solid white !important;">
+                                                <td style="text-align: left;">
+                                                    <t t-esc="rc['receipt_code']"/>
+                                                </td>
+                                                <td style="text-align: left;">
+                                                    <t t-esc="rc['receipt_name']"/>
+                                                </td>
+                                                <td style="text-align: right;">
+                                                    <t t-esc="'{:,.2f}'.format(rc['receipt_total'])"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <div class="row" style="margin-top: 8px;">
+                                    <div class="col-9"></div>
+                                    <div class="col-3"
+                                         style="text-align: right; border-bottom: 1px dotted black; border-top: 1px dotted black;">
+                                        <strong>
+                                            <t t-esc="'{:,.2f}'.format(receipts_total_amount)"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6" style="padding-right: 20px;">
+                                <div class="col-5">
+                                    <h2 style="border-bottom: 1px dotted black; margin-bottom: 10px;">
+                                        Payments
+                                    </h2>
+                                </div>
+                                <h2 style="border-bottom: 1px dotted black; width: 100%; color: transparent; height: 1px;">
+                                    Ghost Header
+                                </h2>
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="border: 1px solid white !important;">
+                                            <th style="font-weight: bold; text-align: left; width: 20%;">Code</th>
+                                            <th style="font-weight: bold; text-align: left; width: 60%;">Description
+                                            </th>
+                                            <th style="font-weight: bold; text-align: right; width: 20%;">Amount</th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3">
+                                                <div style="border-bottom: 1px dotted black; width: 100%; height: 2px;"></div>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="payments_total_amount" t-value="0"/>
+                                        <t t-foreach="payment_data" t-as="pm">
+
+                                            <t t-set="payments_total_amount"
+                                               t-value="payments_total_amount + pm['payment_total']"/>
+
+
+                                            <tr style="border: none !important; border: 1px solid white !important;">
+                                                <td style="text-align: left;">
+                                                    <t t-esc="pm['payment_code']"/>
+                                                </td>
+                                                <td style="text-align: left;">
+                                                    <t t-esc="pm['payment_name']"/>
+                                                </td>
+                                                <td style="text-align: right;">
+                                                    <t t-esc="'{:,.2f}'.format(pm['payment_total'])"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <div class="row" style="margin-top: 8px;">
+                                    <div class="col-9"></div>
+                                    <div class="col-3"
+                                         style="text-align: right; border-bottom: 1px dotted black; border-top: 1px dotted black;">
+                                        <strong>
+                                            <t t-esc="'{:,.2f}'.format(payments_total_amount)"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-11" style="margin-top: 50px;">
+                            <h2 style="border-bottom: 1px dotted black; width: 100%; color: transparent; height: 1px;">
+                                Ghost Header
+                            </h2>
+                            <table style="width: 100%; margin-top: 10px;">
+                                <thead>
+                                    <tr style="border: 1px solid white !important;">
+                                        <th style="font-weight: bold; text-align: left;">Account Code</th>
+                                        <th style="font-weight: bold; text-align: left;">Description</th>
+                                        <th style="font-weight: bold; text-align: right;">Opening</th>
+                                        <th style="font-weight: bold; text-align: right;">Receipt</th>
+                                        <th style="font-weight: bold; text-align: right;">Payment</th>
+                                        <th style="font-weight: bold; text-align: right;">Closing</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="11">
+                                            <div style="border-bottom: 1px dotted black; width: 100%; height: 2px;"></div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td colspan="6"
+                                            style="font-weight: bold; font-size: 25px; border: 1px solid white; padding-top: 15px;">
+                                            CASH AND BANKS
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6">
+                                            <div style="border-bottom: 1px dotted black; width: 45%; height: 2px;"></div>
+                                        </td>
+                                    </tr>
+
+                                    <t t-set="total_opening" t-value="0.0"/>
+                                    <t t-set="total_receipt" t-value="0.0"/>
+                                    <t t-set="total_payment" t-value="0.0"/>
+                                    <t t-set="total_closing" t-value="0.0"/>
+
+                                    <t t-foreach="cash_bank_data" t-as="cb">
+
+                                        <t t-set="total_opening" t-value="total_opening + cb['opening_balance']"/>
+                                        <t t-set="total_receipt" t-value="total_receipt + cb['total_receipts']"/>
+                                        <t t-set="total_payment" t-value="total_payment + cb['total_payments']"/>
+                                        <t t-set="total_closing" t-value="total_closing + cb['closing_balance']"/>
+
+                                        <tr style="border: 1px solid white !important;">
+                                            <td>
+                                                <t t-esc="cb['account_code']"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="cb['account_name']"/>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <t t-esc="'{:,.2f}'.format(cb['opening_balance'])"/>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <t t-esc="'{:,.2f}'.format(cb['total_receipts'])"/>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <t t-esc="'{:,.2f}'.format(cb['total_payments'])"/>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <t t-esc="'{:,.2f}'.format(cb['closing_balance'])"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr style="border: 1px solid white; padding-top: 10px;">
+                                        <td></td>
+                                        <td style="text-align: right;">
+                                            <div style="border-bottom: 3px double black;width:100%;font-weight:bold;">
+                                                <strong>TOTAL:</strong>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: right; padding-left:10px;">
+                                            <div style="border-bottom: 3px double black;width:100%;font-weight:bold;">
+                                                <t t-esc="'{:,.2f}'.format(total_opening)"/>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: right; padding-left:10px;">
+                                            <div style="border-bottom: 3px double black;width:100%;font-weight:bold;">
+<!--                                                <t t-esc="round(total_receipt, 2)"/>-->
+                                                <t t-esc="'{:,.2f}'.format(total_receipt)"/>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: right;">
+                                            <div style="border-bottom: 3px double black;width:100%;font-weight:bold;">
+<!--                                                <t t-esc="round(total_payment, 2)"/>-->
+                                                <t t-esc="'{:,.2f}'.format(total_payment)"/>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: right; padding-left:10px;">
+                                            <div style="border-bottom: 3px double black;width:100%;font-weight:bold;">
+<!--                                                <t t-esc="round(total_closing, 2)"/>-->
+                                                <t t-esc="'{:,.2f}'.format(total_closing)"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="paperformat_receipts_payments_report" model="report.paperformat">
+            <field name="name">Receipts Payments Summary Format</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <record id="action_report_receipts_payments_report" model="ir.actions.report">
+            <field name="name">Receipts Payments Report</field>
+            <field name="model">receipts.payments.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sozo_receipts_and_payments_report.receipts_summary_report_template</field>
+            <field name="report_file">sozo_receipts_and_payments_report.receipts_summary_report_template</field>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="sozo_receipts_and_payments_report.paperformat_receipts_payments_report"/>
+        </record>
+
+    </data>
+</odoo>

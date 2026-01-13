@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+
+        <record id="hr_leave_inherit_special_approval_field" model="ir.ui.view">
+            <field name="name">Inherit Special Approval List View</field>
+            <field name="model">hr.leave</field>
+            <field name="inherit_id" ref="hr_holidays.hr_leave_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="before">
+                    <field name="causal_leave_check"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="hr_leave_button_inherit_special_approval" model="ir.ui.view">
+            <field name="name">Inherit Special Approval Button</field>
+            <field name="model">hr.leave</field>
+            <field name="inherit_id" ref="hr_holidays.hr_leave_view_form_manager"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_refuse']" position="before">
+                    <button name="action_special_approval" string="Special Approval" id="special_approval" type="object"
+                            class="btn-primary" invisible="not special_approval_check"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_approve'][1]" position="attributes">
+                    <attribute name="invisible">not can_approve or state != 'confirm' or special_approval_check == True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='holiday_status_id']" position="before">
+                    <field name="causal_leave_check"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

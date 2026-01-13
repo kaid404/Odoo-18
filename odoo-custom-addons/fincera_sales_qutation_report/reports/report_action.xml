@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_saleorder_fincera" model="ir.actions.report">
+        <field name="name">NOMI-SALE Quotation</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fincera_sales_qutation_report.report_saleorder_fincera</field>
+        <field name="report_file">fincera_sales_qutation_report.report_saleorder_fincera</field>
+        <field name="print_report_name">'Quotation - Order'</field>
+        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+<!--    <record id="action_report_nomisale_quotation" model="ir.actions.report">-->
+<!--        <field name="name">NOMI-SALE Quotation</field>-->
+<!--        <field name="model">sale.order</field>-->
+<!--        <field name="report_type">qweb-pdf</field>-->
+<!--        <field name="report_name">fincera_sales_qutation_report.report_saleorder_document</field>-->
+<!--        <field name="report_file">fincera_sales_qutation_report.report_saleorder_document</field>-->
+<!--        <field name="binding_model_id" ref="sale.model_sale_order"/>-->
+<!--        <field name="binding_type">report</field>-->
+<!--    </record>-->
+
+    <!--    <record id="action_report_account_payment_fincera" model="ir.actions.report">-->
+    <!--        <field name="name">Payment Receipt</field>-->
+    <!--        <field name="model">account.payment</field>-->
+    <!--        <field name="report_type">qweb-pdf</field>-->
+    <!--        <field name="report_name">fincera_sales_qutation_report.report_payment_receipt_fincera</field>-->
+    <!--        <field name="report_file">fincera_sales_qutation_report.report_payment_receipt_fincera</field>-->
+    <!--        <field name="print_report_name">'Payment Receipt'</field>-->
+    <!--        <field name="binding_model_id" ref="model_account_payment"/>-->
+    <!--        <field name="binding_type">report</field>-->
+    <!--    </record>-->
+
+</odoo>

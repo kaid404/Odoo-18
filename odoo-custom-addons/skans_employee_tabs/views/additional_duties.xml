@@ -1,0 +1,52 @@
+<odoo>
+    <data>
+
+        <record id="form_view_additional_duties" model="ir.ui.view">
+            <field name="name">form_view_additional_duties</field>
+            <field name="model">additional.duties</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="duties_job"/>
+                        <field name="duties_department"/>
+                        <field name="duties_additional"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="list_view_additional_duties" model="ir.ui.view">
+            <field name="name">list_view_additional_duties</field>
+            <field name="model">additional.duties</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="duties_job"/>
+                    <field name="duties_department"/>
+                    <field name="duties_additional"/>
+                </list>
+            </field>
+        </record>
+
+<!--        <record id="view_employee_form_custom_additional_duties" model="ir.ui.view">-->
+<!--            <field name="name">Additional Duties Inherit</field>-->
+<!--            <field name="model">hr.employee</field>-->
+<!--            <field name="inherit_id" ref="hr.view_employee_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//page[@name='hr_settings']" position="after">-->
+<!--                    <page string="Additional Duties" name="additional_duties">-->
+
+<!--                        <group>-->
+<!--                            <field name="additional_duties_emp_ids" string=" "-->
+<!--                                   widget="form"-->
+<!--                                   context="{'form_view_ref': 'skans_additional_tabs.form_view_additional_duties'}"-->
+<!--                                   options="{'no_create': False, 'no_open': True}"/>-->
+<!--                        </group>-->
+
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

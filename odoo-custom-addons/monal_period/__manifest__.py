@@ -1,0 +1,23 @@
+{
+    'name': 'Monal Period',
+    'version': '18.0',
+    'category': 'Extra Tools',
+    'summary': 'Module for managing the Monal Period',
+    'sequence': '-1000',
+    'license': 'AGPL-3',
+    'author': 'Hammad Asghar,',
+    'Maintainer': 'Odoo Mates',
+    'website': 'odoomates.com',
+    # 'depends': [],
+    'depends': ['hr','hr_payroll','hr_work_entry_contract_enterprise'],
+    'demo': [],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/monal_evaluation_view.xml',
+        # 'views/view.xml',
+        # 'wizard/bulk_leave_encashment.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto install': False,
+}

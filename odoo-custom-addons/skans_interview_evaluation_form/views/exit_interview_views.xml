@@ -1,0 +1,114 @@
+<odoo>
+    <data>
+
+        <record id="view_exit_interview_form" model="ir.ui.view">
+            <field name="name">Exit Interview Form</field>
+            <field name="model">exit.interview.form</field>
+            <field name="arch" type="xml">
+                <form string="Exit Interview Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="interview_emp"/>
+                                <field name="interview_emp_designation" readonly="1"/>
+                                <field name="interview_emp_school_head" readonly="1"/>
+                                <field name="template_id"
+                                       domain="[('template_type', '=', False)]"/>
+
+                            </group>
+                            <group>
+                                <field name="interview_emp_number" readonly="1"/>
+                                <field name="interview_emp_resign_date"/>
+                                <field name="interview_emp_school_name" readonly="1"/>
+
+                            </group>
+                        </group>
+                        <br/>
+                        <group>
+                            <group>
+                                <field name="interview_salary_package"/>
+                                <field name="interview_further_studies"/>
+                                <field name="interview_org_culture"/>
+                                <field name="interview_conflict_manager_employee"/>
+                                <field name="interview_work_load"/>
+                                <field name="interview_lack_fairness_promotion"/>
+                            </group>
+                            <group>
+                                <field name="interview_benefit_plan"/>
+                                <field name="interview_better_opportunity"/>
+                                <field name="interview_lack_growth"/>
+                                <field name="interview_redundant_termination"/>
+                                <field name="interview_training_development"/>
+                                <field name="interview_other_reason"/>
+                                <field name="interview_other_reason_text"
+                                       readonly="interview_other_reason == False"/>
+                            </group>
+                        </group>
+                        <br/>
+                        <br/>
+                        <group>
+                            <field name="interview_main_reason_text"/>
+                            <field name="interview_suggestion_text"/>
+
+                        </group><br/>
+                        <group>
+                            <p>
+                                <strong>Would you consider returning to
+                                    SKANS system?
+                                </strong>
+
+                            </p>
+                            <field name="interview_return_yes"/>
+                            <field name="interview_return_no"/>
+                            <field name="interview_return_maybe"/>
+                        </group>
+                        <notebook>
+                            <page name="Exit Form Lines">
+                                <field name="line_ids">
+                                    <list editable="bottom">
+                                        <field name="criteria"/>
+                                        <field name="rating_5"/>
+                                        <field name="rating_4"/>
+                                        <field name="rating_3"/>
+                                        <field name="rating_2"/>
+                                        <field name="rating_1"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_exit_interview_tree" model="ir.ui.view">
+            <field name="name">Exit Interview</field>
+            <field name="model">exit.interview.form</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="interview_emp"/>
+                    <field name="interview_emp_number"/>
+                    <field name="interview_emp_designation"/>
+                    <field name="interview_emp_resign_date"/>
+                    <field name="interview_emp_school_head"/>
+                    <field name="interview_emp_school_name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_exit_interview_form" model="ir.actions.act_window">
+            <field name="name">Exit Interview Forms</field>
+            <field name="res_model">exit.interview.form</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first Exit Interview!
+                </p>
+            </field>
+        </record>
+        <!--        <menuitem id="menu_exit_interview" name="Exit Interview" parent="menu_exit_interview_root"-->
+        <!--                  action="action_exit_interview_form"/>-->
+    </data>
+</odoo>

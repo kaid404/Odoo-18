@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_educations,access.employee.educations,model_employee_educations,,1,1,1,1,
+access_hr_child_info,hr.child.info,model_hr_child_info,,1,1,1,1,
+access_hr_qualification,access.hr.qualification,model_hr_qualification,,1,1,1,1,
+access_hr_verify_body,access.hr.verify.body,model_hr_verify_body,,1,1,1,1,
+access_employee_registration_info,employee.registration.info,model_employee_registration_info,,1,1,1,1
+access_employee_collaboration,employee.collaboration,model_employee_collaboration,,1,1,1,1
+access_status_collaboration,status.collaboration,model_status_collaboration,,1,1,1,1

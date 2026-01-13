@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <record id="class_section_page_performance" model="ir.ui.view">
+            <field name="name">Performance</field>
+            <field name="model">class.section</field>
+            <field name="inherit_id" ref="gxs_core.section_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='year_id']" position="after">
+                    <field name="performance_ids"/>
+                </xpath>
+                <xpath expr="//notebook[1]/page[1]" position="after">
+                    <page string="Performance" name="performance_page">
+                        <field name="section_performance_line_ids">
+                            <list create="false" edit="false" delete="false">
+                                <field name="name"/>
+                                <field name="performance_type"/>
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_op_performance_form_inherits" model="ir.ui.view">
+            <field name="name">Performance</field>
+            <field name="model">gxs.std.performance</field>
+            <field name="inherit_id" ref="gxs_student_performance.view_op_performance_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook[1]/page[1]" position="after">
+                    <page string="Performance" name="performance_page">
+                        <field name="section_performance_line_ids">
+                            <list create="false" edit="false" delete="false">
+                                <field name="name"/>
+                                <field name="performance_type"/>
+                            </list>
+                        </field>
+                        <group>
+                             <field name="remarks"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+<!--        <record id="view_std_result_details_form_inheritss" model="ir.ui.view">-->
+<!--            <field name="name">Performance</field>-->
+<!--            <field name="model">gxs.std.result</field>-->
+<!--            <field name="inherit_id" ref="gxs_student_performance.view_std_result_details_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//notebook[1]/page[1]" position="after">-->
+<!--                    <page string="Performance" name="performance_page">-->
+<!--                        <field name="section_performance_line_ids">-->
+<!--                            <list create="false" edit="false" delete="false">-->
+<!--                                <field name="name"/>-->
+<!--                                <field name="performance_type"/>-->
+<!--                            </list>-->
+<!--                        </field>-->
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+
+        <template id="print_daily_attendance_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page"
+                         style="font-size: 8pt; font-family: Helvetica, Verdana, Arial, sans, Lucida Grande, Calibri;">
+                        <div class="row" style="text-align:right;">
+                            <span style="text-align:right;">
+                                Printed On:
+                                <span t-esc="datetime.date.today().strftime('%d %b %Y')"/>
+                            </span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2">
+                                <img t-att-src="'data:image/png;base64,%s' % rec.get('company_logo')"
+                                     style="max-width: 100px; max-height: 100px;"/>
+                            </div>
+                            <div class="col-8" style="text-align:center">
+                                <div class="row">
+                                    <h1>
+                                        <span t-esc="rec.get('company_name')"/>
+                                    </h1>
+                                </div>
+                                <div class="row">
+                                    <h4 align="center">Date Wise Attendance Report</h4>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row" style="text-align:center;">
+                            <h6>
+                                Period From:
+                                <span t-esc="datetime.datetime.strptime(rec.get('pre_datee'),'%Y-%m-%d').strftime('%d %b %Y')"/>
+                                To:
+                                <span t-esc="datetime.datetime.strptime(rec.get('datee'),'%Y-%m-%d').strftime('%d %b %Y')"/>
+                            </h6>
+                        </div>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;">Employee Code</th>
+                                    <th style="text-align:center;">Employee Name</th>
+                                    <th style="text-align:center;">Designation</th>
+                                    <th style="text-align:center;">Date</th>
+                                    <th style="text-align:center;">In-Time</th>
+                                    <th style="text-align:center;">Late by</th>
+                                    <th style="text-align:center;">Out-Time</th>
+                                    <th style="text-align:center;">Date</th>
+                                    <th style="text-align:center;">In-Time</th>
+                                    <th style="text-align:center;">Late by</th>
+                                </tr>
+                            </thead>
+
+                            <!-- Data Rows -->
+                            <tbody>
+                                <t t-foreach="rec.get('record_list')" t-as="record">
+                                    <tr>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('batch')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('name')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('designation')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('pre_datee')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('pre_in_time')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="record.get('pre_late_by_time')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('pre_out_time')"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="record.get('datee')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('in_time')"/>
+                                        </td>
+                                        <td style="text-align:center;border: 1px solid black;">
+                                            <t t-esc="record.get('late_by_time')"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="daily_attendance_report" model="ir.actions.report">
+            <field name="name">Print Daily Attendance Employee</field>
+            <field name="model">daily.attendance.report.employee</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">Imperial_attendance_report.print_daily_attendance_report_template</field>
+            <field name="report_file">Imperial_attendance_report.print_daily_attendance_report_template</field>
+            <field name="paperformat_id" ref="Imperial_attendance_report.daily_atten_report_format"/>
+        </record>
+
+
+        <!--        <report id="daily_attendance_report_18"-->
+        <!--                model="daily.attendance.report.employee"-->
+        <!--                string="Print Daily Attendance Employee "-->
+        <!--                name="Imperial_attendance_report.print_daily_attendance_report_template"-->
+        <!--                file="Imperial_attendance_report.print_daily_attendance_report_template"-->
+        <!--                report_type="qweb-pdf"-->
+        <!--                paperformat="daily_atten_report_format"/>-->
+    </data>
+</odoo>

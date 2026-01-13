@@ -1,0 +1,571 @@
+<odoo>
+    <data>
+        <template id="senior_result_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+
+                    <t t-foreach="student_data" t-as="student">
+                        <div style="font-size: 14pt; margin-bottom: 10px; page-break-before: always;">
+                            <div class="row"
+                                 style="margin-bottom: 15px; text-align: center; border-bottom: 2px solid black; padding-bottom: 10px;">
+                                <div class="col-3">
+                                    <img t-att-src="'/senior_result_report/static/src/img/left-logo.png'"
+                                         style="max-width: 100%; height: auto;"/>
+                                </div>
+                                <div class="col-6"
+                                     style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                    <h5 style="font-weight: bold; padding-top: 10px;">Campus:
+                                        <t t-esc="student['campus']"/>
+                                    </h5>
+                                    <h5 style="font-weight: bold; margin: 0;">Report Card</h5>
+                                    <h5 style="font-weight: bold; margin: 0;">
+                                        <t t-esc="student['year']"/>
+                                    </h5>
+                                    <h5 style="font-weight: bold; margin: 0;">
+                                        <t t-esc="student['exam_type']"/>
+                                    </h5>
+                                </div>
+                                <div class="col-3">
+                                    <img t-att-src="'/senior_result_report/static/src/img/right-logo.png'"
+                                         style="max-width: 100%; height: auto;"/>
+                                </div>
+                            </div>
+
+                            <!--                            <p>-->
+                            <!--                                <strong>Name:</strong>-->
+                            <!--                                <t t-esc="student['name']"/>-->
+                            <!--                            </p>-->
+                            <!--                            <p>-->
+                            <!--                                <strong>Class:</strong>-->
+                            <!--                                <t t-esc="student['class_name']"/>-->
+                            <!--                                &lt;!&ndash;                                <t t-esc="student.class_name"/>&ndash;&gt;-->
+                            <!--                                <t t-esc="student['section']"/>-->
+                            <!--                                &lt;!&ndash;                                <t t-esc="student.section"/>&ndash;&gt;-->
+                            <!--                            </p>-->
+                            <!--                            <p>-->
+                            <!--                                <strong>Age:</strong>-->
+                            <!--                                <t t-esc="student['age']"/>-->
+                            <!--                                &lt;!&ndash;                                <t t-esc="student.age"/>&ndash;&gt;-->
+                            <!--                                Years-->
+                            <!--                            </p>-->
+
+                            <p class="d-flex gap-3">
+                                <span>
+                                    <strong>Name:</strong>
+                                    <t t-esc="student['name']"/>
+                                </span>
+                                <span>
+                                    <strong>Class:</strong>
+                                    <t t-esc="student['class_name']"/>
+                                    <t t-esc="student['section']"/>
+                                </span>
+                                <span>
+                                    <strong>Age:</strong>
+                                    <t t-esc="student['age']"/>
+                                    Years
+                                </span>
+                            </p>
+
+
+                            <h4>Academic Performance:</h4>
+                            <t t-if="'Pre' in student['class_name']">
+                                <table class="table table-bordered" style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th>Subject</th>
+                                            <th>Total</th>
+
+                                            <th>Obtained</th>
+<!--                                            <th>Term%</th>-->
+<!--                                            <th>Exam%</th>-->
+                                            <th>Average%</th>
+                                            <th>Grade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="student['subjects']" t-as="subj">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="subj['subject']"/>
+                                                </td>
+                                                <!--                                            <td>-->
+                                                <!--                                                <t t-esc="subj['obtained_marks']"/>-->
+                                                <!--                                                &lt;!&ndash;                                                <t t-esc="subj.obtained_marks"/>&ndash;&gt;-->
+                                                <!--                                            </td>-->
+                                                <!--                                            <td>-->
+                                                <!--                                                <t t-esc="subj['total_marks']"/>-->
+                                                <!--                                                &lt;!&ndash;                                                <t t-esc="subj.total_marks"/>&ndash;&gt;-->
+                                                <!--                                            </td>-->
+                                                <td>
+                                                    <t t-esc="subj['total_marks']"/>
+                                                    <!--                                                <t t-esc="subj.obtained_marks"/>-->
+                                                </td>
+                                                <td>
+                                                    <t t-esc="subj['obtained_marks']"/>
+                                                    <!--                                                <t t-esc="subj.obtained_marks"/>-->
+                                                </td>
+                                                <td>
+                                                    <t t-esc="subj['average']"/>%
+                                                    <!--                                                <t t-esc="subj.average"/>%-->
+                                                </td>
+                                                <td>
+                                                    <t t-esc="subj['grade']"/>
+                                                    <!--                                                <t t-esc="subj.grade"/>-->
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td colspan="3">Over all average</td>
+                                            <td><t t-esc="student['avg_pr']"/>%
+                                            </td>
+                                            <td>
+                                                <t t-esc="student['avg_grad']"/>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </t>
+                            <t t-elif="'End' in student['exam_type']">
+
+                                <table class="table table-bordered" style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th>Subject</th>
+                                            <!--                                        <th>Obtained</th>-->
+                                            <th>Mid-Year Avg</th>
+                                            <th>Term%</th>
+                                            <th>Exam%</th>
+                                            <!--                                        <th>Total</th>-->
+                                            <th>Overall Average%</th>
+                                            <th>Grade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="student['subjects']" t-as="subj">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="subj['subject']"/>
+                                                </td>
+                                                <!--                                            <td>-->
+                                                <!--                                                <t t-esc="subj['obtained_marks']"/>-->
+                                                <!--                                                &lt;!&ndash;                                                <t t-esc="subj.obtained_marks"/>&ndash;&gt;-->
+                                                <!--                                            </td>-->
+
+                                                <td>
+                                                    <t t-esc="subj['mid_marks']"/>%
+                                                    <!--                                                <t t-esc="subj.obtained_marks"/>-->
+                                                </td>
+                                                <td>
+                                                    <t t-esc="subj['term_pr']"/>%
+                                                    <!--                                                <t t-esc="subj.obtained_marks"/>-->
+                                                </td>
+                                                <td>
+                                                    <t t-esc="subj['exam_pr']"/>%
+                                                    <!--                                                <t t-esc="subj.obtained_marks"/>-->
+                                                </td>
+                                                <!--                                            <td>-->
+                                                <!--                                                <t t-esc="subj['total_marks']"/>-->
+                                                <!--                                                &lt;!&ndash;                                                <t t-esc="subj.total_marks"/>&ndash;&gt;-->
+                                                <!--                                            </td>-->
+                                                <td>
+                                                    <t t-esc="subj['average']"/>%
+                                                    <!--                                                <t t-esc="subj.average"/>%-->
+                                                </td>
+                                                <td>
+                                                    <t t-esc="subj['grade']"/>
+                                                    <!--                                                <t t-esc="subj.grade"/>-->
+                                                </td>
+                                            </tr>
+
+                                        </t>
+                                        <tr>
+                                            <td colspan="4">Over all average</td>
+                                            <td><t t-esc="student['avg_pr']"/>%
+                                            </td>
+                                            <td>
+                                                <t t-esc="student['avg_grad']"/>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                            <t t-else="">
+                                <table class="table table-bordered" style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th>Subject</th>
+                                            <!--                                        <th>Obtained</th>-->
+                                            <!--                                        <th>Total</th>-->
+                                            <th>Term%</th>
+                                            <th>Exam%</th>
+                                            <th>Average%</th>
+                                            <th>Grade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="student['subjects']" t-as="subj">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="subj['subject']"/>
+                                                </td>
+                                                <!--                                            <td>-->
+                                                <!--                                                <t t-esc="subj['obtained_marks']"/>-->
+                                                <!--                                                &lt;!&ndash;                                                <t t-esc="subj.obtained_marks"/>&ndash;&gt;-->
+                                                <!--                                            </td>-->
+                                                <!--                                            <td>-->
+                                                <!--                                                <t t-esc="subj['total_marks']"/>-->
+                                                <!--                                                &lt;!&ndash;                                                <t t-esc="subj.total_marks"/>&ndash;&gt;-->
+                                                <!--                                            </td>-->
+                                                <td>
+                                                    <t t-esc="subj['term_pr']"/>%
+                                                    <!--                                                <t t-esc="subj.obtained_marks"/>-->
+                                                </td>
+                                                <td>
+                                                    <t t-esc="subj['exam_pr']"/>%
+                                                    <!--                                                <t t-esc="subj.obtained_marks"/>-->
+                                                </td>
+                                                <td>
+                                                    <t t-esc="subj['average']"/>%
+                                                    <!--                                                <t t-esc="subj.average"/>%-->
+                                                </td>
+                                                <td>
+                                                    <t t-esc="subj['grade']"/>
+                                                    <!--                                                <t t-esc="subj.grade"/>-->
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td colspan="3">Over all average</td>
+                                            <td><t t-esc="student['avg_pr']"/>%
+                                            </td>
+                                            <td>
+                                                <t t-esc="student['avg_grad']"/>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </t>
+
+                            <!--                        <t t-set="student" t-value="student_data[0]"/>-->
+
+                            <!--                        <div class="row"-->
+                            <!--                             style="margin-bottom: 15px; text-align: center; border-bottom: 2px solid black; padding-bottom: 10px;">-->
+                            <!--                            <div class="col-3">-->
+                            <!--                                <img t-att-src="'/senior_result_report/static/src/img/left-logo.png'"-->
+                            <!--                                     style="max-width: 100%; height: auto;"/>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="col-6"-->
+                            <!--                                 style="display: flex; flex-direction: column; justify-content: center; align-items: center;">-->
+                            <!--                                <h5 style="font-weight: bold; padding-top: 10px;">Campus:-->
+                            <!--                                    <t t-esc="student['campus']"/>-->
+                            <!--                                </h5>-->
+                            <!--                                <h5 style="font-weight: bold; margin: 0;">Report Card</h5>-->
+                            <!--                                <h5 style="font-weight: bold; margin: 0;">-->
+                            <!--                                    <t t-esc="student['year']"/>-->
+                            <!--                                </h5>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="col-3">-->
+                            <!--                                <img t-att-src="'/senior_result_report/static/src/img/right-logo.png'"-->
+                            <!--                                     style="max-width: 100%; height: auto;"/>-->
+                            <!--                            </div>-->
+                            <!--                        </div>-->
+
+                            <!--                        <strong>Name:&#8195;</strong>-->
+                            <!--                        <t t-esc="student['student_name']"/>-->
+                            <!--                        <br/>-->
+                            <!--                        <strong>Class:&#8195;&#160;</strong>-->
+                            <!--                        <t t-esc="student['class'] or 'N/A'"/>&#8195;&#8195;<t-->
+                            <!--                            t-esc="student['section'] or 'N/A'"/>-->
+                            <!--                        <br/>-->
+                            <!--                        <strong>Age:&#8195;&#8195;</strong>-->
+                            <!--                        <t t-esc="student['age'] or 'N/A'"/>&#160;<span>Years</span>-->
+                            <!--                    </div>-->
+
+                            <!--                    <h4 style="margin-bottom: 8px;">Academic Performance:</h4>-->
+                            <!--                    <table style="width:100%; border-collapse:collapse; border:1px solid #000; margin-bottom:20px;">-->
+                            <!--                        <thead style="background-color:#f0f0f0;">-->
+                            <!--                            <tr>-->
+                            <!--                                <th style="width: 50%; border:1px solid #000; padding:3px;">Subject</th>-->
+                            <!--                                <th style="width: 11%; border:1px solid #000; padding:3px;">Obtained</th>-->
+                            <!--                                <th style="width: 11%; border:1px solid #000; padding:3px;">Total</th>-->
+                            <!--                                <th style="width: 15%; border:1px solid #000; padding:3px;">Average%</th>-->
+                            <!--                                <th style="width: 13%; border:1px solid #000; padding:3px;">Grade</th>-->
+                            <!--                            </tr>-->
+                            <!--                        </thead>-->
+                            <!--                        <tbody>-->
+                            <!--                            <t t-foreach="subjects" t-as="st">-->
+                            <!--                                <tr>-->
+                            <!--                                    <td style="border:1px solid #000; padding:3px;">-->
+                            <!--                                        <t t-esc="st['subject_name']"/>-->
+                            <!--                                    </td>-->
+                            <!--                                    <td style="border:1px solid #000; padding:3px;">-->
+                            <!--                                        <t t-esc="st['obt_marks']"/>-->
+                            <!--                                    </td>-->
+                            <!--                                    <td style="border:1px solid #000; padding:3px;">-->
+                            <!--                                        <t t-esc="st['total']"/>-->
+                            <!--                                    </td>-->
+                            <!--                                    <td style="border:1px solid #000; padding:3px;">-->
+                            <!--                                        <t t-esc="'%.2f' % st['average']"/>-->
+                            <!--                                    </td>-->
+                            <!--                                    <td style="border:1px solid #000; padding:3px;">-->
+                            <!--                                        <t t-esc="st['grade']"/>-->
+                            <!--                                    </td>-->
+                            <!--                                </tr>-->
+                            <!--                            </t>-->
+                            <!--                        </tbody>-->
+                            <!--                    </table>-->
+
+                            <div style="width: 400px; margin: 10px auto 0 auto;">
+                                <span style="margin: 0 0 6px 0; font-weight: bold; text-align: left;">
+                                    Marks Grading Criteria:
+                                </span>
+                                <t t-if="grade_lines">
+                                    <table style="width:100%; border: 2px solid #000; border-collapse: separate; border-spacing: 0;">
+                                        <tbody>
+                                            <t t-foreach="grade_lines" t-as="grade">
+                                                <tr>
+                                                    <td style="width: 50%; text-align: left; padding: 1px 20px; border: none;">
+                                                        <t t-esc="grade['result']"/>
+                                                    </td>
+                                                    <td style="width: 50%; text-align: right; padding: 1px 20px; border: none;">
+                                                        <t t-esc="grade['min_per']"/>% -<t t-esc="grade['max_per']"/>%
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </t>
+                                <t t-else="">
+                                    <table style="width:100%; border: 2px solid #000; border-collapse: separate; border-spacing: 0;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 50%; text-align: left; padding: 1px 20px; border: none;">
+                                                    A+
+                                                </td>
+                                                <td style="width: 50%; text-align: right; padding: 1px 20px; border: none;">
+                                                    90%
+                                                    or above
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: left; padding: 1px 20px; border: none;">A</td>
+                                                <td style="text-align: right; padding: 1px 20px; border: none;">80% or
+                                                    above
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: left; padding: 1px 20px; border: none;">B</td>
+                                                <td style="text-align: right; padding: 1px 20px; border: none;">70% or
+                                                    above
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: left; padding: 1px 20px; border: none;">C</td>
+                                                <td style="text-align: right; padding: 1px 20px; border: none;">60% or
+                                                    above
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: left; padding: 1px 20px; border: none;">D</td>
+                                                <td style="text-align: right; padding: 1px 20px; border: none;">50% or
+                                                    above
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: left; padding: 1px 20px; border: none;">(NYS)
+                                                </td>
+                                                <td style="text-align: right; padding: 1px 20px; border: none;">Below
+                                                    50%
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </t>
+                            </div>
+                            <span style="text-align:left; margin-top:13px; text-decoration: underline; font-weight: bold; font-size: 15pt;">
+                                General Performance:
+                            </span>
+                            <div style="border: 2px solid #000; margin-top: 6px; display: block; text-align: center;">
+                                <div class="row">
+                                    <table style="width: 75%; border-collapse: collapse; border-spacing: 0;">
+                                        <t t-if="student['performance']">
+                                            <t t-set="perf_items" t-value="list(student['performance'].items())"/>
+                                            <t t-foreach="range(0, len(perf_items), 2)" t-as="i">
+                                                <tr>
+                                                    <!-- Left performance item -->
+                                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000; padding-left: 5px;">
+                                                        <t t-if="i &lt; len(perf_items)">
+                                                            <t t-esc="perf_items[i][0]"/>
+                                                        </t>
+                                                    </td>
+                                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000; padding-left: 5px;">
+                                                        <t t-if="i &lt; len(perf_items)">
+                                                            <t t-esc="perf_items[i][1]"/>
+                                                        </t>
+                                                    </td>
+
+                                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000; padding: 3px;">
+                                                        <t t-if="i + 1 &lt; len(perf_items)">
+                                                            <t t-esc="perf_items[i + 1][0]"/>
+                                                        </t>
+                                                    </td>
+                                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000; padding: 3px;">
+                                                        <t t-if="i + 1 &lt; len(perf_items)">
+                                                            <t t-esc="perf_items[i + 1][1]"/>
+                                                        </t>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <tr>
+                                                <td colspan="4" style="text-align:center; padding: 8px;">No performance
+                                                    data
+                                                    found
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                    <div style="width: 25%; align-items: center; font-size: 11pt; margin-top:10px;">
+                                        <p style="margin: 3px 0;">
+                                            <strong>Attendance Days:</strong>
+                                            <t t-esc="student['total_att_days'] or 0"/>
+                                        </p>
+                                        <p style="margin: 3px 0;">
+                                            <strong>Present Days:</strong>
+                                            <t t-esc="student['present_days'] or 0"/>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!--                                <table style="margin:8pt; width: 100%; max-width: 900px;border: none; border-collapse: separate; border-spacing: 0;">-->
+                                <!--                                    <tr>-->
+                                <!--                                        <td style="text-align: left; border: none; border-bottom: 2px solid #000;">-->
+                                <!--                                            Attendance-->
+                                <!--                                        </td>-->
+                                <!--                                        <td style="text-align: left; border: none; border-bottom: 2px solid #000;">E-->
+                                <!--                                        </td>-->
+                                <!--                                        &lt;!&ndash;                                <t t-esc="student_data['attendance_key']"/>&ndash;&gt;-->
+                                <!--                                        <td style="text-align: left; border: none; border-bottom: 2px solid #000;">-->
+                                <!--                                            Co-Curricular-->
+                                <!--                                            Participation-->
+                                <!--                                        </td>-->
+                                <!--                                        <td style="text-align: left; border: none; border-bottom: 2px solid #000;">E-->
+                                <!--                                        </td>-->
+                                <!--                                        <td colspan="4" style="border: none;"></td>-->
+                                <!--                                        <td colspan="2" style="text-align: center; border: none;">-->
+                                <!--                                            Total Working Days:-->
+                                <!--                                            <span align="right" style="text-decoration: underline;">-->
+                                <!--                                                253-->
+                                <!--                                                &lt;!&ndash;                                            <t t-esc="student_data['working_days']"/>&ndash;&gt;-->
+                                <!--                                            </span>-->
+                                <!--                                        </td>-->
+                                <!--                                    </tr>-->
+                                <!--                                    <tr>-->
+                                <!--                                        <td style="text-align: left; border: none; border-bottom: 2px solid #000;">-->
+                                <!--                                            Punctuality-->
+                                <!--                                        </td>-->
+                                <!--                                        <td style="text-align: left; border: none; border-bottom: 2px solid #000;">E-->
+                                <!--                                        </td>-->
+                                <!--                                        <td style="text-align: left; border: none; border-bottom: 2px solid #000;">-->
+                                <!--                                            Sports-->
+                                <!--                                            Participation-->
+                                <!--                                        </td>-->
+                                <!--                                        <td style="text-align: left; border: none; border-bottom: 2px solid #000;">G-->
+                                <!--                                        </td>-->
+                                <!--                                        <td colspan="4"></td>-->
+                                <!--                                        <td colspan="2">-->
+                                <!--                                            Attendance:-->
+                                <!--                                            <span align="right" style="text-decoration: underline;">-->
+                                <!--                                                150-->
+                                <!--                                                &lt;!&ndash;                                            <t t-esc="student_data['attendance_days']"/>&ndash;&gt;-->
+                                <!--                                            </span>-->
+                                <!--                                        </td>-->
+                                <!--                                    </tr>-->
+                                <!--                                    <tr>-->
+                                <!--                                        <td style="text-align: left; border: none; border-bottom: 2px solid #000;">Class-->
+                                <!--                                            Participation-->
+                                <!--                                        </td>-->
+                                <!--                                        <td style="text-align: left; border: none; border-bottom: 2px solid #000;">G-->
+                                <!--                                        </td>-->
+                                <!--                                        <td style="text-align: left; border: none; border-bottom: 2px solid #000;">-->
+                                <!--                                            Arts-->
+                                <!--                                        </td>-->
+                                <!--                                        <td style="text-align: left; border: none; border-bottom: 2px solid #000;">E-->
+                                <!--                                        </td>-->
+                                <!--                                        <td colspan="6"></td>-->
+                                <!--                                    </tr>-->
+                                <!--                                </table>-->
+                                <div style="width: 400px; margin: 10px auto 0 auto;">
+                                    <span style="margin: 0 0 4px 0; font-weight: bold; text-align: left;">
+                                        Key:
+                                    </span>
+                                    <table style="width:100%; border: 1px solid #000; border-collapse: separate; border-spacing: 0; margin-bottom: 8px;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 40%; text-align: left; padding: 3px 20px; border: none;">
+                                                    Excellent:&#8195;E
+                                                </td>
+                                                <td style="width: 60%; text-align: right; padding: 3px 20px; border: none;">
+                                                    Satisfactory:&#8195;S
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: left; padding: 3px 20px; border: none;">Good:&#8195;G
+                                                </td>
+                                                <td style="text-align: right; padding: 3px 20px; border: none;">Needs
+                                                    Improvement:&#8195;NI
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div>
+                                    <p style="margin: 3px 0;">
+                                        <strong>Remarks:</strong>
+                                        <t t-esc="student['remarks']"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <div class="footer o_boxed_footer">
+                        <center>
+                            <span>This is a system generated report and does not require signatures</span>
+                        </center>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+
+        <record id="paperformat_senior_st_results_report" model="report.paperformat">
+            <field name="name">Senior Students Results Paper Format</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">8</field>
+            <field name="margin_right">8</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_senior_results_report" model="ir.actions.report">
+            <field name="name">Senior Results Report</field>
+            <field name="model">senior.result.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_file">senior_result_report.senior_result_report_template</field>
+            <field name="report_name">senior_result_report.senior_result_report_template</field>
+            <field name="paperformat_id" ref="paperformat_senior_st_results_report"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

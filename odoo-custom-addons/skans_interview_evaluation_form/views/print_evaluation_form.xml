@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_evaluation_form_template">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <style>
+                    table{width:100%;}
+                    table,th,tr,thead,td{border: 1px solid black;}
+                    th,td{padding:3px;}
+                </style>
+                <div class="header">
+                    <div class="row">
+                        <div class="col-1" align="left">
+                            <!--                                <a t-att-href="request.env['ir.config_parameter'].sudo().get_param('web.base.url')"-->
+                            <!--                                   target="_blank">-->
+                            <!--                                    <img t-att-src="request.env['ir.config_parameter'].sudo().get_param('web.base.url') + '/skans_interview_evaluation_form/static/src/skans_icon.jpg'"-->
+                            <!--                                         style="width: 100%; max-width: 800px; display: block; margin: 0 auto;"/>-->
+                            <!--                                </a>-->
+                            <!--                            <img src="/skans_interview_evaluation_form/static/src/img/skans_icon.jpg" alt="logo 2"-->
+                            <!--                                 width="55px" height="55px"/>-->
+                            <!--                            <t t-if="doc.company_logo">-->
+                            <!--                                <img t-att-src="'data:image/png;base64,%s' % doc.company_logo"-->
+                            <!--                                     style="height:150px;width:150px"/>-->
+                            <!--                            </t>-->
+                            <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
+                                 style="max-height: 90px;" alt="Logo"/>
+
+                        </div>
+                        <div class="col-7" align="left" style="margin-left:6px; padding:0;padding-top:4px;">
+                            <strong style="font-size: 15pt; padding:0">
+                                <t t-esc="doc.company_id.name"/>
+                            </strong>
+                        </div>
+                        <div class="col-4" style="font-size: 8pt; color: #4F4F4F; margin-top:4px;">
+                            <div class="row">
+                                <div class="col-6" style="text-align:right; padding-right:7px;">
+                                    <strong>Created By:</strong>
+                                </div>
+                                <div class="col-6" style="text-align:left;">
+                                    <strong>
+                                        <t t-esc="doc.create_uid.name"/>
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6" style="text-align:right; padding-right:5px;">
+                                    <strong>Created On:</strong>
+                                </div>
+                                <div class="col-6" style="text-align:left">
+                                    <strong t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%B-%Y %H:%M')"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 style="text-align: center; font-size: 15pt">
+                                <strong>Interview Evaluation Form For
+                                    <span style="font-size: 15pt">
+                                        <t t-esc="doc.template_id.name"/>
+                                    </span>
+                                </strong>
+                                <br/>
+                                <!--                                    <strong style="font-size: 16px">As On Date:-->
+                                <!--                                        <t t-esc="date"/>-->
+                                <!--                                    </strong>-->
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="page">
+
+                    <table class="table table-sm"
+                           style="width: 100%; border-collapse: collapse; margin-top:20px;font-size: 18px"
+                           border="1">
+                        <tr>
+                            <td>
+                                <strong>Interviewer:</strong>
+                            </td>
+                            <td colspan="2">
+                                <t t-esc="doc.interviewer_name.name"/>
+                            </td>
+                            <td>
+                                <strong>Date of Interview:</strong>
+                            </td>
+                            <td colspan="2">
+                                <t t-esc="doc.interview_date"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Candidate Name:</strong>
+                            </td>
+                            <td colspan="2">
+                                <t t-esc="doc.candidate_name.partner_name"/>
+                            </td>
+                            <td>
+                                <strong>Position:</strong>
+                            </td>
+                            <td colspan="2">
+                                <t t-esc="doc.position.name"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-sm" style="border-collapse: collapse;font-size: 16px" border="1">
+                        <thead>
+                            <tr>
+                                <td colspan="1">
+                                    <span>Scale:</span>
+                                </td>
+                                <td colspan="1">
+                                    <span>5-Exceptional:</span>
+                                </td>
+                                <td colspan="1">
+                                    <span>4-Above Average:</span>
+                                </td>
+                                <td colspan="1">
+                                    <span>3-Average:</span>
+                                </td>
+                                <td colspan="1">
+                                    <span>2-Satisfactory</span>
+                                </td>
+                                <td colspan="8">
+                                    <span>1-Unsatisfactory</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="8" style="text-align: center;">Criteria</th>
+                                <th colspan="5" style="text-align: center;">Rating</th>
+                            </tr>
+                            <tr>
+                                <th colspan="8"></th>
+                                <th style="text-align: center;">1</th>
+                                <th style="text-align: center;">2</th>
+                                <th style="text-align: center;">3</th>
+                                <th style="text-align: center;">4</th>
+                                <th style="text-align: center;">5</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.line_ids" t-as="line">
+                                <tr>
+                                    <td colspan="8">
+                                        <span>
+                                            <t t-esc="line.criteria"/>
+                                        </span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span t-if="line.rating_1">☑</span>
+                                        <span t-if="not line.rating_1">☐</span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span t-if="line.rating_2">☑</span>
+                                        <span t-if="not line.rating_2">☐</span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span t-if="line.rating_3">☑</span>
+                                        <span t-if="not line.rating_3">☐</span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span t-if="line.rating_4">☑</span>
+                                        <span t-if="not line.rating_4">☐</span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span t-if="line.rating_5">☑</span>
+                                        <span t-if="not line.rating_5">☐</span>
+                                    </td>
+                                </tr>
+
+                            </t>
+                            <tr>
+                                <td colspan="7">
+                                    <p>
+                                        <b>Overall Impression and Recommendation</b>
+                                        – Summary of your perceptions of
+                                        the candidate’s strengths/weaknesses. Final comments and recommendations
+                                        for proceeding with the candidate.
+                                    </p>
+                                    <strong>Comments:</strong>
+                                    <t t-esc="doc.comments"/>
+                                    <br/>
+                                    <t t-if="doc.template_id.name in ['Principal', 'Teacher']">
+                                        <span>Total Marks: &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<t
+                                                t-esc="doc.total_possible_marks"/>
+                                            <br/>
+                                            Marks Obtained:&#160;&#160;<t t-esc="doc.total_marks"/>
+                                            <br/>
+                                            Percentage:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                            <t t-esc="'%.0f' % doc.percentage"/>%
+                                        </span>
+                                    </t>
+                                </td>
+                                <td colspan="2">
+                                    <span t-if="doc.status_appr">☑</span>
+                                    <span t-if="not doc.status_appr">☐</span>
+                                    <br/>Approved
+
+                                </td>
+                                <td colspan="2">
+                                    <span t-if="doc.status_not_appr">☑</span>
+                                    <span t-if="not doc.status_not_appr">☐</span>
+                                    <br/>Not Approved
+
+                                </td>
+                                <td colspan="2">
+                                    <span t-if="doc.status_appr_res">☑</span>
+                                    <span t-if="not doc.status_appr_res">☐</span>
+                                    <br/>Approved With Reservation
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+    <record id="action_report_evaluation_form" model="ir.actions.report">
+        <field name="name">Evaluation Form Report</field>
+        <field name="model">evaluation.form</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">skans_interview_evaluation_form.report_evaluation_form_template</field>
+        <field name="report_file">skans_interview_evaluation_form.report_evaluation_form_template</field>
+        <field name="binding_model_id" ref="model_evaluation_form"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="skans_interview_evaluation_form.interview_evaluation_paperformat"/>
+    </record>
+
+
+</odoo>

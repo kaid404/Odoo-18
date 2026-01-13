@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record id="inherit_view_form_final_settlement_clearance" model="ir.ui.view">
+            <field name="name">Final Settlement Clearance</field>
+            <field name="model">employee.final.settlement</field>
+            <field name="inherit_id" ref="skans_employee_final_settelment.view_employee_final_settlement_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[1]" position="after">
+                    <page string="Clearance" name="clearance">
+                        <group>
+                            <field name="librarian_report"/>
+                            <field name="it_report_ids" widget="many2many_checkboxes" options="{'horizontal': true}"/>
+                            <field name="canteen_report"/>
+                            <field name="comments"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

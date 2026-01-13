@@ -1,0 +1,36 @@
+<odoo>
+
+    <record id="view_promote_students_form" model="ir.ui.view">
+        <field name="name">Promote Students</field>
+        <field name="model">promote.students</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="old_batch"/>
+                    </group>
+                    <group>
+                        <field name="new_batch"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Promote" type="object" name="promote_students"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="promote_student_action" model="ir.actions.act_window">
+        <field name="name">Promote Student Batch</field>
+        <field name="res_model">promote.students</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_op_promote_student" name="Promote Students" action="promote_student_action"
+              parent="odoocms.menu_odoocms_students_root"/>
+
+
+</odoo>

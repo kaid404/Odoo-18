@@ -1,0 +1,87 @@
+<odoo>
+    <data>
+        <record id="faculty_result_summary_pdf_report_action" model="ir.actions.report">
+            <field name="name">Faculty Result Summary PDF</field>
+            <field name="model">faculty.result.summary.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">faculty_result_summary.report_faculty_result_summary_pdf</field>
+            <field name="report_file">faculty_result_summary_pdf</field>
+            <field name="print_report_name">'Faculty_Result_Summary_%s' % (object.academic_year_id.name)</field>
+        </record>
+
+        <template id="report_faculty_result_summary_pdf">
+            <t t-call="web.html_container">
+                <!-- Company Header -->
+                <div style="text-align:center; margin-bottom:20px;">
+                    <h2>
+                        <t t-esc="company.name"/>
+                    </h2>
+                    <p>
+                        <t t-esc="company.street or ''"/>
+                        <t t-esc="company.street2 or ''"/>
+                        <br/>
+                        <t t-esc="company.city or ''"/>,
+                        <t t-esc="company.state_id.name or ''"/>
+                        <t t-esc="company.zip or ''"/>
+                        <br/>
+                        <t t-esc="company.country_id.name or ''"/>
+                        <br/>
+                        Phone:
+                        <t t-esc="company.phone or ''"/>
+                        |
+                        Email:
+                        <t t-esc="company.email or ''"/>
+                    </p>
+                </div>
+
+                <!-- Report Title -->
+                <h2>Faculty Result Summary</h2>
+                <p>
+                    <strong>Academic Year:</strong>
+                    <t t-esc="data.get('academic_year', '')"/>
+                </p>
+                <p t-if="data.get('campus')">
+                    <strong>Campus:</strong>
+                    <t t-esc="data.get('campus')"/>
+                </p>
+
+                <!-- Table -->
+                <table border="1" style="width:100%; border-collapse:collapse;">
+                    <thead>
+                        <tr>
+                            <th>Faculty</th>
+                            <th>Campus</th>
+                            <th>A %</th>
+                            <th>B/C %</th>
+                            <th>D %</th>
+                            <th>Total Students</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="data.get('records')" t-as="rec">
+                            <td>
+                                <t t-esc="rec['faculty_name']"/>
+                            </td>
+                            <td>
+                                <t t-esc="rec['campus_name']"/>
+                            </td>
+                            <td>
+                                <t t-esc="rec['A_percent']"/>
+                            </td>
+                            <td>
+                                <t t-esc="rec['BC_percent']"/>
+                            </td>
+                            <td>
+                                <t t-esc="rec['D_percent']"/>
+                            </td>
+                            <td>
+                                <t t-esc="rec['total_students']"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </template>
+
+    </data>
+</odoo>

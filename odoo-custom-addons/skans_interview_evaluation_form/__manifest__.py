@@ -1,0 +1,22 @@
+{
+    'name': "Skans Interview Evaluation Froms",
+    'author': 'Hammad Asghar',
+    'category': 'Payroll',
+    'license': 'AGPL-3',
+    'website': 'http://www.globalxs.co',
+    'description': """Skans Interview Evaluation Froms""",
+    'version': '18.0',
+    'depends': ['hr_recruitment'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/paperformat.xml',
+        'views/print_evaluation_form.xml',
+        'views/print_exit_form.xml',
+        'views/exit_interview_views.xml',
+        'views/interview_evaluation_admin.xml',
+        'views/interview_evaluation_template.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+
+        <record id="view_inherit_show_in_report_tree" model="ir.ui.view">
+            <field name="name">Show In Report in Tree View</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_list"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='account_type']" position="after">
+                    <field name="show_in_report"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="receipts_payments_report_form" model="ir.ui.view">
+            <field name="name">receipts.payments.report.form</field>
+            <field name="model">receipts.payments.report</field>
+            <field name="arch" type="xml">
+                <form string="Receipts And Payments Report">
+                    <group col="2">
+                        <field name="rp_date"/>
+                    </group>
+                    <footer>
+                        <button string="Generate Report" type="object" name="generate_receipts_and_payments_report"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_receipt_payments_report" model="ir.actions.act_window">
+            <field name="name">Receipts and Payments Report</field>
+            <field name="res_model">receipts.payments.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+                id="menu_receipts_payments_report_wizard"
+                name="Receipts and Payments Report"
+                parent="point_of_sale.menu_point_rep"
+                action="action_receipt_payments_report"
+        />
+    </data>
+</odoo>

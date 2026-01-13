@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="salary_sheet_form" model="ir.ui.view">
+        <field name="name">salary.sheet.wizard</field>
+        <field name="model">salary.sheet</field>
+        <field name="arch" type="xml">
+            <form string="Generate Salary Sheet">
+                <group>
+                    <group>
+                        <field name="check" invisible="1"/>
+                        <field name="check2" invisible="1"/>
+                        <field name="payslip_run_id" invisible="check2"/>
+                        <field name="employee_ids" widget="many2many_tags"/>
+                    </group>
+                    <group>
+                        <field name="date_from" invisible="check"/>
+                        <field name="date_to" invisible="check"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="salary_sheet_xlsx" string="Generate Excel" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-danger" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="salary_sheet_action" model="ir.actions.act_window">
+        <field name="name">Salary Sheet</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">salary.sheet</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="salary_sheet_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="salary_sheet"
+              name="Salary Sheet"
+              parent="hr_payroll.menu_hr_payroll_report"
+              action="salary_sheet_action"
+              sequence="1"/>
+
+    <record id="salary_sheet_excel" model="ir.actions.report">
+        <field name="name">Salary Sheet</field>
+        <field name="model">salary.sheet</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">salary_sheet_report.salary_sheet_documents_xlsx</field>
+        <field name="report_file">salary_sheet_report.salary_sheet_documents_xlsx</field>
+        <field name="binding_type">report</field>
+    </record>
+
+
+</odoo>

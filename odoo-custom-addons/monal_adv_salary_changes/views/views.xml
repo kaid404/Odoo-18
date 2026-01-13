@@ -1,0 +1,51 @@
+<odoo>
+
+    <record id="inherit_allowed_amount_advance_salary" model="ir.ui.view">
+        <field name="name">Inherit Allowed Amount Field in Form</field>
+        <field name="model">hr.advance.salary</field>
+        <field name="inherit_id" ref="sync_employee_advance_salary.hr_employee_advance_salary_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='request_amount']" position="before">
+                <field name="allowed_amount" placeholder="Press Calculate..." invisible="payment != 'fully'"/>
+                <field name="remaining_bank_limit" invisible="payment != 'fully'"/>
+            </xpath>
+            <xpath expr="//field[@name='payment']" position="after">
+                <field name="advance_type" widget="radio" invisible="payment != 'fully'"/>
+            </xpath>
+
+            <xpath expr="//notebook/page[2]" position="after">
+                <page name="adv_salary_calculation" string="Allowed Salary" invisible="payment != 'fully'">
+                    <group>
+                        <group>
+                            <field name="salary_without_tax"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Allowances">
+<!--                            <field name="resident_allowance_amount"/>-->
+                            <field name="house_allowance_amount"/>
+<!--                            <field name="realocation_allowance_amount"/>-->
+<!--                            <field name="bike_allowance_amount"/>-->
+<!--                            <field name="car_maintence_allowance_amount"/>-->
+<!--                            <field name="car_allowance_amount"/>-->
+<!--                            <field name="mobile_allowance_amount"/>-->
+<!--                            <field name="miscellaneous_allowance_amount"/>-->
+<!--                            <field name="fuel_allowance_cash_amount"/>-->
+<!--                            <field name="food_allowance_amount"/>-->
+<!--                            <field name="gun_allowance_amount"/>-->
+<!--                            <field name="hill_allowance_amount"/>-->
+                        </group>
+                        <group string="Deductions">
+                            <field name="loan_amount"/>
+                            <field name="tax_amount"/>
+                            <field name="eobi_amount"/>
+                            <field name="umra_amount"/>
+                            <field name="already_taken_adv"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+        <record id="mid_fnial_results_report_form" model="ir.ui.view">
+            <field name="name">mid_fnial_results_report_form</field>
+            <field name="model">mid.final.result.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Senior Student Result Report">
+                    <group>
+                        <group>
+                            <field name="campus_id"/>
+                            <field name="class_id"/>
+                            <field name="exam_type"/>
+                        </group>
+                        <group>
+                            <field name="year_id"/>
+                            <field name="section_id" domain="[('id', 'in', sec_ids)]"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Generate Report" type="object" name="print_result_report"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="mid_final_result_report_action">
+            <field name="name">Mid Final Results</field>
+            <field name="res_model">mid.final.result.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="results_reporting_root"
+                  name="Reporting"
+                  parent="gxs_student_performance.menu_op_performance_root"/>
+
+        <menuitem id="mid_final_results_report_menu"
+                  name="Mid/Final Results"
+                  parent="results_reporting_root"
+                  action="mid_final_result_report_action"/>
+    </data>
+</odoo>

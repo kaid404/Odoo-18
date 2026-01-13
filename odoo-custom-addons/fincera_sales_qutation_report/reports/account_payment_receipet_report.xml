@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="account.report_payment_receipt_document">
+        <t t-set="o" t-value="o.with_context(lang=lang)"/>
+        <t t-if="o.show_button_noumi != True">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+            <div class="page">
+                <h3><strong>Payment Receipt: <span t-field="o.name"/></strong></h3>
+                <div class="mb-4 mt-3">
+                    <div class="row">
+                        <div class="col-6" t-if="o.date">
+                            Payment Date: <span t-field="o.date"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6" t-if="o.partner_type">
+                            <t t-if="o.partner_type == 'customer'">
+                                <b> Received with thanks from :</b>
+                            </t>
+                            <t t-if="o.partner_type == 'supplier'">
+                                Vendor:
+                            </t><span t-field="o.partner_id"/>
+                        </div>
+
+                        <div class="col-6" t-if="o.partner_type">
+                            <t t-if="o.partner_type == 'customer'">
+                                <b>Address</b>
+                                <span t-field="o.partner_id.street"/>
+                                <br/>
+                                <b>Received by </b>
+                                <span t-field="o.create_uid"/>
+                            </t>
+
+                        </div>
+<!--                        <div class="col-6" t-if="o.partner_type">-->
+<!--                            <t t-if="o.partner_type == 'customer'">-->
+<!--                                <b>The sum of rupees:</b>-->
+
+<!--                                <span t-field="o.word_num"/>-->
+<!--                            </t>-->
+
+<!--                        </div>-->
+                        <div class="col-6" t-if="o.payment_method_id">
+                            Payment Method: <span t-field="o.payment_method_id.name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6" t-if="o.amount">
+                            Payment Amount: <span t-field="o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                        <br/>
+                            <b>The sum of rupees:</b>
+
+                                <span t-field="o.word_num"/>
+                         </div>
+                        <div class="col-6" t-if="o.payment_reference">
+                            Memo: <span t-field="o.payment_reference"/>
+                         </div>
+                    </div>
+                </div>
+                <t t-if="o.partner_type == 'customer'">
+                    <p>
+                        <b>NOTE:</b> Please check your account name on the receipt as our company will not be responsible if not reported at
+                        the same time. Any kind of bank charges will be debited to customer account.
+                    </p>
+                </t>
+                <t t-if="o.partner_type == 'customer'">
+                     <div>
+                         <b>Authorized Signature:</b>      ____________
+                     </div>
+                </t>
+                <t t-if="o.partner_type == 'customer'">
+                    <t t-set="a" t-value="0"></t>
+                    <t t-set="b" t-value="0"></t>
+                    <t t-set="c" t-value="0"></t>
+                    <t t-foreach="o.reconciled_invoice_ids" t-as="rec">
+                        <t t-set="a" t-value="a + (rec.amount_total)"></t>
+                    <t t-set="b" t-value="b + rec.amount_residual"></t>
+                    </t>
+                     <t t-set="c" t-value="a - b"></t>
+                    <center>
+
+                        <div class='table table-bordered md-0' style='border: 2px solid black;'>
+                            <b><span>Summary of Payment  :</span></b>
+                            <br/>
+                            <br/>
+                            <b>Total Quotation Amount:</b><t t-esc="a"/>
+                            <br></br>
+                            <b>Amount Received </b><t t-esc="c"/>
+                            <br/>
+                            <b>Balance Payment </b><t t-esc="b"/>
+
+                        </div>
+                    </center>
+                </t>
+                <t t-if="o.partner_type == 'supplier'">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th><span>Invoice Date</span></th>
+                            <th><span>Invoice Number</span></th>
+                            <th><span>Reference</span></th>
+                            <th class="text-right"><span>Amount</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="o.move_id._get_reconciled_invoices_partials()" t-as="rec">
+                            <!-- MOVE -->
+                            <t t-set="inv" t-value="rec[2].move_id"/>
+                            <t t-if="inv.move_type != 'entry'">
+                                <tr>
+                                    <td><span t-field="inv.invoice_date"/></td>
+                                    <td><span t-field="inv.name"/></td>
+                                    <td><span t-field="inv.ref"/></td>
+                                    <td class="text-right"><span t-field="inv.amount_total"/></td>
+                                </tr>
+                                <!-- PAYMENTS/REVERSALS -->
+                                <tr t-foreach="inv._get_reconciled_invoices_partials()" t-as="par">
+                                    <t t-set="amount" t-value="par[1]"/>
+                                    <t t-set="payment" t-value="par[2].move_id"/>
+                                    <td><span t-field="payment.date"/></td>
+                                    <td><span t-field="payment.name"/></td>
+                                    <td><span t-field="payment.ref"/></td>
+                                    <td class="text-right">-<span t-esc="amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></td>
+                                </tr>
+                                <!-- BALANCE -->
+                                <tr>
+                                    <td/>
+                                    <td><strong>Due Amount for <span t-field="inv.name"/></strong></td>
+                                    <td/>
+                                    <td class="text-right"><strong><span t-field="inv.amount_residual"/></strong></td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+                </t>
+            </div>
+        </t>
+        </t>
+
+        <t t-if="o.show_button_noumi == True">
+        <t t-call="fincera_sales_qutation_report.external_layout_boxed_fincera">
+            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+            <div class="page">
+                <h3><strong>Payment Receipt: <span t-field="o.name"/></strong></h3>
+                <div class="mb-4 mt-3">
+                    <div class="row">
+                        <div class="col-6" t-if="o.date">
+                            Payment Date: <span t-field="o.date"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6" t-if="o.partner_type">
+                            <t t-if="o.partner_type == 'customer'">
+                                <b> Received with thanks from :</b>
+                            </t>
+                            <t t-if="o.partner_type == 'supplier'">
+                                Vendor:
+                            </t><span t-field="o.partner_id"/>
+                        </div>
+
+                        <div class="col-6" t-if="o.partner_type">
+                            <t t-if="o.partner_type == 'customer'">
+                                <b>Address</b>
+                                <span t-field="o.partner_id.street"/>
+                                <br/>
+                                <b>Received by </b>
+                                <span t-field="o.create_uid"/>
+                            </t>
+
+                        </div>
+<!--                        <div class="col-6" t-if="o.partner_type">-->
+<!--                            <t t-if="o.partner_type == 'customer'">-->
+<!--                                <b>The sum of rupees:</b>-->
+
+<!--                                <span t-field="o.word_num"/>-->
+<!--                            </t>-->
+
+<!--                        </div>-->
+                        <div class="col-6" t-if="o.payment_method_id">
+                            Payment Method: <span t-field="o.payment_method_id.name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6" t-if="o.amount">
+                            Payment Amount: <span t-field="o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                        <br/>
+                            <b>The sum of rupees:</b>
+
+                                <span t-field="o.word_num"/>
+                         </div>
+                        <div class="col-6" t-if="o.payment_reference">
+                            Memo: <span t-field="o.payment_reference"/>
+                         </div>
+                    </div>
+                </div>
+                <t t-if="o.partner_type == 'customer'">
+                    <p>
+                        <b>NOTE:</b> Please check your account name on the receipt as our company will not be responsible if not reported at
+                        the same time. Any kind of bank charges will be debited to customer account.
+                    </p>
+                </t>
+                <t t-if="o.partner_type == 'customer'">
+                     <div>
+                         <b>Authorized Signature:</b>      ____________
+                     </div>
+                </t>
+                <t t-if="o.partner_type == 'customer'">
+                    <t t-set="a" t-value="0"></t>
+                    <t t-set="b" t-value="0"></t>
+                    <t t-set="c" t-value="0"></t>
+                    <t t-foreach="o.reconciled_invoice_ids" t-as="rec">
+                        <t t-set="a" t-value="a + (rec.amount_total)"></t>
+                    <t t-set="b" t-value="b + rec.amount_residual"></t>
+                    </t>
+                     <t t-set="c" t-value="a - b"></t>
+                    <center>
+
+                        <div class='table table-bordered md-0' style='border: 2px solid black;'>
+                            <b><span>Summary of Payment  :</span></b>
+                            <br/>
+                            <br/>
+                            <b>Total Quotation Amount:</b><t t-esc="a"/>
+                            <br></br>
+                            <b>Amount Received </b><t t-esc="c"/>
+                            <br/>
+                            <b>Balance Payment </b><t t-esc="b"/>
+
+                        </div>
+                    </center>
+                </t>
+                <t t-if="o.partner_type == 'supplier'">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th><span>Invoice Date</span></th>
+                            <th><span>Invoice Number</span></th>
+                            <th><span>Reference</span></th>
+                            <th class="text-right"><span>Amount</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="o.move_id._get_reconciled_invoices_partials()" t-as="rec">
+                            <!-- MOVE -->
+                            <t t-set="inv" t-value="rec[2].move_id"/>
+                            <t t-if="inv.move_type != 'entry'">
+                                <tr>
+                                    <td><span t-field="inv.invoice_date"/></td>
+                                    <td><span t-field="inv.name"/></td>
+                                    <td><span t-field="inv.ref"/></td>
+                                    <td class="text-right"><span t-field="inv.amount_total"/></td>
+                                </tr>
+                                <!-- PAYMENTS/REVERSALS -->
+                                <tr t-foreach="inv._get_reconciled_invoices_partials()" t-as="par">
+                                    <t t-set="amount" t-value="par[1]"/>
+                                    <t t-set="payment" t-value="par[2].move_id"/>
+                                    <td><span t-field="payment.date"/></td>
+                                    <td><span t-field="payment.name"/></td>
+                                    <td><span t-field="payment.ref"/></td>
+                                    <td class="text-right">-<span t-esc="amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></td>
+                                </tr>
+                                <!-- BALANCE -->
+                                <tr>
+                                    <td/>
+                                    <td><strong>Due Amount for <span t-field="inv.name"/></strong></td>
+                                    <td/>
+                                    <td class="text-right"><strong><span t-field="inv.amount_residual"/></strong></td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+                </t>
+            </div>
+        </t>
+        </t>
+    </template>
+
+</odoo>

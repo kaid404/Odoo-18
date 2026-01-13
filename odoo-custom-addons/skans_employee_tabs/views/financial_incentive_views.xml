@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+
+<!--        <record id="view_employee_form_custom_financial_incentive" model="ir.ui.view">-->
+<!--            <field name="name">Financial Incentives Inherit</field>-->
+<!--            <field name="model">hr.employee</field>-->
+<!--            <field name="inherit_id" ref="hr.view_employee_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//page[@name='hr_settings']" position="after">-->
+<!--                    <page string="Financial Incentives" name="financial_incentives">-->
+
+<!--                        <group string="Increments">-->
+<!--                            <field name="increment_ids" readonly="1">-->
+<!--                                <list>-->
+<!--                                    <field name="employee_id"/>-->
+<!--                                    <field name="date"/>-->
+<!--                                    <field name="wage" optional="hide"/>-->
+<!--                                    <field name="amount"/>-->
+<!--                                </list>-->
+<!--                            </field>-->
+<!--                        </group>-->
+
+<!--                        <group string="Bonuses">-->
+<!--                            <field name="bonus_line_ids" readonly="1">-->
+<!--                                <list>-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="bonus" string="Amount"/>-->
+<!--                                </list>-->
+<!--                            </field>-->
+<!--                        </group>-->
+
+
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

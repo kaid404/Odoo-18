@@ -1,0 +1,65 @@
+<odoo>
+    <data>
+        <template id="grade_summary_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <h2>Grade Summary Report</h2>
+                        <table class="table table-bordered" style="width: 100%; text-align: center;">
+                            <thead>
+                                <tr>
+                                    <th>Grade ↓ / Subject →</th>
+                                    <t t-foreach="subject_names" t-as="subject">
+                                        <th>
+                                            <t t-esc="subject"/>
+                                        </th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="grade_levels" t-as="grade">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="grade"/>
+                                        </td>
+                                        <t t-foreach="subject_names" t-as="subject_name">
+                                            <td>
+                                                <t t-esc="grade_data[grade].get(subject_name, 0)"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+
+        <record id="paperformat_grade_summary_report" model="report.paperformat">
+            <field name="name">Grade Summary Paper Format</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">8</field>
+            <field name="margin_right">8</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_grade_summary_report" model="ir.actions.report">
+            <field name="name">Grade Summary Report</field>
+            <field name="model">grade.summary.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_file">grade_summary_report.grade_summary_report_template</field>
+            <field name="report_name">grade_summary_report.grade_summary_report_template</field>
+            <field name="paperformat_id" ref="paperformat_grade_summary_report"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

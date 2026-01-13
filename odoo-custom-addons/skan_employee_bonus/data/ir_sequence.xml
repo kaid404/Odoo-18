@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_employee_bonus" model="ir.sequence">
+            <field name="name">Employee Bonus Sequence</field>
+            <field name="code">employee.bonus</field>
+            <field name="prefix">BON-</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</odoo>

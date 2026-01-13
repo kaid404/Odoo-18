@@ -1,0 +1,158 @@
+<odoo>
+    <data>
+        <record id="view_employee_education_info" model="ir.ui.view">
+            <field name="name">hr.employee.education.info</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='hr_settings']" position="after">
+                    <page string="Academic Information" name="academic_info">
+
+
+                        <group string="Academic Information">
+                            <field name="education_id" widget="form" string="Academic Information Page"
+                                   context="{'form_view_ref': 'employee_details.edu_info_form'}"
+                                   options="{'no_create_edit': False, 'no_create': False}"/>
+                        </group>
+
+
+                        <group string="Verifying Body Details">
+                            <field name="verify_body_id" widget="form"
+                                   context="{'form_view_ref': 'employee_details.verify_info_form'}"
+                                   options="{'no_create_edit': False, 'no_create': False}"/>
+                        </group>
+
+
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="edu_info_form" model="ir.ui.view">
+            <field name="name">employee.education.info.form</field>
+            <field name="model">employee.educations</field>
+            <field name="arch" type="xml">
+                <form string="Academic Information Page">
+                    <group>
+                        <field name="emp_edu" widget="many2one_tags"/>
+                        <field name="dgr_name"/>
+                        <field name="dg_duration"/>
+                        <field name="specialization"/>
+                        <field name="university"/>
+                        <field name="edu_country"/>
+                    </group>
+
+                    <group>
+                        <field name="t_marks"/>
+                        <field name="ob_marks"/>
+                        <field name="dgr_status"/>
+                        <field name="dgr_from"/>
+                        <field name="dgr_to"/>
+                        <field name="dgr_verify"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="verify_info_form" model="ir.ui.view">
+            <field name="name">employee.verification.info.form</field>
+            <field name="model">hr.verify.body</field>
+            <field name="arch" type="xml">
+                <form string="Verification">
+                    <group>
+                        <field name="verify_by" domain="[('job_id.name', 'ilike', 'manager')]"/>
+                        <field name="verify_authority"/>
+                        <field name="v_date"/>
+                        <field name="remarks"/>
+                        <field name="dgr_cate"/>
+                        <field name="eq_degree"/>
+                        <field name="j_type"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="verify_info_list" model="ir.ui.view">
+            <field name="name">employee.verification.info.list</field>
+            <field name="model">hr.verify.body</field>
+            <field name="arch" type="xml">
+                <list string="Verification">
+                        <field name="verify_by" />
+                        <field name="verify_authority"/>
+                        <field name="v_date"/>
+                        <field name="remarks"/>
+                        <field name="dgr_cate"/>
+                        <field name="eq_degree"/>
+                        <field name="j_type"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="edu_info_list" model="ir.ui.view">
+            <field name="name">employee.education.info.list</field>
+            <field name="model">employee.educations</field>
+            <field name="arch" type="xml">
+                <list string="Qualification">
+
+                        <field name="emp_edu"/>
+                        <field name="dgr_name"/>
+                        <field name="dg_duration"/>
+                        <field name="specialization"/>
+                        <field name="university"/>
+                        <field name="edu_country"/>
+                        <field name="t_marks"/>
+                        <field name="ob_marks"/>
+<!--                        <field name="dgr_status"/>-->
+<!--                        <field name="dgr_from"/>-->
+<!--                        <field name="dgr_to"/>-->
+                        <field name="dgr_verify"/>
+
+                </list>
+            </field>
+        </record>
+
+
+        <!--        code for qualification and there form and tree view -->
+
+        <record id="view_qualification_tree" model="ir.ui.view">
+            <field name="name">employee.children.info.tree</field>
+            <field name="model">hr.qualification</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="degree_name"/>
+                    <field name="degree_duration"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_qualification_form" model="ir.ui.view">
+            <field name="name">employee.children.info.form</field>
+            <field name="model">hr.qualification</field>
+            <field name="arch" type="xml">
+                <form string="Qualification">
+                    <group>
+                        <field name="degree_name"/>
+                        <field name="degree_duration"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_qualification_info" model="ir.actions.act_window">
+            <field name="name">Qualification</field>
+            <field name="res_model">hr.qualification</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create the qualification record for employees.</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_children_info"
+                  name="Qualification"
+                  parent="hr.menu_human_resources_configuration"
+                  action="action_qualification_info"
+                  sequence="2"/>
+
+
+    </data>
+</odoo>

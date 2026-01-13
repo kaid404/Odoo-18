@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+
+        <!-- Employee Daily Attendance Report -->
+        <record model="ir.ui.view" id="date_wise_daily_att_report_form">
+            <field name="name">Daily Attendance Report Employee</field>
+            <field name="model">daily.attendance.report.employee</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="to_date"/>
+                            <field name="from_date"/>
+                        </group>
+                        <group>
+                            <field name="department"/>
+                            <field name="shift"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print Daily Attendance" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="date_wise_attendance_action_window">
+            <field name="name">Daily Employee Attendance</field>
+            <field name="res_model">daily.attendance.report.employee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="date_wise_daily_att_report_form"/>
+
+        </record>
+
+
+        <menuitem id="menu_hr_attendance_daily_report"
+                  name="Date Wise Attendance Report"
+                  parent="hr_attendance.menu_hr_attendance_reporting"
+                  action="date_wise_attendance_action_window"
+                  sequence="100"/>
+    </data>
+</odoo>

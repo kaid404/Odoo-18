@@ -1,0 +1,163 @@
+<odoo>
+
+    <template id="report_nomi_quotation_template">
+        <t t-call="fincera_sales_qutation_report.external_layout_boxed_fincera">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+
+            <!-- Order Info -->
+            <div class="row mb-3">
+                <div class="col-12" style="opacity: .9;">
+                    <h3>Order #
+                        <span t-field="doc.name"/>
+                    </h3>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <p>
+                        <strong>Order Date:</strong>
+                        <br/>
+                        <span t-field="doc.date_order"/>
+                    </p>
+                </div>
+                <div class="col-6">
+                    <p>
+                        <strong>Salesperson:</strong>
+                        <br/>
+                        <span t-field="doc.user_id.name"/>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Order Lines Table -->
+            <table class="table table-sm o_main_table" style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="font-weight: 600; padding: 5px; border-bottom: 2px solid black;">Description</th>
+                        <th class="text-right" style="font-weight: 600; padding: 5px; border-bottom: 2px solid black;">
+                            Quantity
+                        </th>
+                        <th class="text-right" style="font-weight: 600; padding: 5px; border-bottom: 2px solid black;">
+                            Cost
+                        </th>
+                        <th class="text-right" style="font-weight: 600; padding: 5px; border-bottom: 2px solid black;">
+                            Cost Subtotal
+                        </th>
+                        <th class="text-right" style="font-weight: 600; padding: 5px; border-bottom: 2px solid black;">
+                            Unit Price
+                        </th>
+                        <th class="text-right" style="font-weight: 600; padding: 5px; border-bottom: 2px solid black;">
+                            Taxes
+                        </th>
+                        <th class="text-right" style="font-weight: 600; padding: 5px; border-bottom: 2px solid black;">
+                            Amount
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="doc.order_line" t-as="l">
+                        <td style="border-top: none;">
+                            <span t-field="l.name"/>
+                        </td>
+                        <td class="text-right" style="border-top: none;">
+                            <span t-field="l.product_uom_qty"/>
+                            <span t-field="l.product_uom"/>
+                        </td>
+                        <td class="text-right" style="border-top: none;">
+                            <t t-esc="'{:,.2f}'.format(l.standard_cost2)"/>
+                        </td>
+                        <td class="text-right" style="border-top: none;">
+                            <t t-esc="'{:,.2f}'.format(l.cost_order_line)"/>
+                        </td>
+                        <td class="text-right" style="border-top: none;">
+                            <span t-field="l.price_unit"/>
+                        </td>
+                        <td class="text-right" style="border-top: none;">
+                            <span t-esc="', '.join([x.description or x.name for x in l.tax_id])"/>
+                        </td>
+                        <td class="text-right" style="border-top: none;">
+                            <span t-field="l.price_total"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Totals & Terms Section -->
+            <div class="row mt32">
+                <div class="col-6">
+                </div>
+                <div class="col-6 text-right">
+                    <table class="table table-sm">
+                        <tr>
+                            <td align="right">
+                                <strong>Cost Subtotal:</strong>
+                            </td>
+                            <td align="right">
+                                <t t-set="cost_subtotal"
+                                   t-value="sum(line.cost_order_line for line in doc.order_line)"/>
+                                <t t-esc="'{:,.2f}'.format(cost_subtotal)"/>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right" style="background-color: #000; color: white;">
+                                <strong>Total:</strong>
+                            </td>
+                            <td align="right" style="background-color: #000; color: white;">
+                                <span t-field="doc.amount_total"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </t>
+    </template>
+
+    <template id="report_nomi_quotation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sale_order_report_with_cost.report_nomi_quotation_template" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+
+    <!--    <record id="action_report_nomi_quotation" model="ir.actions.report">-->
+    <!--        <field name="name">NOMI-SALE Quotation With Cost</field>-->
+    <!--        <field name="model">sale.order</field>-->
+    <!--        <field name="report_type">qweb-pdf</field>-->
+    <!--        <field name="report_name">sale_order_report_with_cost.report_nomi_quotation</field>-->
+    <!--        <field name="report_file">sale_order_report_with_cost.report_nomi_quotation</field>-->
+    <!--        <field name="print_report_name">-->
+    <!--            (object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)-->
+    <!--        </field>-->
+    <!--        <field name="binding_model_id" ref="sale.model_sale_order"/>-->
+    <!--        <field name="binding_type">report</field>-->
+    <!--    </record>-->
+    <record id="view_order_form_inherit_print_button" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.nomi.print.button</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_print_nomi_quotation" string="NUOMI-SALE Quotation With Cost" type="object"
+                        class="btn-primary" icon="fa-print" invisible="not show_button_noumi"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--    <report id="action_report_nomi_quotation" model="sale.order" string="NUOMI Quotation With Cost" report_type="qweb-pdf" name="sale_order_report_with_cost.report_nomi_quotation" file="sale_order_report_with_cost.report_nomi_quotation" print_report_name="(object.name or 'Quotation')"/>-->
+
+    <record id="action_report_nomi_quotation" model="ir.actions.report">
+        <field name="name">NUOMI Quotation With Cost</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sale_order_report_with_cost.report_nomi_quotation</field>
+        <field name="report_file">sale_order_report_with_cost.report_nomi_quotation</field>
+        <field name="print_report_name">(object.name or 'Quotation')</field>
+        <!--        <field name="binding_model_id" ref="model_sale_order"/>-->
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

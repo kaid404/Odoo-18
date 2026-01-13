@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_exit_form_template">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <style>
+                    table{width:100%;}
+                    table,th,tr,thead,td{border: 1px solid black;}
+                    th,td{padding:3px;}
+                </style>
+                <div class="header">
+                    <div class="row">
+                        <div class="col-1" align="left">
+                            <!--                                <a t-att-href="request.env['ir.config_parameter'].sudo().get_param('web.base.url')"-->
+                            <!--                                   target="_blank">-->
+                            <!--                                    <img t-att-src="request.env['ir.config_parameter'].sudo().get_param('web.base.url') + '/skans_interview_evaluation_form/static/src/skans_icon.jpg'"-->
+                            <!--                                         style="width: 100%; max-width: 800px; display: block; margin: 0 auto;"/>-->
+                            <!--                                </a>-->
+                            <!--                            <img src="/skans_interview_evaluation_form/static/src/img/skans_icon.jpg" alt="logo 2"-->
+                            <!--                                 width="55px" height="55px"/>-->
+                            <!--                            <t t-if="doc.company_logo">-->
+                            <!--                                <img t-att-src="'data:image/png;base64,%s' % doc.company_logo"-->
+                            <!--                                     style="height:150px;width:150px"/>-->
+                            <!--                            </t>-->
+                            <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
+                                 style="max-height: 90px;" alt="Logo"/>
+
+                        </div>
+                        <div class="col-7" align="left" style="margin-left:6px; padding:0;padding-top:4px;">
+                            <strong style="font-size: 15pt; padding:0">
+                                <t t-esc="doc.company_id.name"/>
+                            </strong>
+                        </div>
+                        <div class="col-4" style="font-size: 8pt; color: #4F4F4F; margin-top:4px;">
+                            <div class="row">
+                                <div class="col-6" style="text-align:right; padding-right:7px;">
+                                    <strong>Created By:</strong>
+                                </div>
+                                <div class="col-6" style="text-align:left;">
+                                    <strong>
+                                        <t t-esc="doc.create_uid.name"/>
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6" style="text-align:right; padding-right:5px;">
+                                    <strong>Created On:</strong>
+                                </div>
+                                <div class="col-6" style="text-align:left">
+                                    <strong t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%B-%Y %H:%M')"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 style="text-align: center; font-size: 15pt">
+                                <strong>Interview Exit Form
+                                </strong>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="page">
+                    <table class="table table-sm"
+                           style="width: 100%; border-collapse: collapse; margin-top:20px;font-size: 18px"
+                           border="1">
+                        <tr>
+                            <td>
+                                <strong>Employee Number:</strong>
+                                <t t-esc="doc.interview_emp.barcode"/>
+                            </td>
+                            <td colspan="2">
+                                <strong>Name:</strong>
+                                <t t-esc="doc.interview_emp.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Date Of Resigning:</strong>
+                                <t t-esc="doc.interview_emp_resign_date"/>
+                            </td>
+
+                            <td colspan="2">
+                                <strong>Designation:</strong>
+                                <t t-esc="doc.interview_emp_designation"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Head Of School:</strong>
+                                <t t-esc="doc.interview_emp_school_head"/>
+                            </td>
+                            <td colspan="2">
+                                <strong>Name Of School:</strong>
+                                <t t-esc="doc.interview_emp_school_name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <strong>What is your main reason for leaving the company:</strong>
+                                <t t-esc="doc.interview_main_reason_text"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span t-if="doc.interview_salary_package">☑</span>
+                                <span t-if="not doc.interview_salary_package">☐</span>
+                                <span>Salary Package</span>
+                            </td>
+                            <td>
+                                <span t-if="doc.interview_benefit_plan">☑</span>
+                                <span t-if="not doc.interview_benefit_plan">☐</span>
+                                <span>Benefit Plan</span>
+                            </td>
+                            <td>
+                                <span t-if="doc.interview_work_load">☑</span>
+                                <span t-if="not doc.interview_work_load">☐</span>
+                                <span>Work Load</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span t-if="doc.interview_further_studies">☑</span>
+                                <span t-if="not doc.interview_further_studies">☐</span>
+                                <span>Further Studies</span>
+                            </td>
+                            <td>
+                                <span t-if="doc.interview_better_opportunity">☑</span>
+                                <span t-if="not doc.interview_better_opportunity">☐</span>
+                                <span>Better Opportunity</span>
+                            </td>
+                            <td>
+                                <span t-if="doc.interview_lack_fairness_promotion">☑</span>
+                                <span t-if="not doc.interview_lack_fairness_promotion">☐</span>
+                                <span>Lack Of Fairness In Promotion</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span t-if="doc.interview_org_culture">☑</span>
+                                <span t-if="not doc.interview_org_culture">☐</span>
+                                <span>Culture of the Organization</span>
+                            </td>
+                            <td>
+                                <span t-if="doc.interview_lack_growth">☑</span>
+                                <span t-if="not doc.interview_lack_growth">☐</span>
+                                <span>Lack Of Growth</span>
+                            </td>
+                            <td>
+                                <span t-if="doc.interview_training_development">☑</span>
+                                <span t-if="not doc.interview_training_development">☐</span>
+                                <span>Training and Development</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span t-if="doc.interview_conflict_manager_employee">☑</span>
+                                <span t-if="not doc.interview_conflict_manager_employee">☐</span>
+                                <span>Conflict with Manager/Employee</span>
+                            </td>
+                            <td>
+                                <span t-if="doc.interview_redundant_termination">☑</span>
+                                <span t-if="not doc.interview_redundant_termination">☐</span>
+                                <span>Redundant / Termination</span>
+                            </td>
+                            <td>
+                                <span t-if="doc.interview_other_reason">☑</span>
+                                <span t-if="not doc.interview_other_reason">☐</span>
+                                <span>Other</span>
+                                <t t-esc="doc.interview_other_reason_text"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-sm" style="border-collapse: collapse;font-size: 15px" border="1">
+                        <thead>
+                            <tr>
+                                <th colspan="5">
+                                    <strong>How did you feel about the following</strong>
+                                </th>
+                                <th style="text-align: center;">
+                                    <strong>Very satisfied</strong>
+                                </th>
+                                <th style="text-align: center;">
+                                    <strong>slightly Satisfied</strong>
+                                </th>
+                                <th style="text-align: center;">
+                                    <strong>Neutral</strong>
+                                </th>
+                                <th style="text-align: center;">
+                                    <strong>Slightly Dissatisfied</strong>
+                                </th>
+                                <th style="text-align: center;">
+                                    <strong>Very Dissatisfied</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.line_ids" t-as="line">
+                                <tr>
+                                    <td colspan="5">
+                                        <span>
+                                            <t t-esc="line.criteria"/>
+                                        </span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span t-if="line.rating_5">☑</span>
+                                        <span t-if="not line.rating_5">☐</span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span t-if="line.rating_4">☑</span>
+                                        <span t-if="not line.rating_4">☐</span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span t-if="line.rating_3">☑</span>
+                                        <span t-if="not line.rating_3">☐</span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span t-if="line.rating_2">☑</span>
+                                        <span t-if="not line.rating_2">☐</span>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span t-if="line.rating_1">☑</span>
+                                        <span t-if="not line.rating_1">☐</span>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="10">
+                                    <strong>Suggestions for Improvement:</strong>
+                                    <t t-esc="doc.interview_suggestion_text"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    <strong>Would you consider returning to SKANS system?</strong>
+                                </td>
+                                <td colspan="2">
+                                    <span t-if="doc.interview_return_yes">☑</span>
+                                    <span t-if="not doc.interview_return_yes">☐</span>
+                                    <strong>Yes</strong>
+                                </td>
+                                <td>
+                                    <span t-if="doc.interview_return_no">☑</span>
+                                    <span t-if="not doc.interview_return_no">☐</span>
+                                    <strong>No</strong>
+                                </td>
+                                <td>
+                                    <span t-if="doc.interview_return_maybe">☑</span>
+                                    <span t-if="not doc.interview_return_maybe">☐</span>
+                                    <strong>Maybe</strong>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="10">
+                                    <br/>
+                                    <strong>Employee Signature:_______________________________________</strong>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+    <record id="action_report_exit_form" model="ir.actions.report">
+        <field name="name">Exit Form Print</field>
+        <field name="model">exit.interview.form</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">skans_interview_evaluation_form.report_exit_form_template</field>
+        <field name="report_file">skans_interview_evaluation_form.report_exit_form_template</field>
+        <field name="binding_model_id" ref="model_exit_interview_form"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="skans_interview_evaluation_form.interview_exit_paperformat"/>
+    </record>
+
+
+</odoo>

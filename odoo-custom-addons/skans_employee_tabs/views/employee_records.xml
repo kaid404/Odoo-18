@@ -1,0 +1,105 @@
+<odoo>
+    <data>
+
+        <record id="form_view_action_type" model="ir.ui.view">
+            <field name="name">form_view_action_type</field>
+            <field name="model">action.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="action_type_name"/>
+                        <field name="action_type_status"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="list_view_action_type" model="ir.ui.view">
+            <field name="name">list_view_action_type</field>
+            <field name="model">action.type</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="action_type_name"/>
+                    <field name="action_type_status"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_employee_action_type" model="ir.actions.act_window">
+            <field name="name">Action Type</field>
+            <field name="res_model">action.type</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create Action Type</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_employee_action_type"
+                  name="Action type"
+                  parent="hr.menu_human_resources_configuration"
+                  action="action_employee_action_type"
+                  sequence="10"/>
+
+
+        <record id="skans_form_view_employee_records" model="ir.ui.view">
+            <field name="name">form_view_employee_records</field>
+            <field name="model">emp.records</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="record_oo_num"/>
+                        <field name="record_action_name"/>
+                        <field name="record_action_status"/>
+                        <field name="record_effective_from"/>
+                        <field name="record_effective_to"/>
+                        <field name="record_placed_at_sch"/>
+                        <field name="record_placed_at_clg"/>
+                        <field name="record_oo_date"/>
+                        <field name="record_salary_amount"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="list_view_employee_records" model="ir.ui.view">
+            <field name="name">list_view_employee_records</field>
+            <field name="model">emp.records</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="record_oo_num"/>
+                    <field name="record_action_name"/>
+                    <field name="record_action_status"/>
+                    <field name="record_effective_from"/>
+                    <field name="record_effective_to"/>
+                    <field name="record_placed_at_sch"/>
+                    <field name="record_placed_at_clg"/>
+                    <field name="record_oo_date"/>
+                    <field name="record_salary_amount"/>
+                </list>
+            </field>
+        </record>
+
+<!--        <record id="view_employee_form_records" model="ir.ui.view">-->
+<!--            <field name="name">Employee Records Inherit</field>-->
+<!--            <field name="model">hr.employee</field>-->
+<!--            <field name="inherit_id" ref="hr.view_employee_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//page[@name='hr_settings']" position="after">-->
+<!--                    <page string="Employee Records" name="employee_records">-->
+
+<!--                        <group>-->
+<!--                            <field name="employee_records_ids" string=" "-->
+<!--                                   widget="form"-->
+<!--                                   context="{'form_view_ref': 'skans_additional_tabs.form_view_employee_records'}"-->
+<!--                                   options="{'no_create': False, 'no_open': True}"/>-->
+<!--                        </group>-->
+
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

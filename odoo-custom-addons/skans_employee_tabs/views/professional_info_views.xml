@@ -1,0 +1,102 @@
+<odoo>
+    <data>
+
+        <record id="form_view_professional_info" model="ir.ui.view">
+            <field name="name">form_view_professional_info</field>
+            <field name="model">professional.info</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="emp_is_military_course"/>
+                            <field name="emp_name_in_personal_qualification"/>
+                            <field name="emp_certification_status"/>
+                            <field name="emp_institute_name"/>
+                        </group>
+                        <group>
+                            <field name="emp_country_name"/>
+                            <field name="emp_from_date"/>
+                            <field name="emp_to_date"/>
+                            <field name="emp_remarks_field"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="list_view_professional_info" model="ir.ui.view">
+            <field name="name">list_view_professional_info</field>
+            <field name="model">professional.info</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="emp_is_military_course"/>
+                    <field name="emp_name_in_personal_qualification"/>
+                    <field name="emp_certification_status"/>
+                    <field name="emp_institute_name"/>
+                    <field name="emp_country_name"/>
+                    <field name="emp_from_date"/>
+                    <field name="emp_to_date"/>
+                    <field name="emp_remarks_field"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="form_view_verification_info" model="ir.ui.view">
+            <field name="name">form_view_verification_info</field>
+            <field name="model">body.verification.details</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="emp_body_verification_status"/>
+                        <field name="emp_body_verification_date"/>
+                        <field name="emp_body_verification_remarks"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="list_view_verification_info" model="ir.ui.view">
+            <field name="name">list_view_verification_info</field>
+            <field name="model">body.verification.details</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="emp_body_verification_status"/>
+                    <field name="emp_body_verification_date"/>
+                    <field name="emp_body_verification_remarks"/>
+                </list>
+            </field>
+        </record>
+
+
+<!--        <record id="view_employee_form_custom_professional_info" model="ir.ui.view">-->
+<!--            <field name="name">Professional Info Inherit</field>-->
+<!--            <field name="model">hr.employee</field>-->
+<!--            <field name="inherit_id" ref="hr.view_employee_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//page[@name='hr_settings']" position="after">-->
+<!--                    <page string="Professional Qualification" name="professional_qualification">-->
+
+<!--                        <group string="Certification">-->
+<!--                            <field name="professional_details_ids"-->
+<!--                                   string="Professional Qualification"-->
+<!--                                   widget="form"-->
+<!--                                   context="{'form_view_ref': 'personal_details_management.form_view_professional_info'}"-->
+<!--                                   options="{'no_create': False, 'no_open': True}"/>-->
+<!--                        </group>-->
+
+<!--                        <group string="Body Verification">-->
+<!--                            <field name="verification_details_ids"-->
+<!--                                   string="Body Verification"-->
+<!--                                   widget="form"-->
+<!--                                   context="{'form_view_ref': 'personal_details_management.form_view_verification_info'}"-->
+<!--                                   options="{'no_create': False, 'no_open': True}"/>-->
+<!--                        </group>-->
+
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

@@ -1,0 +1,39 @@
+<odoo>
+
+    <record id="view_op_result_student" model="ir.ui.view">
+        <field name="name">op_result_student</field>
+        <field name="model">op.result.student</field>
+        <field name="arch" type="xml">
+            <form string="Reference">
+                <group>
+                    <group>
+                        <field name="class_id"/>
+                        <field name="section_id"/>
+                        <field name="campus_id"/>
+                    </group>
+                    <group>
+                        <field name="year_id"/>
+                        <field name="exam_type"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Generate Report" type="object" name="print_result_report"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="student_result_action" model="ir.actions.act_window">
+        <field name="name">Get Student Report</field>
+        <field name="res_model">op.result.student</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_op_result_student" name="Junior Result Report" action="student_result_action"
+              parent="senior_result_report.results_reporting_root"/>
+
+
+</odoo>

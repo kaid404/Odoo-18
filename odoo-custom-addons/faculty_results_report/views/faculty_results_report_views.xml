@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_faculty_results_report_form" model="ir.ui.view">
+        <field name="name">faculty.results.report.form</field>
+        <field name="model">faculty.results.report</field>
+        <field name="arch" type="xml">
+            <form string="Faculty Results Report">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="faculty_id"/>
+                            <field name="year_id"/>
+                        </group>
+                        <group>
+                            <field name="exam_type_id"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_faculty_report" type="object" string="Print Report" class="btn-primary"/>
+                        <button string="Close" class="btn-default" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_faculty_results_report" model="ir.actions.act_window">
+        <field name="name">Faculty Results Reports</field>
+        <field name="res_model">faculty.results.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_faculty_results_reports" name="Faculty Subjects Results Summary"
+              parent="senior_result_report.results_reporting_root" action="action_faculty_results_report"/>
+</odoo>

@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+        <record model="ir.ui.view" id="skans_exam_view_form">
+            <field name="name">SKANS Exams Report</field>
+            <field name="model">skans.exam.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="wizard_session"/>
+                            <field name="wizard_start_date"/>
+                        </group>
+                        <group>
+                            <field name="wizard_class"/>
+                            <field name="wizard_end_date"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Generate Report" type="object" name="generate_exam_results_report"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="skans_exam_report_action">
+            <field name="name">SKANS Exams Report Action</field>
+            <field name="res_model">skans.exam.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem name="Reporting" id="exams_reporting_root" parent="gxs_exam.menu_op_exam_root"/>
+        <menuitem name="Exam Report" id="skans_exam_report" parent="exams_reporting_root"
+                  action="skans_exam_report_action"/>
+    </data>
+</odoo>

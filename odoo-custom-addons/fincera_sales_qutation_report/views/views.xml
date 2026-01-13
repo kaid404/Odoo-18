@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="external_layout_boxed_fincera">
+
+        <t t-set="company" t-value="env['res.company'].search([('id','=',1)])"/>
+        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style" style="border-bottom: 2px solid #ccc; padding-bottom: 10px;">
+            <div class="o_boxed_header">
+                <div class="row mb8">
+                    <div class="col-8">
+                        <img t-att-src="'/fincera_sales_qutation_report/static/src/img/NUOMI_LOGO.png'" style="max-height: 50px;" alt="logo"/>
+                    </div>
+                    <div class="col-4 text-right mb4">
+<!--                        <h4 class="mt0" t-field="company.report_header"/>-->
+                        <div name="company_address" class="float-right mb4" align="right">
+                            <ul class="list-unstyled">
+                                <li>
+                                    Nuomi Pakistan
+                                </li>
+                                <li>
+                                    Address 135 CCA Phase IV, DHA
+                                </li>
+                                <li>
+                                    Lahore, Pakistan
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div t-attf-class="article o_report_layout_boxed o_company_#{company.id}_layout {{  'o_layout_background' if company.layout_background in ['Geometric', 'Custom']  else  '' }}" t-attf-style="background-image: url({{ 'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/bg_background_template.jpg' if company.layout_background == 'Geometric' else ''}});" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <div class="pt-5">
+                <!-- This div ensures that the address is not cropped by the header. -->
+                <t t-call="web.address_layout"/>
+            </div>
+            <t t-out="0"/>
+        </div>
+
+        <div t-attf-class="footer o_boxed_footer o_company_#{company.id}_layout">
+            <div class="text-center">
+                <div t-field="company.report_footer"/>
+                <div t-if="report_type == 'pdf'">
+                    Page:
+                    <span class="page"/>
+                    /
+                    <span class="topage"/>
+                </div>
+                <div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">
+                    <span t-field="o.name"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!--    <template id="custom_report_external_layout" inherit_id="web.external_layout_boxed">-->
+    <!--        <xpath expr="//img[1]" position="replace">-->
+    <!--            <img t-att-src="'/fincera_sales_qutation_report/static/src/img/NUOMI_LOGO.png'" style="max-height: 50px;"/>-->
+    <!--        </xpath>-->
+    <!--    </template>-->
+
+
+    <record id="view_sale_order_report_inheritsss" model="ir.ui.view">
+        <field name="name">fincera.sale.order.report</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="show_button_noumi"/>
+            </xpath>
+            <xpath expr="//button[@name='action_draft']" position="after">
+                <field name="show_button_noumi" invisible="1"/>
+                <button name="action_sale_order_print" type="object" string="NUOMI-Sale Quotation Print" class="oe_highlight" invisible="not show_button_noumi"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_account_payment_report_inheritsss" model="ir.ui.view">
+        <field name="name">fincera.account.payment.report</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='memo']" position="after">
+                <field name="show_button_noumi"/>
+            </xpath>
+            <xpath expr="//button[@name='unmark_as_sent']" position="after">
+                <field name="show_button_noumi" invisible="1"/>
+                <button name="action_account_payment_print" type="object" string="NUOMI-Sale Payment Print" class="oe_highlight" invisible="not show_button_noumi"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

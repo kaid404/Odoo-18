@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+        <record id="view_vendor_bill_custom_approval_v18" model="ir.ui.view">
+            <field name="name">account.move.vendor.bill.approvals.v18</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='action_post']" position="before">
+
+                    <button name="button_department_approve" type="object" string="Department Approval"
+                            class="btn-primary"
+                            groups="skans_po_and_vendor_approval.department_approval"
+                            invisible="not show_department_button"/>
+
+                    <button name="button_audit_approve" type="object" string="Audit Approval"
+                            class="btn-primary"
+                            groups="skans_po_and_vendor_approval.audit_approval"
+                            invisible="not show_audit_button"/>
+
+                    <button name="button_finance_approve" type="object" string="Finance Approval"
+                            class="btn-primary"
+                            groups="account.group_account_invoice"
+                            invisible="not show_finance_button"/>
+                </xpath>
+
+                <xpath expr="//button[@class='oe_highlight'][2]" position="replace">
+                    <button name="action_post" string="Finance Approval" class="oe_highlight"
+                            type="object"
+                            groups="account.group_account_invoice" data-hotkey="q"
+                            context="{'validate_analytic': True, 'disable_abnormal_invoice_detection': False}"
+                            invisible="move_type == 'entry' or display_inactive_currency_warning or (state != 'audit' or state == 'draft')"/>
+                </xpath>
+
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,department,audit,finance,posted"/>
+                </xpath>
+
+
+            </field>
+        </record>
+    </data>
+</odoo>

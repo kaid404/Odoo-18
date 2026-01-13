@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+
+        <!--        <record id="hr_leave_type_hajj_umrah" model="hr.leave.type">-->
+        <!--            <field name="name"></field>-->
+        <!--            <field name="allocation_type">fixed</field>-->
+        <!--            <field name="requires_allocation">True</field>-->
+        <!--            <field name="active">True</field>-->
+        <!--            <field name="limit">False</field>-->
+        <!--        </record>-->
+
+<!--        <record id="button_inherit00" model="ir.ui.view">-->
+<!--            <field name="name">allocation.button.inherit</field>-->
+<!--            <field name="model">hr.leave.allocation</field>-->
+<!--            <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form_manager"/>-->
+<!--            <field name="arch" type="xml">-->
+
+<!--                <xpath expr="//button[1]" position="after">-->
+<!--                    <button name="hajj_umrah_leave_allocation" string="Check" type="object" class="btn-secondary"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

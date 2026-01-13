@@ -1,0 +1,16 @@
+<odoo>
+  <data>
+
+    <record id="inherit_teacher_unique_code_field" model="ir.ui.view">
+            <field name="name">Teacher Unique Code Field Inherit</field>
+            <field name="model">op.faculty</field>
+            <field name="inherit_id" ref="gxs_core.view_op_faculty_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='emergency_contact']" position="after">
+                  <field name="teacher_unique_code"/>
+                </xpath>
+            </field>
+        </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="leave_register_report_form">
+            <field name="name">Leave Register Report</field>
+            <field name="model">leave.register.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="month"/>
+                            <field name="year"/>
+                        </group>
+                        <group>
+                            <field name="filter_by"/>
+                            <field name="company_id" invisible="filter_by != 'company'"/>
+                            <field name="employee_id" widget="many2many_avatar_user"
+                                   invisible="filter_by != 'employees'" options="{'no_create': True}"/>
+                            <field name="department_id" widget="many2many_tags" invisible="filter_by != 'departments'"
+                                   options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print Register" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="leave_register_report_action">
+            <field name="name">Leave Register Report Action</field>
+            <field name="res_model">leave.register.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_leave_register_report"
+                  name="Leave Register Report"
+                  parent="hr_holidays.menu_hr_holidays_report"
+                  action="leave_register_report_action"
+        />
+
+    </data>
+</odoo>

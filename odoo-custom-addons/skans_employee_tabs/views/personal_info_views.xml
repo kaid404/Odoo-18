@@ -1,0 +1,187 @@
+<odoo>
+    <data>
+        <record id="view_employee_form_custom_private_info" model="ir.ui.view">
+            <field name="name">hr.employee.form.private.info.rename</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[@string='Private Information']" position="attributes">
+                    <attribute name="string">Personal Profile Management</attribute>
+                </xpath>
+
+                <!--                <xpath expr="//page[3]" position="attributes">-->
+                <!--                    <attribute name="string">Personal Profile Management</attribute>-->
+                <!--                </xpath>-->
+
+                <xpath expr="//page[@string='Personal Profile Management']/group[1]/group[2]" position="attributes">
+                    <attribute name="string">Personal Information</attribute>
+                </xpath>
+
+                <!--                <xpath expr="//page[3]/group[1]/group[2]" position="attributes">-->
+                <!--                    <attribute name="string">Personal Information</attribute>-->
+                <!--                </xpath>-->
+
+                <xpath expr="//page[@string='Personal Profile Management']/group[1]/group[2]/field[@name='ssnid']"
+                       position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <!--                <xpath expr="//page[3]/group[1]/group[2]/field[@name='ssnid']" position="attributes">-->
+                <!--                    <attribute name="invisible">True</attribute>-->
+                <!--                </xpath>-->
+
+                <xpath expr="//page[@string='Personal Profile Management']/group[1]/group[2]/field[@name='passport_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="//page[@string='Personal Profile Management']/group[1]/group[2]/field[@name='country_of_birth']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='identification_id']" position="replace"/>
+                <xpath expr="//field[@name='country_id']" position="before">
+                    <field name="identification_id" string="CNIC No." placeholder="xxxxx-xxxxxxx-x"/>
+                </xpath>
+
+                <xpath expr="//field[@name='country_id']" position="replace"/>
+                <xpath expr="//field[@name='identification_id']" position="after">
+                    <field name="country_id"/>
+                </xpath>
+
+                <xpath expr="//field[@name='country_id']" position="attributes">
+                    <attribute name="string">Primary Country</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='gender']" position="replace"/>
+                <xpath expr="//field[@name='identification_id']" position="after">
+                    <field name="gender"/>
+                </xpath>
+
+
+                <xpath expr="//field[@name='country_id']" position="after">
+                    <field name="emp_religion"/>
+                </xpath>
+
+                <xpath expr="//field[@name='emp_religion']" position="before">
+                    <field name="secondary_country"/>
+                </xpath>
+
+                <xpath expr="//field[@name='emp_religion']" position="after">
+                    <field name="emp_sect"/>
+                </xpath>
+
+                <xpath expr="//field[@name='birthday']" position="replace"/>
+                <xpath expr="//field[@name='emp_sect']" position="after">
+                    <field name="birthday"/>
+                </xpath>
+
+                <xpath expr="//field[@name='place_of_birth']" position="replace"/>
+                <xpath expr="//field[@name='birthday']" position="after">
+                    <field name="place_of_birth"/>
+                </xpath>
+
+                <xpath expr="//field[@name='place_of_birth']" position="after">
+                    <field name="emp_domicile"/>
+                </xpath>
+
+                <xpath expr="//field[@name='emp_domicile']" position="after">
+                    <field name="emp_marital_field"/>
+                </xpath>
+
+                <xpath expr="//field[@name='emp_marital_field']" position="after">
+                    <field name="emp_blood_groups"/>
+                </xpath>
+
+                <xpath expr="//field[@name='emp_blood_groups']" position="after">
+                    <field name="emp_age_field"/>
+                </xpath>
+
+
+                <xpath expr="//page[@string='Personal Profile Management']/group[1]/group[2]" position="after">
+                    <group string="Address Information">
+
+                        <label for="emp_mailing_street1" string="Mailing Address"/>
+                        <div class="o_address_format">
+                            <field name="emp_mailing_street1" placeholder="Street..." class="o_address_street"/>
+                            <field name="emp_mailing_street2" placeholder="Street 2..." class="o_address_street"/>
+                            <field name="emp_mailing_city" placeholder="City" class="o_address_city"/>
+                            <field name="emp_mailing_state_id" class="o_address_state" placeholder="State"
+                                   options="{'no_open': True, 'no_quick_create': True}"
+                                   context="{'default_country_id': private_country_id}"/>
+                            <field name="emp_mailing_zip" placeholder="ZIP" class="o_address_zip"/>
+                            <field name="emp_mailing_country_id" placeholder="Country" class="o_address_country"
+                                   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                        </div>
+
+                        <label for="emp_permanent_street1" string="Permanent Address"/>
+                        <div class="o_address_format">
+                            <field name="emp_permanent_street1" placeholder="Street..." class="o_address_street"/>
+                            <field name="emp_permanent_street2" placeholder="Street 2..." class="o_address_street"/>
+                            <field name="emp_permanent_city" placeholder="City" class="o_address_city"/>
+                            <field name="emp_permanent_state_id" class="o_address_state" placeholder="State"
+                                   options="{'no_open': True, 'no_quick_create': True}"
+                                   context="{'default_country_id': private_country_id}"/>
+                            <field name="emp_permanent_zip" placeholder="ZIP" class="o_address_zip"/>
+                            <field name="emp_permanent_country_id" placeholder="Country" class="o_address_country"
+                                   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                        </div>
+
+                    </group>
+
+                </xpath>
+
+                <xpath expr="//page[@string='Personal Profile Management']/group[1]/group[3]" position="after">
+                    <group string="Contact Information" colspan="2">
+                        <group>
+                            <field name="emp_primary_phone_number"/>
+                            <field name="emp_secondary_phone_number"/>
+                            <field name="emp_landline_home_number"/>
+                            <field name="emp_landline_office_number"/>
+                        </group>
+                        <group>
+                            <field name="emp_skype_id"/>
+                            <field name="emp_email_personal"/>
+                            <field name="emp_email_official"/>
+                            <field name="emp_social_media_profile"/>
+                        </group>
+                    </group>
+                </xpath>
+
+                <xpath expr="//page[@string='Personal Profile Management']/group[1]/group[4]" position="after">
+                    <group string="SKANS CAMPUS DETAILS">
+                        <field name="emp_employed_from"/>
+                        <field name="emp_credit_load"/>
+                        <field name="emp_flag_status"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//field[@name='job_id']" position="replace"/>
+                <xpath expr="//field[@name='emp_employed_from']" position="before">
+                    <field name="job_id"/>
+                </xpath>
+
+                <xpath expr="//field[@name='department_id']" position="replace"/>
+                <xpath expr="//field[@name='emp_employed_from']" position="before">
+                    <field name="department_id"/>
+                </xpath>
+
+                <xpath expr="//page[@string='Personal Profile Management']/group[1]/group[1]" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="//page[@string='Personal Profile Management']/group[1]/group[6]" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="//page[@string='Personal Profile Management']/group[1]/group[7]" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,475 @@
+<odoo>
+
+    <!-- ✅ QWeb Report Template -->
+    <template id="report_faculty_timetable_pdf">
+        <t t-call="web.basic_layout">
+            <t t-set="doc" t-value="docs[0]"/>
+            <t t-set="user" t-value="env.user"/>
+
+            <!--            <div class="header">-->
+            <!--                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">-->
+            <!--                    <tr style="vertical-align: middle;">-->
+
+            <!--                        &lt;!&ndash; Left: Company Logo &ndash;&gt;-->
+            <!--                        <td style="width: 33%; text-align: left; vertical-align: middle; height: 100px;">-->
+            <!--                            <t t-if="user and user.company_id and user.company_id.logo">-->
+            <!--                                <div style="display: flex; align-items: center; height: 100%;">-->
+            <!--                                    <img t-att-src="'/web/image?model=res.company&amp;id=%d&amp;field=logo' % user.company_id.id"-->
+            <!--                                         style="height: 90px;"/>-->
+            <!--                                </div>-->
+            <!--                            </t>-->
+            <!--                        </td>-->
+
+            <!--                        <td style="width: 34%; text-align: center;">-->
+            <!--                            <h1 style="font-size: 36px; font-weight: bold; margin: 0;">-->
+            <!--                                <t t-esc="user.company_id.name"/>-->
+            <!--                            </h1>-->
+            <!--                        </td>-->
+
+            <!--                        &lt;!&ndash; Right: Company Address &ndash;&gt;-->
+            <!--                        <td style="width: 33%; text-align: right; font-size: 14px; vertical-align: middle;">-->
+            <!--                            <t t-if="user and user.company_id">-->
+            <!--                                <div>-->
+            <!--                                    <t t-esc="user.company_id.street"/>-->
+            <!--                                    <br/>-->
+            <!--                                    <t t-if="user.company_id.street2">-->
+            <!--                                        <t t-esc="user.company_id.street2"/>-->
+            <!--                                        <br/>-->
+            <!--                                    </t>-->
+            <!--                                    <t t-if="user.company_id.city"><t t-esc="user.company_id.city"/>,-->
+            <!--                                    </t>-->
+            <!--                                    <t t-if="user.company_id.state_id"><t t-esc="user.company_id.state_id.name"/>,-->
+            <!--                                    </t>-->
+            <!--                                    <t t-if="user.company_id.country_id">-->
+            <!--                                        <t t-esc="user.company_id.country_id.name"/>-->
+            <!--                                    </t>-->
+            <!--                                </div>-->
+            <!--                            </t>-->
+            <!--                        </td>-->
+
+            <!--                    </tr>-->
+            <!--                </table>-->
+            <!--            </div>-->
+
+            <t t-set="days" t-value="['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']"/>
+
+            <div class="page">
+                <h3 style="text-align: center;">Teacher Timetable (C2)</h3>
+
+
+                <table style="font-size:11px; border-collapse: collapse; width:100%;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid black; padding: 5px;" colspan="2">Class Teacher</th>
+
+                            <t t-if="doc.faculty_ids">
+                                <t t-foreach="doc.faculty_ids" t-as="faculty">
+                                    <th style="border: 1px solid black; padding: 5px; padding-left: 15px;">
+                                        <t t-esc="faculty.teacher_unique_code"/>
+                                    </th>
+                                </t>
+                            </t>
+
+                            <t t-else="">
+                                <t t-set="sessions" t-value="doc.get_sessions()"/>
+                                <t t-set="faculties"
+                                   t-value="sorted(set([s.faculty_id for s in sessions if s.faculty_id]), key=lambda f: f.name)"/>
+                                <t t-foreach="faculties" t-as="faculty">
+                                    <th style="border: 1px solid black; padding: 5px; padding-left: 15px;">
+                                        <t t-esc="faculty.teacher_unique_code"/>
+                                    </th>
+                                </t>
+                            </t>
+                        </tr>
+
+                        <tr>
+                            <th style="border: 1px solid black; padding: 5px;" colspan="2">Class</th>
+
+                            <t t-if="doc.faculty_ids">
+                                <t t-foreach="doc.faculty_ids" t-as="faculty">
+                                    <th style="border: 1px solid black; padding: 5px;">
+                                        <t t-set="section"
+                                           t-value="env['class.section'].search([('faculty', '=', faculty.id)], limit=1)"/>
+                                        <t t-if="section">
+                                            <t t-esc="section.class_id.name"/>
+                                            /
+                                            <t t-esc="section.name"/>
+                                        </t>
+                                    </th>
+                                </t>
+                            </t>
+
+                            <t t-else="">
+                                <t t-set="sessions" t-value="doc.get_sessions()"/>
+                                <t t-set="faculties"
+                                   t-value="sorted(set([s.faculty_id for s in sessions if s.faculty_id]), key=lambda f: f.name)"/>
+                                <t t-foreach="faculties" t-as="faculty">
+                                    <th style="border: 1px solid black; padding: 5px;">
+                                        <t t-set="section"
+                                           t-value="env['class.section'].search([('faculty', '=', faculty.id)], limit=1)"/>
+                                        <t t-if="section">
+                                            <t t-esc="section.class_id.name"/>
+                                            /
+                                            <t t-esc="section.name"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="doc.class_id.name"/>
+                                        </t>
+                                    </th>
+                                </t>
+                            </t>
+                        </tr>
+                        <!--                        <tr>-->
+                        <!--                            <th style="border: 1px solid black; padding: 5px;" colspan="2">Class Teacher</th>-->
+                        <!--                            <t t-foreach="doc.faculty_ids" t-as="faculty">-->
+                        <!--                                <th style="border: 1px solid black; padding: 5px; padding-left: 15px;">-->
+                        <!--                                    &lt;!&ndash;                                    <t t-esc="faculty.name"/>&ndash;&gt;-->
+                        <!--                                    <t t-esc="faculty.teacher_unique_code"/>-->
+                        <!--                                </th>-->
+                        <!--                            </t>-->
+                        <!--                        </tr>-->
+
+                        <!--                        <tr>-->
+                        <!--                            <th style="border: 1px solid black; padding: 5px;" colspan="2">Class</th>-->
+                        <!--                            <t t-foreach="doc.faculty_ids" t-as="faculty">-->
+                        <!--                                <th style="border: 1px solid black; padding: 5px;">-->
+                        <!--                                    <t t-set="section"-->
+                        <!--                                       t-value="env['class.section'].search([('faculty', '=', faculty.id)], limit=1)"/>-->
+                        <!--                                    <t t-if="section">-->
+                        <!--                                        <t t-esc="section.class_id.name"/>-->
+                        <!--                                        /-->
+                        <!--                                        <t t-esc="section.name"/>-->
+                        <!--                                    </t>-->
+                        <!--                                </th>-->
+                        <!--                            </t>-->
+                        <!--                        </tr>-->
+
+                    </thead>
+                    <tbody>
+                        <t t-foreach="days" t-as="day">
+                            <t t-set="faculty_sessions" t-value="[]"/>
+                            <t t-set="all_times" t-value="[]"/>
+
+                            <!-- Collect sessions per faculty -->
+                            <t t-if="doc.faculty_ids">
+                                <t t-foreach="doc.faculty_ids" t-as="faculty">
+                                    <t t-set="sessions" t-value="doc.get_sessions(faculty)"/>
+                                    <t t-set="filtered_sessions"
+                                       t-value="[s for s in sessions if s.start_datetime.strftime('%A') == day]"/>
+                                    <t t-set="faculty_sessions"
+                                       t-value="faculty_sessions + [(faculty, filtered_sessions)]"/>
+                                    <t t-set="all_times"
+                                       t-value="all_times + [s.start_datetime.strftime('%H:%M') for s in filtered_sessions]"/>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <t t-set="sessions" t-value="doc.get_sessions()"/>
+                                <t t-set="filtered_sessions"
+                                   t-value="[s for s in sessions if s.start_datetime.strftime('%A') == day]"/>
+                                <!-- “faculty_sessions” still used later, so we just fake a list -->
+                                <t t-set="faculty_sessions" t-value="[(False, filtered_sessions)]"/>
+                                <t t-set="all_times"
+                                   t-value="[s.start_datetime.strftime('%H:%M') for s in filtered_sessions]"/>
+                            </t>
+                            <!--                            <t t-foreach="doc.faculty_ids" t-as="faculty">-->
+                            <!--                                <t t-set="sessions" t-value="doc.get_sessions(faculty)"/>-->
+                            <!--                                <t t-set="filtered_sessions"-->
+                            <!--                                   t-value="[s for s in sessions if s.start_datetime.strftime('%A') == day]"/>-->
+                            <!--                                <t t-set="faculty_sessions"-->
+                            <!--                                   t-value="faculty_sessions + [(faculty, filtered_sessions)]"/>-->
+                            <!--                                <t t-set="all_times"-->
+                            <!--                                   t-value="all_times + [s.start_datetime.strftime('%H:%M') for s in filtered_sessions]"/>-->
+                            <!--                            </t>-->
+
+                            <t t-set="unique_times" t-value="sorted(set(all_times))"/>
+                            <t t-set="row_index" t-value="1"/>
+
+                            <t t-foreach="unique_times" t-as="time" t-foreach-index="time_index">
+                                <tr>
+                                    <!-- Vertical Day only once -->
+                                    <t t-if="time_index == 0">
+                                        <td style="border: 1px solid black; padding: 5px; font-weight: bold; text-align: center;"
+                                            t-att-rowspan="len(unique_times)">
+                                            <t t-foreach="day.upper()" t-as="char">
+                                                <t t-esc="char"/>
+                                                <br/>
+                                            </t>
+                                        </td>
+                                    </t>
+
+                                    <!-- Period number -->
+                                    <td style="border: 1px solid black; padding: 5px; text-align: center;">
+                                        <t t-esc="row_index"/>
+                                    </td>
+
+                                    <!-- Subject per teacher -->
+                                    <t t-foreach="faculty_sessions" t-as="fs">
+                                        <t t-set="matched_sessions"
+                                           t-value="[s for s in fs[1] if s.start_datetime.strftime('%H:%M') == time]"/>
+                                        <td style="border: 1px solid black; padding: 5px; text-align: center;">
+                                            <t t-if="matched_sessions">
+                                                <t t-set="s" t-value="matched_sessions[0]"/>
+                                                <div>
+                                                    <t t-esc="s.subject_id.name"/>
+                                                    <br/>
+                                                    <t t-if="s.section_id">
+                                                        <span style="font-size: 10px; color: #666;">
+                                                            <t t-esc="s.section_id.class_id.name"/>
+                                                            -
+                                                            <t t-esc="s.section_id.name"/>
+                                                        </span>
+                                                    </t>
+                                                </div>
+                                            </t>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <t t-set="row_index" t-value="row_index + 1"/>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+    <!-- ✅ View Inheritance: Replace faculty_id & Add PDF Button -->
+    <!--    <record id="view_time_table_report_form_inherit_pdf" model="ir.ui.view">-->
+    <!--        <field name="name">time.table.report.form.inherit.pdf</field>-->
+    <!--        <field name="model">time.table.report</field>-->
+    <!--        <field name="inherit_id" ref="gxs_timetable.view_time_table_report_form"/>-->
+    <!--        <field name="arch" type="xml">-->
+
+    <!--            <xpath expr="//field[@name='faculty_id']" position="replace">-->
+    <!--                <field name="faculty_ids" widget="many2many_tags"-->
+    <!--                       required="state == 'faculty'"-->
+    <!--                       invisible="state != 'faculty'"/>-->
+    <!--            </xpath>-->
+
+    <!--            <xpath expr="//footer" position="inside">-->
+    <!--                <button name="generate_pdf_report"-->
+    <!--                        string="Teacher Timetable Report"-->
+    <!--                        type="object"-->
+    <!--                        class="btn-secondary"/>-->
+    <!--            </xpath>-->
+    <!--            <xpath expr="//footer" position="inside">-->
+    <!--                <button name="generate_pdf_class_report"-->
+    <!--                        string="Class Timetable Report"-->
+    <!--                        type="object"-->
+    <!--                        class="btn-secondary"/>-->
+    <!--            </xpath>-->
+
+    <!--        </field>-->
+    <!--    </record>-->
+    <record id="paperformat_class_teacher" model="report.paperformat">
+        <field name="name">Teacher And Class Timetable</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_bottom">32</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- ✅ Report Action -->
+    <record id="action_faculty_timetable_pdf_report" model="ir.actions.report">
+        <field name="name">Teacher Timetable PDF</field>
+        <field name="model">time.table.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">timetable_reports.report_faculty_timetable_pdf</field>
+        <field name="report_file">timetable_reports.report_faculty_timetable_pdf</field>
+        <field name="paperformat_id" ref="timetable_reports.paperformat_class_teacher"/>
+        <field name="print_report_name">'Faculty_Timetable_%s' % (object.id)</field>
+    </record>
+    <record id="action_faculty_class_timetable_pdf_report" model="ir.actions.report">
+        <field name="name">Class Timetable PDF</field>
+        <field name="model">time.table.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">timetable_reports.report_class_faculty_timetable_pdf</field>
+        <field name="report_file">timetable_reports.report_class_faculty_timetable_pdf</field>
+        <field name="paperformat_id" ref="timetable_reports.paperformat_class_teacher"/>
+        <field name="print_report_name">'Faculty_Timetable_%s' % (object.id)</field>
+    </record>
+
+    <record id="your_custom_session_form_view" model="ir.ui.view">
+        <field name="name">op.session.form.inherit.section</field>
+        <field name="model">op.session</field>
+        <field name="inherit_id" ref="gxs_timetable.view_op_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='subject_id']" position="after">
+                <field name="section_id"/>
+                <field name="class_name"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="your_custom_session_list_view" model="ir.ui.view">
+        <field name="name">op.session.list.inherit.section</field>
+        <field name="model">op.session</field>
+        <field name="inherit_id" ref="gxs_timetable.view_op_session_search"/>  <!-- original list view ID -->
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='subject_id']" position="after">
+                <field name="section_id"/>
+                <field name="class_name"/>
+            </xpath>
+        </field>
+    </record>
+    <template id="report_class_faculty_timetable_pdf">
+        <t t-call="web.basic_layout">
+            <t t-set="doc" t-value="docs[0]"/>
+            <t t-set="user" t-value="env.user"/>
+
+            <!--            <div class="header">-->
+            <!--                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">-->
+            <!--                    <tr style="vertical-align: middle;">-->
+
+            <!--                        &lt;!&ndash; Left: Company Logo &ndash;&gt;-->
+            <!--                        <td style="width: 33%; text-align: left; vertical-align: middle; height: 100px;">-->
+            <!--                            <t t-if="user and user.company_id and user.company_id.logo">-->
+            <!--                                <div style="display: flex; align-items: center; height: 100%;">-->
+            <!--                                    <img t-att-src="'/web/image?model=res.company&amp;id=%d&amp;field=logo' % user.company_id.id"-->
+            <!--                                         style="height: 90px;"/>-->
+            <!--                                </div>-->
+            <!--                            </t>-->
+            <!--                        </td>-->
+
+            <!--                        &lt;!&ndash; Center: Company Name &ndash;&gt;-->
+            <!--                        <td style="width: 34%; text-align: center;">-->
+            <!--                            <h1 style="font-size: 36px; font-weight: bold; margin: 0;">-->
+            <!--                                <t t-esc="user.company_id.name"/>-->
+            <!--                            </h1>-->
+            <!--                        </td>-->
+
+            <!--                        &lt;!&ndash; Right: Company Address &ndash;&gt;-->
+            <!--                        <td style="width: 33%; text-align: right; font-size: 14px; vertical-align: middle;">-->
+            <!--                            <t t-if="user and user.company_id">-->
+            <!--                                <div>-->
+            <!--                                    <t t-esc="user.company_id.street"/>-->
+            <!--                                    <br/>-->
+            <!--                                    <t t-if="user.company_id.street2">-->
+            <!--                                        <t t-esc="user.company_id.street2"/>-->
+            <!--                                        <br/>-->
+            <!--                                    </t>-->
+            <!--                                    <t t-if="user.company_id.city"><t t-esc="user.company_id.city"/>,-->
+            <!--                                    </t>-->
+            <!--                                    <t t-if="user.company_id.state_id"><t t-esc="user.company_id.state_id.name"/>,-->
+            <!--                                    </t>-->
+            <!--                                    <t t-if="user.company_id.country_id">-->
+            <!--                                        <t t-esc="user.company_id.country_id.name"/>-->
+            <!--                                    </t>-->
+            <!--                                </div>-->
+            <!--                            </t>-->
+            <!--                        </td>-->
+
+            <!--                    </tr>-->
+            <!--                </table>-->
+            <!--            </div>-->
+
+            <t t-set="days" t-value="['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']"/>
+
+            <div class="page">
+                <h3 style="text-align: center;">Class Timetable (C1)</h3>
+
+
+                <table style="font-size:11px; border-collapse: collapse; width:100%;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid black; padding: 5px;" colspan="2">Class Teacher</th>
+                            <t t-foreach="doc.faculty_ids" t-as="faculty">
+                                <th style="border: 1px solid black; padding: 5px; padding-left: 15px;">
+                                    <t t-esc="faculty.name"/>
+                                </th>
+                            </t>
+                        </tr>
+
+                        <tr>
+                            <th style="border: 1px solid black; padding: 5px;" colspan="2">Class</th>
+                            <t t-foreach="doc.faculty_ids" t-as="faculty">
+                                <th style="border: 1px solid black; padding: 5px;">
+                                    <t t-set="section"
+                                       t-value="env['class.section'].search([('faculty', '=', faculty.id)], limit=1)"/>
+                                    <t t-if="section">
+                                        <t t-esc="section.class_id.name"/>
+                                        /
+                                        <t t-esc="section.name"/>
+                                    </t>
+                                </th>
+                            </t>
+                        </tr>
+
+
+                    </thead>
+                    <tbody>
+                        <t t-foreach="days" t-as="day">
+                            <t t-set="faculty_sessions" t-value="[]"/>
+                            <t t-set="all_times" t-value="[]"/>
+
+                            <!-- Collect sessions per faculty -->
+                            <t t-foreach="doc.faculty_ids" t-as="faculty">
+                                <t t-set="sessions" t-value="doc.get_sessions(faculty)"/>
+                                <t t-set="filtered_sessions"
+                                   t-value="[s for s in sessions if s.start_datetime.strftime('%A') == day]"/>
+                                <t t-set="faculty_sessions"
+                                   t-value="faculty_sessions + [(faculty, filtered_sessions)]"/>
+                                <t t-set="all_times"
+                                   t-value="all_times + [s.start_datetime.strftime('%H:%M') for s in filtered_sessions]"/>
+                            </t>
+
+                            <t t-set="unique_times" t-value="sorted(set(all_times))"/>
+                            <t t-set="row_index" t-value="1"/>
+
+                            <t t-foreach="unique_times" t-as="time" t-foreach-index="time_index">
+                                <tr>
+                                    <!-- Vertical Day only once -->
+                                    <t t-if="time_index == 0">
+                                        <td style="border: 1px solid black; padding: 5px; font-weight: bold; text-align: center;"
+                                            t-att-rowspan="len(unique_times)">
+                                            <t t-foreach="day.upper()" t-as="char">
+                                                <t t-esc="char"/>
+                                                <br/>
+                                            </t>
+                                        </td>
+                                    </t>
+
+                                    <!-- Period number -->
+                                    <td style="border: 1px solid black; padding: 5px; text-align: center;">
+                                        <t t-esc="row_index"/>
+                                    </td>
+
+                                    <!-- Subject per teacher -->
+                                    <t t-foreach="faculty_sessions" t-as="fs">
+                                        <t t-set="matched_sessions"
+                                           t-value="[s for s in fs[1] if s.start_datetime.strftime('%H:%M') == time]"/>
+                                        <td style="border: 1px solid black; padding: 5px; text-align: center;">
+                                            <t t-if="matched_sessions">
+                                                <t t-set="s" t-value="matched_sessions[0]"/>
+                                                <div>
+                                                    <t t-esc="s.subject_id.name"/>
+                                                    <br/>
+                                                    <t t-if="s.section_id">
+                                                        <span style="font-size: 10px; color: #666;">
+                                                            <t t-esc="s.section_id.class_id.name"/>
+                                                            -
+                                                            <t t-esc="s.section_id.name"/>
+                                                        </span>
+                                                    </t>
+                                                </div>
+                                            </t>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <t t-set="row_index" t-value="row_index + 1"/>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+
+</odoo>

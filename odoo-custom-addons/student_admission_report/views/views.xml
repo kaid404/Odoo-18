@@ -1,0 +1,40 @@
+<odoo>
+  <data>
+         <record id="st_adm_form_view" model="ir.ui.view">
+            <field name="name">Student Admission Report</field>
+            <field name="model">student.admission.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="date_from"/>
+                    </group>
+                    <group>
+                        <field name="date_to"/>
+                    </group>
+                    <footer>
+                        <button name="action_print_student_report" string="Print PDF Report" type="object"
+                                class="btn-success"/>
+
+                        <button string="Discard" class="btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="student_admission_action" model="ir.actions.act_window">
+            <field name="name">Student Admission Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">student.admission.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem id="student_adm_menu"
+                  name="Admission Report"
+                  parent="odoocms_admission.menu_odoocms_admission_report"
+                  action="student_admission_action"
+                  sequence="500"/>
+
+  </data>
+</odoo>

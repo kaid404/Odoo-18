@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gxs_campus_transfer,account_gxs_campus_transfer,model_gxs_campus_transfer,,1,1,1,1
+access_gxs_section_transfer,account_gxs_section_transfer,model_gxs_section_transfer,,1,1,1,1
+access_gxs_section_transfer_bulk,account_gxs_section_transfer_bulk,model_gxs_section_transfer_bulk,,1,1,1,1
+access_gxs_class_transfer,account_gxs_class_transfer,model_gxs_class_transfer,,1,1,1,1
+
+
+
+
+
+
+
+
+

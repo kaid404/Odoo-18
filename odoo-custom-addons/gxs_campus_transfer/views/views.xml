@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="gxs_campus_transfer_form_view" model="ir.ui.view">
+        <field name="name">gxs.campus.transfer</field>
+        <field name="model">gxs.campus.transfer</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Reset to draft" class="oe_highlight" type="object"
+                            name="action_reset_draft" invisible="state not in ['refuse']"/>
+                    <button string="Refuse" class="btn-danger"
+                            invisible="state not in ['draft']" type="object"
+                            name="action_refuse"/>
+                    <button string="Transfer" class="oe_highlight" type="object"
+                            name="action_confirm" invisible="state not in ['draft']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,refuse,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_id" readonly="state in 'done'"/>
+                            <field name="campus_id" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="new_campus_id" readonly="state in 'done'"/>
+                            <field name="new_class_id" readonly="state in 'done'"/>
+                            <field name="new_section_id" readonly="state in 'done'"/>
+                            <field name="reason" readonly="state in 'done'"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="gxs_campus_transfer_list_view" model="ir.ui.view">
+        <field name="name">gxs.campus.transfer.list</field>
+        <field name="model">gxs.campus.transfer</field>
+        <field name="arch" type="xml">
+            <list string="Student Transfer"
+                  decoration-info="state == 'draft'"
+                  decoration-success="state == 'done'"
+                  decoration-danger="state == 'refuse'">
+                <field name="student_id"/>
+                <field name="campus_id"/>
+                <field name="new_campus_id"/>
+                <field name="reason"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="action_gxs_campus_transfer" model="ir.actions.act_window">
+        <field name="name">Student Transfer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gxs.campus.transfer</field>
+        <field name="view_mode">form,list</field>
+        <field name="view_id" ref="gxs_campus_transfer_list_view"/>
+    </record>
+
+    <menuitem id="student_transfer_menu"
+              name="Students Campus Transfer"
+              parent="gxs_core.menu_op_student_root"
+              sequence="120"/>
+
+    <menuitem id="student_transfer_menu_child"
+              name="Students Campus Transfer"
+              parent="student_transfer_menu"
+              action="action_gxs_campus_transfer"
+              sequence="1"/>
+
+
+</odoo>

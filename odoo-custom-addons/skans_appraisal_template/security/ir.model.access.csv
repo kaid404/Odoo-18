@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_skans_appraisal_template_skans_appraisal_template,skans_appraisal_template.skans_appraisal_template,model_skans_appraisal_template_skans_appraisal_template,base.group_user,1,1,1,1

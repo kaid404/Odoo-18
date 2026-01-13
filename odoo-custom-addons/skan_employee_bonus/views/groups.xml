@@ -1,0 +1,18 @@
+<odoo>
+    <record id="module_category_employee_bonus" model="ir.module.category">
+        <field name="name">Employee Bonus</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="group_half_bonus" model="res.groups">
+        <field name="name">Half Bonus</field>
+        <field name="category_id" ref="module_category_employee_bonus"/>
+    </record>
+    <record id="group_full_bonus" model="res.groups">
+        <field name="name">Full Bonus</field>
+        <field name="category_id" ref="module_category_employee_bonus"/>
+    </record>
+    <record id="group_coo_approval" model="res.groups">
+        <field name="name">HOD Approval</field>
+        <field name="category_id" ref="module_category_employee_bonus"/>
+    </record>
+</odoo>

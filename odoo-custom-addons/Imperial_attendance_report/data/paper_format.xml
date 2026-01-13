@@ -1,0 +1,15 @@
+<odoo>
+        <record id="daily_atten_report_format" model="report.paperformat">
+            <field name="name">Daily Attendance Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">12</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">27</field>
+            <field name="dpi">105</field>
+        </record>
+</odoo>

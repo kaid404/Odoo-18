@@ -1,0 +1,15 @@
+<!--<odoo>-->
+<!--    <data>-->
+<!--        <record id="campus_field_inherit_employee" model="ir.ui.view">-->
+<!--            <field name="name">campus.field.inherit.employee</field>-->
+<!--            <field name="model">hr.contract</field>-->
+<!--            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='resource_calendar_id']" position="after">-->
+<!--                    <field name="school_campus" invisible="'not show_school"/>-->
+<!--                    <field name="college_campus" invisible="not show_college"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+<!--    </data>-->
+<!--</odoo>-->

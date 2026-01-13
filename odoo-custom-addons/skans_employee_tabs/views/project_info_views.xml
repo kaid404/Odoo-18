@@ -1,0 +1,72 @@
+<odoo>
+    <data>
+
+        <record id="form_view_project" model="ir.ui.view">
+            <field name="name">Projects</field>
+            <field name="model">projects.info</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="emp_type_project_list"/>
+                            <field name="emp_position_list"/>
+                            <field name="emp_status_list"/>
+                            <field name="emp_remuneration"/>
+                            <field name="emp_project_funded"/>
+                            <field name="emp_project_total"/>
+                        </group>
+                        <group>
+                            <field name="emp_funding_agency"/>
+                            <field name="emp_funded_amount"/>
+                            <field name="emp_project_date_from"/>
+                            <field name="emp_project_date_to"/>
+                            <field name="emp_project_url"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="list_view_project" model="ir.ui.view">
+            <field name="name">Projects Summary</field>
+            <field name="model">projects.info</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="emp_type_project_list"/>
+                    <field name="emp_position_list"/>
+                    <field name="emp_status_list"/>
+                    <field name="emp_remuneration"/>
+                    <field name="emp_project_funded"/>
+                    <field name="emp_project_total"/>
+                    <field name="emp_funding_agency"/>
+                    <field name="emp_funded_amount"/>
+                    <field name="emp_project_date_from"/>
+                    <field name="emp_project_date_to"/>
+                    <field name="emp_project_url"/>
+                </list>
+            </field>
+        </record>
+
+
+<!--        <record id="view_employee_form_custom_project" model="ir.ui.view">-->
+<!--            <field name="name">Project Summary Inherit</field>-->
+<!--            <field name="model">hr.employee</field>-->
+<!--            <field name="inherit_id" ref="hr.view_employee_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//page[@name='hr_settings']" position="after">-->
+<!--                    <page string="Projects Summary" name="projects_summary">-->
+
+<!--                        <group string="Projects">-->
+<!--                            <field name="project_employee_ids"-->
+<!--                                   string="Project Summary"-->
+<!--                                   widget="form"-->
+<!--                                   context="{'form_view_ref': 'personal_details_management.form_view_project'}"-->
+<!--                                   options="{'no_create': False, 'no_open': True}"/>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

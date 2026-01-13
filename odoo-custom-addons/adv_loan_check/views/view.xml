@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_advance_salary_form_inherit" model="ir.ui.view">
+        <field name="name">hr.advance.salary.form.inherit</field>
+        <field name="model">hr.advance.salary</field>
+        <field name="inherit_id" ref="sync_employee_advance_salary.hr_employee_advance_salary_view_form"/>
+        <field name="arch" type="xml">
+            <!--            <xpath expr="//field[@name='loan_type']" position="attributes">-->
+            <!--                <attribute name="loan_type" invisible="payment == 'fully'" readonly="state != 'draft'"/>-->
+            <!--            </xpath>-->
+            <xpath expr="//header[1]/field[@name='state']" position="replace">
+                <field name="state" widget="statusbar"
+                       statusbar_visible="draft,confirm,line_manager,hr_approval,finance_director,finance__asst_director,executive_director,ceo,paid,done,refuse"/>
+            </xpath>
+            <xpath expr="//group[2]/group[2]/field[@name='request_date']" position="after">
+                <field name="special_approval"/>
+            </xpath>
+            <xpath expr="//header/button[@name='action_confirm']" position="replace">
+                <button name="action_confirm" type="object" string="Confirm" class="btn-primary"
+                        invisible="state in ['confirm','line_manager','hr_approval','finance_director','finance__asst_director','executive_director','ceo','paid','done','refuse','paid','refuse']"
+                        groups="base.group_user"/>
+            </xpath>
+            <xpath expr="//header/button[@name='action_approve1']" position="replace">
+                <button name="action_approve1" type="object" string="Line Manager" class="btn-primary"
+                        invisible="state in ['draft','line_manager','hr_approval','finance_director','finance__asst_director','executive_director','ceo','paid','refuse']"
+                        groups="hr.group_hr_manager"/>
+            </xpath>
+
+            <xpath expr="//header/button[@name='action_approve2']" position="after">
+                <button name="action_approve2" type="object" string="Finance Director" class="btn-primary"
+                        invisible="not ((state == 'line_manager' and payment == 'fully') or state == 'hr_approval')"/>
+            </xpath>
+
+            <xpath expr="//header/button[@name='action_approve2']" position="after">
+                <button name="action_executive_director_approve" type="object" string="Executive Director" class="btn-primary"
+                        invisible="not (state == 'finance_director' and payment == 'partially')"/>
+<!--                        groups="hr_payroll.group_hr_payroll_manager,account.group_account_manager"/>-->
+
+            </xpath>
+            <xpath expr="//header/button[@name='action_approve2']" position="replace">
+                <button name="action_hr_approve" type="object" string="HR Approval" class="btn-primary"
+                        invisible="not (state == 'line_manager' and payment == 'partially')"/>
+            </xpath>
+
+
+            <xpath expr="//header/button[@name='action_paid']" position="attributes">
+                <attribute name="invisible">not (state in ['executive_director', 'ceo'] or (state == 'finance_director' and payment == 'fully'))</attribute>
+            </xpath>
+
+<!--            <xpath expr="//header/button[@name='action_paid']" position="after">-->
+<!--                <button name="action_paid_adv_salary" type="object" string="Payment" class="btn-secondary"-->
+<!--                        invisible="not (state == 'finance_director' and payment == 'fully')"/>-->
+<!--            </xpath>-->
+            <!--            <xpath expr="//header/button[@name='action_paid']" position="replace">-->
+            <!--                <button name="action_paid" type="object" string="Payment"-->
+            <!--                        invisible="state != 'special_approve' or not special_approval"-->
+            <!--                        groups="account.group_account_manager"/>-->
+            <!--                <button name="action_paid" type="object" string="Payment"-->
+            <!--                        invisible="state != 'finance_appr' or payment != 'fully' or special_approval"-->
+            <!--                        groups="account.group_account_manager"/>-->
+            <!--                <button name="action_paid" type="object" string="Payment"-->
+            <!--                        invisible="state != 'approve2' or payment == 'fully' or special_approval"-->
+            <!--                        groups="account.group_account_manager"/>-->
+            <!--            </xpath>-->
+            <!--            <xpath expr="//header/button[@name='action_approve2']" position="after">-->
+            <!--                <button name="action_finance_approval" type="object" string="Finance Approval" class="btn-primary"-->
+            <!--                        invisible="(state != 'approve1' or special_approval) or (payment != 'fully')"-->
+            <!--                        groups="adv_loan_check.finance_approval"/>-->
+            <!--                <button name="action_special_approval" type="object" string="Special Approval" class="btn-primary"-->
+            <!--                        invisible="not (state == 'approve1' and special_approval)"-->
+            <!--                        groups="adv_loan_check.special_approval"/>-->
+            <!--            </xpath>-->
+        </field>
+    </record>
+    <record id="view_account_payment_form_inherit" model="ir.ui.view">
+        <field name="name">account.payment.form.inherit</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@class='oe_highlight'][1]" position="attributes">
+                <attribute name="invisible">state == 'paid'</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="adv_loan_check.special_approval" model="res.groups">
+        <field name="name">Special Approval</field>
+    </record>
+    <record id="adv_loan_check.finance_approval" model="res.groups">
+        <field name="name">Finance Approval Salary</field>
+    </record>
+</odoo>

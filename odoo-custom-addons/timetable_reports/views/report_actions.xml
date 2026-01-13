@@ -1,0 +1,28 @@
+<odoo>
+
+<!--    <record id="action_timetable_xlsx_report" model="ir.actions.report">-->
+<!--        <field name="name">Download Timetable XLSX</field>-->
+<!--        <field name="model">time.table.report</field>-->
+<!--        <field name="report_type">xlsx</field>-->
+<!--        <field name="report_name">timetable_reports.c1_timetable_xlsx</field>-->
+<!--        <field name="report_file">Timetable_Report</field>-->
+<!--        <field name="print_report_name">'Timetable_Report_%s' % (object.id)</field>-->
+<!--    </record>-->
+     <record id="action_faculty_timetable_pdf_report" model="ir.actions.report">
+        <field name="name">Faculty Timetable PDF</field>
+        <field name="model">time.table.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">timetable_reports.report_faculty_timetable_pdf</field>
+        <field name="report_file">Timetable_Reports</field>
+        <field name="print_report_name">'Faculty_Timetable_%s' % (object.id)</field>
+    </record>
+     <record id="action_faculty_class_timetable_pdf_report" model="ir.actions.report">
+        <field name="name">Class Timetable PDF</field>
+        <field name="model">time.table.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">timetable_reports.report_class_faculty_timetable_pdf</field>
+        <field name="report_file">Timetable_Reports</field>
+        <field name="print_report_name">'Faculty_Timetable_%s' % (object.id)</field>
+    </record>
+
+</odoo>

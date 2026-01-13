@@ -1,0 +1,45 @@
+<odoo>
+  <data>
+
+    <record id="timetable_slot_gen_views" model="ir.ui.view">
+        <field name="name">Timetable Slot Generator</field>
+        <field name="model">timetable.slot.generator</field>
+        <field name="arch" type="xml">
+            <form string="Generate TimeTable Slots">
+                <group>
+                  <group>
+                    <field name="slot_course_id"/>
+                      <field name="interval_slot_time" widget="float_time"/>
+                  </group>
+                    <group>
+                        <field name="starting_slot_time" widget="float_time"/>
+                        <field name="ending_slot_time" widget="float_time"/>
+                  </group>
+                </group>
+                <footer>
+                    <button string="Generate Time Slots"
+                            type="object"
+                            name="action_timetable_slot_generator"
+                            class="btn-primary"/>
+                    <button string="Cancel"
+                            special="cancel"
+                            class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_timetable_slot_gen" model="ir.actions.act_window">
+        <field name="name">Generate TimeTable Slots</field>
+        <field name="res_model">timetable.slot.generator</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_timetable_slot_generator"
+              name="Generate TimeTable Slots"
+              parent="gxs_timetable.menu_op_timetable_config"
+              action="action_timetable_slot_gen"/>
+
+  </data>
+</odoo>

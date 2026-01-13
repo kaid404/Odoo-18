@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="assessment_report_form_view">
+            <field name="name">Assessment Form View</field>
+            <field name="model">assessment.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="wizard_term"/>
+                            <field name="wizard_assignment" domain="[('class_id', '=', wizard_class)]"/>/>
+                        </group>
+                        <group>
+                            <field name="wizard_class"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Generate Report" type="object" name="generate_report"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="assessment_report_action_window">
+            <field name="name">Assessment Report</field>
+            <field name="res_model">assessment.report</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Assessment Report" id="skans_assessment_report" parent="odoocms_exam.menu_odoocms_exam_main"
+                  sequence="100" action="assessment_report_action_window"/>
+
+    </data>
+</odoo>

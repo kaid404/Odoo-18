@@ -1,0 +1,138 @@
+<odoo>
+    <data>
+        <template id="milestone_result_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+
+
+                    <t t-foreach="student_data" t-as="student">
+
+                        <div style="font-size: 14pt; margin-bottom: 10px; page-break-before: always;">
+                            <div class="row"
+                                 style="margin-bottom: 15px; text-align: center; border-bottom: 2px solid black; padding-bottom: 10px;">
+                                <div class="col-3">
+                                    <img t-att-src="'/jr_result_report/static/src/img/left-logo.png'"
+                                         style="max-width: 100%; height: auto;"/>
+                                </div>
+                                <div class="col-6"
+                                     style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                    <h5 style="font-weight: bold; padding-top: 10px;">Campus:
+                                        <t t-esc="student['campus']"/>
+                                    </h5>
+                                    <h5 style="font-weight: bold; margin: 0;">Report Card</h5>
+                                    <h5 style="font-weight: bold; margin: 0;">
+                                        <t t-esc="student['year']"/>
+                                    </h5>
+                                </div>
+                                <div class="col-3">
+                                    <img t-att-src="'/jr_result_report/static/src/img/right-logo.png'"
+                                         style="max-width: 100%; height: auto;"/>
+                                </div>
+                            </div>
+                            <strong>Name:&#8195;</strong>
+                            <t t-esc="student['student_name']"/>
+                            <br/>
+                            <strong>Class:&#8195;&#160;</strong>
+                            <t t-esc="student['class'] or 'N/A'"/>&#8195;&#8195;<t
+                                t-esc="student['section'] or 'N/A'"/>
+                            <br/>
+                            <strong>Age:&#8195;&#8195;</strong>
+                            <t t-esc="student['age'] or 'N/A'"/>&#160;<span>Years</span>
+                        </div>
+
+                        <t t-foreach="student['subjects']" t-as="subject">
+                            <table class="table table-bordered" style="width: 100%; margin: 0px;">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2"
+                                            style="background-color: #33017a; color: white; text-align: center; padding: 8px;">
+                                            <t t-esc="subject['subject_name']"/>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="subject['result_details']" t-as="detail">
+                                        <tr>
+                                            <td style="width: 80%; text-align: left;">
+                                                <t t-esc="detail['criteria'] or 'N/A'"/>
+                                            </td>
+                                            <td style="width: 20%; text-align: left;">
+                                                <t t-esc="detail['rating'] or 'N/A'"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                        <div style="border: 2px solid #000; margin-top: 6px; display: block; text-align: center;margin-top:10px;">
+                            <div class="row">
+                                <div style="width: 25%; align-items: center; font-size: 11pt; margin-top:10px;">
+                                    <p style="margin: 3px 0;">
+                                        <strong>Attendance Days:</strong>
+                                        <t t-esc="student['att_days'] or 0"/>
+                                    </p>
+                                    <p style="margin: 3px 0;">
+                                        <strong>Present Days:</strong>
+                                        <t t-esc="student['presents'] or 0"/>
+                                    </p>
+                                </div>
+                                <div style="width: 75%; border: 1px solid black;">
+                                    <p>
+                                        <strong>Performance Indicator Grading Key:</strong>
+                                    </p>
+                                    <p>
+                                        <strong>Working Towards:</strong>
+                                        This underlines the efforts of a learner while he/she is working to achieve the
+                                        milestone, that he has not yet achieved.
+                                    </p>
+                                    <p>
+                                        <strong>Working At:</strong>
+                                        This signifies that a learner is working at an expected level and has attained
+                                        the milestone.
+                                    </p>
+                                    <p>
+                                        <strong>Working Beyond:</strong>
+                                        This criterion highlights that the learner has attained the milestone and is
+                                        ready to work or is working with bigger and more complex challenges.
+                                    </p>
+                                </div>
+                            </div>
+                            <div>
+                                <p style="margin: 3px 0;">
+                                    <strong>Remarks:</strong>
+                                    <t t-esc="student['remarks']"/>
+                                </p>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+        <record id="paperformat_milestone_results_report" model="report.paperformat">
+            <field name="name">Milestone Results Paper Format</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">8</field>
+            <field name="margin_right">8</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_milestone_results_report" model="ir.actions.report">
+            <field name="name">Milestone Results Report</field>
+            <field name="model">op.result.student</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_file">jr_result_report.milestone_result_report_template</field>
+            <field name="report_name">jr_result_report.milestone_result_report_template</field>
+            <field name="paperformat_id" ref="paperformat_milestone_results_report"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

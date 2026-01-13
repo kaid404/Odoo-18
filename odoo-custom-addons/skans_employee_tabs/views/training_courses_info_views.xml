@@ -1,0 +1,68 @@
+<odoo>
+    <data>
+
+        <record id="form_view_training_courses" model="ir.ui.view">
+            <field name="name">Training Courses</field>
+            <field name="model">training.courses</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="emp_type_list_training_courses"/>
+                            <field name="emp_tc_name"/>
+                            <field name="emp_tc_date_from"/>
+                            <field name="emp_tc_date_to"/>
+                        </group>
+                        <group>
+                            <field name="emp_tc_center"/>
+                            <field name="emp_tc_organize_by"/>
+                            <field name="emp_tc_organizing_body"/>
+                            <field name="emp_tc_sponsored_by"/>
+                            <field name="emp_tc_sponsored_body"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="list_view_training_courses" model="ir.ui.view">
+            <field name="name">Training Courses</field>
+            <field name="model">training.courses</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="emp_type_list_training_courses"/>
+                    <field name="emp_tc_name"/>
+                    <field name="emp_tc_date_from"/>
+                    <field name="emp_tc_date_to"/>
+                    <field name="emp_tc_center"/>
+                    <field name="emp_tc_organize_by"/>
+                    <field name="emp_tc_organizing_body"/>
+                    <field name="emp_tc_sponsored_by"/>
+                    <field name="emp_tc_sponsored_body"/>
+                </list>
+            </field>
+        </record>
+
+
+<!--        <record id="view_employee_form_custom_training_courses" model="ir.ui.view">-->
+<!--            <field name="name">Training Courses Inherit</field>-->
+<!--            <field name="model">hr.employee</field>-->
+<!--            <field name="inherit_id" ref="hr.view_employee_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//page[@name='hr_settings']" position="after">-->
+<!--                    <page string="Training Courses" name="training_courses">-->
+
+<!--                        <group string="Courses">-->
+<!--                            <field name="training_courses_emp_ids"-->
+<!--                                   string="Training Course"-->
+<!--                                   widget="form"-->
+<!--                                   context="{'form_view_ref': 'personal_details_management.form_view_training_courses'}"-->
+<!--                                   options="{'no_create': False, 'no_open': True}"/>-->
+<!--                        </group>-->
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

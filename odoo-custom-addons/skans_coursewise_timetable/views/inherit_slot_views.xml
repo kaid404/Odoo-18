@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+
+        <record id="view_generate_time_table_form" model="ir.ui.view">
+            <field name="name">generate.time.table.form</field>
+            <field name="model">gen.time.table.line</field>
+            <field name="inherit_id" ref="gxs_timetable.view_gen_time_table_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='subject_id']" position="after">
+                    <field name="slot_id"/>
+                </xpath><xpath expr="//field[@name='day']" position="replace">
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

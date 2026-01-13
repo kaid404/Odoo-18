@@ -1,0 +1,98 @@
+<!--RPC_ERROR-->
+<!--Odoo Server Error-->
+<!--Traceback (most recent call last):-->
+<!--  File "/home/odoo/src/odoo/odoo/tools/convert.py", line 698, in _tag_root-->
+<!--    f(rec)-->
+<!--  File "/home/odoo/src/odoo/odoo/tools/convert.py", line 599, in _tag_record-->
+<!--    record = model._load_records([data], self.mode == 'update')-->
+<!--  File "/home/odoo/src/odoo/odoo/models.py", line 4423, in _load_records-->
+<!--    imd._update_xmlids(imd_data_list, update)-->
+<!--  File "/home/odoo/src/odoo/odoo/addons/base/models/ir_model.py", line 2128, in _update_xmlids-->
+<!--    self.env.cr.execute(query, [arg for row in sub_rows for arg in row])-->
+<!--  File "/home/odoo/src/odoo/odoo/sql_db.py", line 321, in execute-->
+<!--    res = self._obj.execute(query, params)-->
+<!--psycopg2.errors.CheckViolation: new row for relation "ir_model_data" violates check constraint "ir_model_data_name_nospaces"-->
+<!--DETAIL:  Failing row contains (73012, null, 2024-01-30 07:12:23.454785, 2024-01-30 07:12:23.454785, null, 2556, f,   , Imperial_attendance_report, ir.ui.view, null).-->
+
+
+<!--The above exception was the direct cause of the following exception:-->
+
+<!--Traceback (most recent call last):-->
+<!--  File "/home/odoo/src/odoo/odoo/http.py", line 1591, in _serve_db-->
+<!--    return service_model.retrying(self._serve_ir_http, self.env)-->
+<!--  File "/home/odoo/src/odoo/odoo/service/model.py", line 133, in retrying-->
+<!--    result = func()-->
+<!--  File "/home/odoo/src/odoo/odoo/http.py", line 1618, in _serve_ir_http-->
+<!--    response = self.dispatcher.dispatch(rule.endpoint, args)-->
+<!--  File "/home/odoo/src/odoo/odoo/http.py", line 1822, in dispatch-->
+<!--    result = self.request.registry['ir.http']._dispatch(endpoint)-->
+<!--  File "/home/odoo/src/odoo/odoo/addons/base/models/ir_http.py", line 154, in _dispatch-->
+<!--    result = endpoint(**request.params)-->
+<!--  File "/home/odoo/src/odoo/odoo/http.py", line 697, in route_wrapper-->
+<!--    result = endpoint(self, *args, **params_ok)-->
+<!--  File "/home/odoo/src/odoo/addons/web/controllers/dataset.py", line 46, in call_button-->
+<!--    action = self._call_kw(model, method, args, kwargs)-->
+<!--  File "/home/odoo/src/odoo/addons/web/controllers/dataset.py", line 33, in _call_kw-->
+<!--    return call_kw(request.env[model], method, args, kwargs)-->
+<!--  File "/home/odoo/src/odoo/odoo/api.py", line 468, in call_kw-->
+<!--    result = _call_kw_multi(method, model, args, kwargs)-->
+<!--  File "/home/odoo/src/odoo/odoo/api.py", line 453, in _call_kw_multi-->
+<!--    result = method(recs, *args, **kwargs)-->
+<!--  File "<decorator-gen-77>", line 2, in button_immediate_install-->
+<!--  File "/home/odoo/src/odoo/odoo/addons/base/models/ir_module.py", line 74, in check_and_log-->
+<!--    return method(self, *args, **kwargs)-->
+<!--  File "/home/odoo/src/odoo/odoo/addons/base/models/ir_module.py", line 476, in button_immediate_install-->
+<!--    return self._button_immediate_function(self.env.registry[self._name].button_install)-->
+<!--  File "/home/odoo/src/odoo/odoo/addons/base/models/ir_module.py", line 600, in _button_immediate_function-->
+<!--    registry = modules.registry.Registry.new(self._cr.dbname, update_module=True)-->
+<!--  File "<decorator-gen-16>", line 2, in new-->
+<!--  File "/home/odoo/src/odoo/odoo/tools/func.py", line 87, in locked-->
+<!--    return func(inst, *args, **kwargs)-->
+<!--  File "/home/odoo/src/odoo/odoo/modules/registry.py", line 90, in new-->
+<!--    odoo.modules.load_modules(registry, force_demo, status, update_module)-->
+<!--  File "/home/odoo/src/odoo/odoo/modules/loading.py", line 488, in load_modules-->
+<!--    processed_modules += load_marked_modules(cr, graph,-->
+<!--  File "/home/odoo/src/odoo/odoo/modules/loading.py", line 372, in load_marked_modules-->
+<!--    loaded, processed = load_module_graph(-->
+<!--  File "/home/odoo/src/odoo/odoo/modules/loading.py", line 231, in load_module_graph-->
+<!--    load_data(cr, idref, mode, kind='data', package=package)-->
+<!--  File "/home/odoo/src/odoo/odoo/modules/loading.py", line 71, in load_data-->
+<!--    tools.convert_file(cr, package.name, filename, idref, mode, noupdate, kind)-->
+<!--  File "/home/odoo/src/odoo/odoo/tools/convert.py", line 763, in convert_file-->
+<!--    convert_xml_import(cr, module, fp, idref, mode, noupdate)-->
+<!--  File "/home/odoo/src/odoo/odoo/tools/convert.py", line 829, in convert_xml_import-->
+<!--    obj.parse(doc.getroot())-->
+<!--  File "/home/odoo/src/odoo/odoo/tools/convert.py", line 749, in parse-->
+<!--    self._tag_root(de)-->
+<!--  File "/home/odoo/src/odoo/odoo/tools/convert.py", line 698, in _tag_root-->
+<!--    f(rec)-->
+<!--  File "/home/odoo/src/odoo/odoo/tools/convert.py", line 711, in _tag_root-->
+<!--    raise ParseError('while parsing %s:%s, somewhere inside\n%s' % (-->
+<!--odoo.tools.convert.ParseError: while parsing /home/odoo/src/user/Imperial_attendance_report/views/view.xml:6, somewhere inside-->
+<record model="ir.ui.view" id="  ">
+            <field name="name">Daily Attendance Report Employee</field>
+            <field name="model">daily.attendance.report.employee</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="to_date"/>
+                            <field name="from_date"/>
+                        </group>
+                        <group>
+                            <field name="department"/>
+                            <field name="shift"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print Daily Attendance" type="object" class="btn-primary"/>
+                        <button string="Close" class="btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+<!--The above server error caused the following client error:-->
+<!--RPC_ERROR: Odoo Server Error-->
+<!--    at makeErrorFromResponse (https://imperiallimited-test-11395055.dev.odoo.com/web/assets/620-2dad0c7/web.assets_backend.min.js:999:163)-->
+<!--    at XMLHttpRequest.<anonymous> (https://imperiallimited-test-11395055.dev.odoo.com/web/assets/620-2dad0c7/web.assets_backend.min.js:1007:13)-->

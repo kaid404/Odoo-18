@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="faculty_subject_result_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <page>
+                    <t t-foreach="results.items()" t-as="grp">
+
+                        <div class="row"
+                             style="margin-bottom: 15px; text-align: center; border-bottom: 2px solid black; padding-bottom: 10px;">
+                            <div class="col-3">
+                                <img t-att-src="'/faculty_results_report/static/src/img/left-logo.png'"
+                                     style="max-width: 100%; height: auto;"/>
+                            </div>
+                            <div class="col-6"
+                                 style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top: 30px; ">
+                                <h5 style="font-weight: bold; padding-top: 10px;">Faculty Subjects Results Summary
+                                </h5>
+                            </div>
+                            <div class="col-3">
+                                <img t-att-src="'/faculty_results_report/static/src/img/right-logo.png'"
+                                     style="max-width: 100%; height: auto;"/>
+                            </div>
+                        </div>
+
+                        <t t-set="total" t-value="len(grp[1])"/>
+                        <t t-set="marked" t-value="len([l for l in grp[1] if l.get('status') == 'Marked'])"/>
+                        <t t-set="percent" t-value="(marked / total * 100) if total else 0"/>
+
+                        <div style="margin-top:20px; margin-bottom:10px;">
+                            <strong style="font-size:18px; border-bottom:1px solid #000; padding-bottom:4px;">
+                                <t t-esc="grp[0]"/>
+                            </strong>
+                        </div>
+
+                        <table class="table table-sm" style="width:100%; margin-bottom:25px; margin-top:15px;">
+                            <thead>
+                                <tr>
+                                    <th style="background-color:#e6e6e6;">Section</th>
+                                    <th style="background-color:#e6e6e6;">Subject</th>
+                                    <th style="background-color:#e6e6e6;">Exam Type</th>
+                                    <th style="background-color:#e6e6e6;">Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <t t-foreach="grp[1]" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="line['section']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line['subject']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line['exam_type']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line['status']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="3" style="background-color:#e6e6e6; text-align:right;">
+                                        <strong>Percentage</strong>
+                                    </td>
+                                    <td style="background-color:#e6e6e6;">
+                                        <t t-esc="percent"/>%
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                </page>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_faculty_subject_results_report" model="report.paperformat">
+        <field name="name">Milestone Faculty Subjects Results Paper Format</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">5</field>
+        <field name="dpi">90</field>
+    </record>
+
+
+    <record id="action_faculty_subjects_results_report" model="ir.actions.report">
+        <field name="name">Faculty Subjects Results Summary</field>
+        <field name="model">faculty.results.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_file">faculty_results_report.faculty_subject_result_report_template</field>
+        <field name="report_name">faculty_results_report.faculty_subject_result_report_template</field>
+        <field name="paperformat_id" ref="paperformat_faculty_subject_results_report"/>
+    </record>
+</odoo>

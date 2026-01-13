@@ -1,0 +1,186 @@
+<odoo>
+    <data>
+        <!-- List View -->
+        <record id="view_type_list_info_tree" model="ir.ui.view">
+            <field name="name">view.type.list.info.tree</field>
+            <field name="model">type.project</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="project_type_name"/>
+                    <field name="project_type_desc"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_type_list_info_form" model="ir.ui.view">
+            <field name="name">Type List</field>
+            <field name="model">type.project</field>
+            <field name="arch" type="xml">
+                <form string="Type List">
+                    <group>
+                        <field name="project_type_name"/>
+                        <field name="project_type_desc"/>
+
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_type_list_info" model="ir.actions.act_window">
+            <field name="name">Type</field>
+            <field name="res_model">type.project</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create Type List for Projects.</p>
+            </field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_type_list_info"
+                  name="Project Types"
+                  parent="hr.menu_human_resources_configuration"
+                  action="action_type_list_info"
+                  sequence="10"/>
+
+
+
+
+
+        <!-- List View -->
+        <record id="view_position_list_info_tree" model="ir.ui.view">
+            <field name="name">Position List</field>
+            <field name="model">position.project</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="project_position_name"/>
+                    <field name="project_position_desc"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_position_list_info_form" model="ir.ui.view">
+            <field name="name">Position List</field>
+            <field name="model">position.project</field>
+            <field name="arch" type="xml">
+                <form string="Position">
+                    <group>
+                        <field name="project_position_name"/>
+                        <field name="project_position_desc"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_position_list_info" model="ir.actions.act_window">
+            <field name="name">Position List</field>
+            <field name="res_model">position.project</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create Position List for Projects.</p>
+            </field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_position_list_info"
+                  name="Project Position"
+                  parent="hr.menu_human_resources_configuration"
+                  action="action_position_list_info"
+                  sequence="10"/>
+
+
+
+
+        <!-- List View -->
+        <record id="view_status_list_tree" model="ir.ui.view">
+            <field name="name">Status List</field>
+            <field name="model">status.project</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="project_status_name"/>
+                    <field name="project_status_desc"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_status_list_form" model="ir.ui.view">
+            <field name="name">Status List</field>
+            <field name="model">status.project</field>
+            <field name="arch" type="xml">
+                <form string="Status">
+                    <group>
+                        <field name="project_status_name"/>
+                        <field name="project_status_desc"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_status_info" model="ir.actions.act_window">
+            <field name="name">Status List</field>
+            <field name="res_model">status.project</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create Position List for Projects.</p>
+            </field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_status_list"
+                  name="Project Status"
+                      parent="hr.menu_human_resources_configuration"
+                  action="action_status_info"
+                  sequence="10"/>
+
+
+
+
+        <!-- List View -->
+        <record id="view_type_tc_tree" model="ir.ui.view">
+            <field name="name">Type List</field>
+            <field name="model">type.training.courses</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="tc_type_name"/>
+                    <field name="tc_type_desc"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_type_tc_form" model="ir.ui.view">
+            <field name="name">Type List</field>
+            <field name="model">type.training.courses</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <group>
+                        <field name="tc_type_name"/>
+                        <field name="tc_type_desc"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_type_tc" model="ir.actions.act_window">
+            <field name="name">Position List</field>
+            <field name="res_model">type.training.courses</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create Type List for Training Courses.</p>
+            </field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_action_type_tc"
+                  name="Training Courses Type"
+                      parent="hr.menu_human_resources_configuration"
+                  action="action_type_tc"
+                  sequence="14"/>
+    </data>
+</odoo>

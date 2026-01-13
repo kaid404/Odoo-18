@@ -1,0 +1,252 @@
+<odoo>
+    <data>
+        <template id="skans_exam_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+
+
+                    <t t-foreach="data.items()" t-as="item">
+                        <t t-set="student_data" t-value="item[1]"/>
+
+                        <div style="font-size: 14pt; margin-bottom: 10px; page-break-before: always;">
+
+                            <div class="row" style="margin-bottom: 15px; text-align: center; border-bottom: 2px solid black; padding-bottom: 10px;">
+                                <div class="col-3">
+                                    <img t-att-src="'/skans_exam_report/static/src/img/left-logo.png'"
+                                         style="max-width: 100%; height: auto;"/>
+                                </div>
+                                <div class="col-6" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                    <h5 style="font-weight: bold; padding-top: 10px;">Campus: <t t-esc="student_data['campus']"/></h5>
+                                    <h5 style="font-weight: bold; margin: 0;">Report Card</h5>
+                                    <h5 style="font-weight: bold; margin: 0;"><t t-esc="student_data['session_year']"/></h5>
+                                </div>
+                                <div class="col-3">
+                                    <img t-att-src="'/skans_exam_report/static/src/img/right-logo.png'"
+                                         style="max-width: 100%; height: auto;"/>
+                                </div>
+                            </div>
+
+                            <strong>Name:&#8195;</strong>
+                            <t t-esc="student_data['user_id']"/>
+                            <br/>
+                            <strong>Class:&#8195;&#160;</strong>
+                            <t t-esc="student_data['class'] or 'N/A'"/>&#8195;&#8195;<t
+                                t-esc="student_data['section'] or 'N/A'"/>
+                            <br/>
+                            <strong>Age:&#8195;&#8195;</strong>
+                            <t t-esc="student_data['age'] or 'N/A'"/>
+                        </div>
+
+                        <h4 style="margin-bottom: 8px;">Academic Performance:</h4>
+                        <table style="width:100%; border-collapse:collapse; border:1px solid #000; margin-bottom:20px;">
+                            <thead style="background-color:#f0f0f0;">
+                                <tr>
+                                    <th style="width: 50%; border:1px solid #000; padding:3px;">Subject</th>
+                                    <th style="width: 11%; border:1px solid #000; padding:3px;">Total Marks</th>
+                                    <th style="width: 11%; border:1px solid #000; padding:3px;">Obt. Marks</th>
+                                    <th style="width: 15%; border:1px solid #000; padding:3px;">Average%</th>
+                                    <th style="width: 13%; border:1px solid #000; padding:3px;">Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="obtained_marks" t-value="0"/>
+                                <t t-set="total_marks" t-value="0"/>
+
+                                <t t-foreach="student_data['results']" t-as="r">
+                                    <t t-set="obtained_marks" t-value="obtained_marks + r['obtained_marks']"/>
+                                    <t t-set="total_marks" t-value="total_marks + r['total_marks']"/>
+
+
+                                    <tr>
+                                        <td style="border:1px solid #000; padding:3px;">
+                                            <t t-esc="r['subject']"/>
+                                        </td>
+                                        <td style="border:1px solid #000; padding:3px;">
+                                            <t t-esc="r['total_marks']"/>
+                                        </td>
+                                        <td style="border:1px solid #000; padding:3px;">
+                                            <t t-esc="r['obtained_marks']"/>
+                                        </td>
+                                        <td style="border:1px solid #000; padding:3px;"><t t-esc="r['average']"/>%
+                                        </td>
+                                        <td style="border:1px solid #000; padding:3px;">
+                                            <t t-esc="r['grade']"/>
+                                        </td>
+                                    </tr>
+
+                                    <t t-set="overall_avg"
+                                       t-value="obtained_marks / total_marks * 100 if total_marks != 0 else 0"/>
+                                    <t t-set="overall_grade" t-value="'A+' if overall_avg >= 90 else 'A' if overall_avg >= 80 else 'B' if overall_avg >= 70 else
+                                     'C' if overall_avg >= 60 else 'D' if overall_avg >= 50 else 'NYS'"/>
+                                </t>
+
+                                <tr>
+                                    <td style="width: 50%; border:1px solid #000; padding:3px;">Grand Total</td>
+                                    <td style="width: 11%; border:1px solid #000; padding:3px;">
+                                        <t t-esc="total_marks"/>
+                                    </td>
+                                    <td style="width: 11%; border:1px solid #000; padding:3px;">
+                                        <t t-esc="obtained_marks"/>
+                                    </td>
+                                    <td style="width: 15%; border:1px solid #000; padding:3px;">
+                                        <t t-esc="'%.2f' % overall_avg"/>
+                                    </td>
+                                    <td style="width: 13%; border:1px solid #000; padding:3px;">
+                                        <t t-esc="overall_grade"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!--                        <h4 style="text-align:center; margin-top:15px;">Marks Grading Criteria</h4>-->
+                        <div style="width: 400px; margin: 10px auto 0 auto;">
+                            <span style="margin: 0 0 6px 0; font-weight: bold; text-align: left;">
+                                Marks Grading Criteria:
+                            </span>
+                            <table style="width:100%; border: 2px solid #000; border-collapse: separate; border-spacing: 0;">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 50%; text-align: left; padding: 1px 20px; border: none;">A+
+                                        </td>
+                                        <td style="width: 50%; text-align: right; padding: 1px 20px; border: none;">90%
+                                            or above
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; padding: 1px 20px; border: none;">A</td>
+                                        <td style="text-align: right; padding: 1px 20px; border: none;">80% or above
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; padding: 1px 20px; border: none;">B</td>
+                                        <td style="text-align: right; padding: 1px 20px; border: none;">70% or above
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; padding: 1px 20px; border: none;">C</td>
+                                        <td style="text-align: right; padding: 1px 20px; border: none;">60% or above
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; padding: 1px 20px; border: none;">D</td>
+                                        <td style="text-align: right; padding: 1px 20px; border: none;">50% or above
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left; padding: 1px 20px; border: none;">(NYS)</td>
+                                        <td style="text-align: right; padding: 1px 20px; border: none;">Below 50%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <span style="text-align:left; margin-top:13px; text-decoration: underline; font-weight: bold; font-size: 15pt;">
+                            General Performance:
+                        </span>
+                        <div style="border: 2px solid #000; margin-top: 6px; display: block; text-align: center;">
+                            <table style="margin:8pt; width: 100%; max-width: 900px;border: none; border-collapse: separate; border-spacing: 0;">
+                                <tr>
+                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000;">
+                                        Attendance
+                                    </td>
+                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000;"><t t-esc="student_data['attendance_key']"/></td>
+                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000;">
+                                        Co-Curricular
+                                        Participation
+                                    </td>
+                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000;">E</td>
+                                    <td colspan="4" style="border: none;"></td>
+                                    <td colspan="2" style="text-align: center; border: none;">
+                                        Total Working Days:
+                                        <span align="right" style="text-decoration: underline;">
+                                            <t t-esc="student_data['working_days']"/>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000;">
+                                        Punctuality
+                                    </td>
+                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000;">E</td>
+                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000;">Sports
+                                        Participation
+                                    </td>
+                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000;">G</td>
+                                    <td colspan="4"></td>
+                                    <td colspan="2">
+                                        Attendance:
+                                        <span align="right" style="text-decoration: underline;">
+                                            <t t-esc="student_data['attendance_days']"/>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000;">Class
+                                        Participation
+                                    </td>
+                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000;">G</td>
+                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000;">Arts</td>
+                                    <td style="text-align: left; border: none; border-bottom: 2px solid #000;">E</td>
+                                    <td colspan="6"></td>
+                                </tr>
+                            </table>
+                            <div style="width: 400px; margin: 10px auto 0 auto;">
+                                <span style="margin: 0 0 4px 0; font-weight: bold; text-align: left;">
+                                    Key:
+                                </span>
+                                <table style="width:100%; border: 1px solid #000; border-collapse: separate; border-spacing: 0;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 40%; text-align: left; padding: 3px 20px; border: none;">
+                                                Excellent:&#8195;E
+                                            </td>
+                                            <td style="width: 60%; text-align: right; padding: 3px 20px; border: none;">
+                                                Satisfactory:&#8195;S
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; padding: 3px 20px; border: none;">Good:&#8195;G
+                                            </td>
+                                            <td style="text-align: right; padding: 3px 20px; border: none;">Needs
+                                                Improvement:&#8195;NI
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div align="left" style="margin: 6px;">
+                                <span style="font-size: 14px; font-weight: bold;">Teacher's Remarks:</span>
+                                <span style="">
+                                    <t t-esc="student_data['teacher_remarks']"/>
+                                </span>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+
+        <record id="paperformat_exams_report" model="report.paperformat">
+            <field name="name">Exams Report Paper Format</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">8</field>
+            <field name="margin_right">8</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_skans_exam_report" model="ir.actions.report">
+            <field name="name">Skans Exam Report</field>
+            <field name="model">skans.exam.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_file">skans_exam_report.skans_exam_report_template</field>
+            <field name="report_name">skans_exam_report.skans_exam_report_template</field>
+            <field name="paperformat_id" ref="paperformat_exams_report"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

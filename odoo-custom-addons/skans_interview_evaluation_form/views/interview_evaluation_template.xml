@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_interview_form_template" model="ir.ui.view">
+            <field name="name">interview.form.template.form</field>
+            <field name="model">interview.form.template</field>
+            <field name="arch" type="xml">
+                <form string="Interview Evaluation Template">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="template_type"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="Template Lines">
+                                <field name="line_ids">
+                                    <list editable="bottom">
+                                        <field name="criteria"/>
+                                        <field name="rating_5"/>
+                                        <field name="rating_4"/>
+                                        <field name="rating_3"/>
+                                        <field name="rating_2"/>
+                                        <field name="rating_1"/>
+                                        <!--                                        <field name="rating" widget="priority"/>-->
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_interview_form_template_tree" model="ir.ui.view">
+            <field name="name">interview.form.template.tree</field>
+            <field name="model">interview.form.template</field>
+            <field name="arch" type="xml">
+                <list string="Interview Evaluation Template">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+
+        <record id="action_interview_template_tree" model="ir.actions.act_window">
+            <field name="name">Interview Evaluation Template</field>
+            <field name="res_model">interview.form.template</field>
+            <field name="view_mode">form,list</field>
+            <field name="view_id" ref="view_interview_form_template_tree"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create the first Interview Evaluation Template.
+                </p>
+            </field>
+        </record>
+        <menuitem id="menu_evaluation_template_tree"
+                  name="Interview From Template"
+                  parent="hr_recruitment.menu_hr_recruitment_configuration"
+                  sequence="10"
+                  action="action_interview_template_tree"/>
+    </data>
+
+</odoo>

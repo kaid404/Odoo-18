@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+        <record id="skans_special_time_off_approval.special_approval" model="res.groups">
+            <field name="name">Special Time-Off Approval</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_timetable_slot_generator,timetable.slot.generator,model_timetable_slot_generator,base.group_user,1,1,1,1
+access_op_timetable_slots,op.timetable.slots,model_op_timetable_slots,base.group_user,1,1,1,1

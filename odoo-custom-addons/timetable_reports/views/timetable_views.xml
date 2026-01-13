@@ -1,0 +1,86 @@
+<odoo>
+
+
+    <record id="gxs_timetable.view_time_table_report_form" model="ir.ui.view">
+        <field name="name">time.table.report.form</field>
+        <field name="model">time.table.report</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Time Table Report">
+                <sheet>
+                    <div>
+                        <group colspan="4" cols="4">
+                            <group>
+                                <field name="start_date"/>
+                                <field name="state" invisible="1"/>
+                                <field name="faculty_id"
+                                       required="state == '1'" invisible="1"/>
+
+                                <field name="gxs_campus_id"/>
+                                <field name="faculty_ids" widget="many2many_tags"/>
+
+                                <field name="class_id"/>
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                                <!--                                    <field name="course_id"-->
+                                <!--                                           required="state == 'student'" invisible="state != 'student'"/>-->
+                                <!--                                    <field name="batch_id" context="{'course_id': course_id,'get_parent_batch':1}"-->
+                                <!--                                           required="state == 'student'" invisible="state != 'student'"/>-->
+                            </group>
+                        </group>
+                    </div>
+                </sheet>
+                <footer>
+                    <span groups="base.group_user">
+                        <button name="generate_pdf_report"
+                                string="Teacher Timetable Report"
+                                type="object"
+                                class="btn-secondary"/>
+
+                        <button name="generate_pdf_class_report"
+                                string="Class Timetable Report"
+                                type="object"
+                                class="btn-secondary"/>
+                        <button string="Print" type="object"
+                                name="gen_time_table_report" class="oe_highlight"/>
+                        <button special="cancel" string="Close" type="object"/>
+                    </span>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--    <record id="view_timetable_configuration_form_inherit" model="ir.ui.view">-->
+    <!--        <field name="name">timetable.configuration.form.inherit</field>-->
+    <!--        <field name="model">time.table.report</field>-->
+    <!--        <field name="inherit_id" ref="gxs_timetable.view_time_table_report_form"/>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--&lt;!&ndash;            <xpath expr="//footer" position="inside">&ndash;&gt;-->
+    <!--&lt;!&ndash;                <button name="generate_excel_report"&ndash;&gt;-->
+    <!--&lt;!&ndash;                        string="Generate Excel Report"&ndash;&gt;-->
+    <!--&lt;!&ndash;                        type="object"&ndash;&gt;-->
+    <!--&lt;!&ndash;                        class="btn-primary"/>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;            </xpath>&ndash;&gt;-->
+    <!--              <xpath expr="//footer" position="inside">-->
+    <!--                <button name="generate_pdf_report"-->
+    <!--                        string="Teacher Timetable Report"-->
+    <!--                        type="object"-->
+    <!--                        class="btn-secondary"/>-->
+
+    <!--                  <button name="generate_pdf_class_report"-->
+    <!--                          string="Class Timetable Report"-->
+    <!--                          type="object"-->
+    <!--                          class="btn-secondary"/>-->
+    <!--            </xpath>-->
+    <!--&lt;!&ndash;            <xpath expr="//field[@name='faculty_id']" position="replace">&ndash;&gt;-->
+    <!--                <field name="gxs_campus_id"/>-->
+    <!--                <field name="faculty_ids" widget="many2many_tags"/>-->
+
+    <!--                <field name="class_id"/>-->
+    <!--&lt;!&ndash;            </xpath>&ndash;&gt;-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+</odoo>

@@ -1,0 +1,73 @@
+<odoo>
+    <data>
+        <template id="surveys_summary_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <h2>Survey Summary Report</h2>
+
+                        <table class="table table-borderless"
+                               style="width:100%; border-collapse: collapse; font-size:14px;">
+                            <thead>
+                                <tr>
+                                    <th style="padding:6px;">Student Name</th>
+                                    <th style="padding:6px;">Session</th>
+                                    <th style="padding:6px;">Pap</th>
+                                    <th style="padding:6px;">Evaluation Date</th>
+                                    <th style="padding:6px;">Question</th>
+                                    <th style="padding:6px;">Answer</th>
+                                    <th style="padding:6px;">Batch</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="report_data" t-as="student">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="student['student_name'] or 'N/A'"/>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach="student['answers']" t-as="ans">
+                                        <tr>
+                                            <td style="padding:6px;">
+                                                <t t-esc="ans['name'] or 'N/A'"/>
+                                            </td>
+                                            <td style="padding:6px;">
+                                                <t t-esc="ans['session'] or 'N/A'"/>
+                                            </td>
+                                            <td style="padding:6px;">
+                                                <t t-esc="ans['Pap'] or 'N/A'"/>
+                                            </td>
+                                            <td style="padding:6px;">
+                                                <t t-esc="ans['eval_date']"/>
+                                            </td>
+                                            <td style="padding:6px;">
+                                                <t t-esc="ans['description']"/>
+                                            </td>
+                                            <td style="padding:6px;">
+                                                <t t-esc="ans['result'] or 'N/A'"/>
+                                            </td>
+                                            <td style="padding:6px;">
+                                                <t t-esc="ans['Batch'] or 'N/A'"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+
+        <record id="action_report_skans_surveys" model="ir.actions.report">
+            <field name="name">Surveys Summary Report</field>
+            <field name="model">survey.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">skans_survey_report.surveys_summary_report_template</field>
+            <field name="report_file">skans_survey_report.surveys_summary_report_template</field>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

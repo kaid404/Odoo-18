@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_evaluation_form_form" model="ir.ui.view">
+            <field name="name">Interview Evaluation Form</field>
+            <field name="model">evaluation.form</field>
+            <field name="arch" type="xml">
+                <form string="Interview Evaluation Form">
+                    <header>
+                        <button name="action_not_appr" type="object" string="Not Approved"
+                                class="btn-primary" groups="skans_interview_evaluation_form.group_not_appr"
+                                invisible="state in ['not_approved','approved_with_reser','approved']"/>
+                        <button name="action_appr_reser" type="object" string="Approved With Reservation"
+                                class="btn-primary" groups="skans_interview_evaluation_form.group_approved"
+                                invisible="state in ['not_approved','approved_with_reser','approved']"/>
+                        <button name="action_approved" type="object" string="Approved"
+                                class="btn-primary" groups="skans_interview_evaluation_form.group_appr_with_res"
+                                invisible="state in ['not_approved','approved_with_reser','approved']"/>
+                        <button name="%(skans_interview_evaluation_form.action_report_evaluation_form)d"
+                                string="Print"
+                                type="action" invisible="state == False"
+                                class="btn-primary"/>
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="not_approved,approved_with_reser,approved"/>
+                    </header>
+                    <sheet>
+                        <div>
+                            <group>
+                                <group>
+                                    <field name="interviewer_name" readonly="state != False"/>
+                                    <field name="candidate_name" readonly="state != False"/>
+                                    <field name="template_id" readonly="state != False"
+                                           domain="[('template_type', '=', True)]"/>
+                                    <field name="total_marks"/>
+                                    <!--                                    <field name="company_logo" widget="image" class="oe_avatar"/>-->
+                                </group>
+                                <group>
+                                    <field name="interview_date" readonly="state != False"/>
+                                    <field name="position" readonly="state != False"/>
+                                    <field name="total_possible_marks"/>
+                                    <field name="percentage"/>
+                                </group><br/>
+                                <group>
+                                    <field name="comments" readonly="state != False"/>
+                                </group>
+                            </group>
+                        </div>
+                        <notebook>
+                            <page name="Evaluation Form Lines">
+                                <field name="line_ids" readonly="state != False">
+                                    <list editable="bottom">
+                                        <field name="criteria"/>
+                                        <field name="rating_5"/>
+                                        <field name="rating_4"/>
+                                        <field name="rating_3"/>
+                                        <field name="rating_2"/>
+                                        <field name="rating_1"/>
+                                        <!--                                        <field name="rating" widget="priority"/>-->
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_evaluation_form_tree" model="ir.ui.view">
+            <field name="name">Interview Evaluation Tree</field>
+            <field name="model">evaluation.form</field>
+            <field name="arch" type="xml">
+                <list string="Interview Evaluation Form">
+                    <field name="candidate_name"/>
+                    <field name="interviewer_name"/>
+                    <field name="interview_date"/>
+                    <field name="position"/>
+                </list>
+            </field>
+        </record>
+
+
+        <record id="action_evaluation_form_tree" model="ir.actions.act_window">
+            <field name="name">Interview Evaluation Form</field>
+            <field name="res_model">evaluation.form</field>
+            <field name="view_mode">form,list</field>
+            <field name="view_id" ref="view_evaluation_form_tree"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create the first Interview Evaluation Form.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_evaluation_form_tree"
+                  name="Evaluation Form"
+                  parent="menu_interview_form"
+                  sequence="40"
+                  action="action_evaluation_form_tree"/>
+
+        <menuitem id="menu_exit_form_tree"
+                  name="Exit Form"
+                  parent="menu_interview_form"
+                  sequence="50"
+                  action="action_exit_interview_form"/>
+
+        <menuitem id="menu_interview_form"
+                  name="Interview Form"
+                  parent="hr_recruitment.menu_hr_recruitment_root"
+                  sequence="60"/>
+
+        <record id="interview_evaluation_category" model="ir.module.category">
+            <field name="name">Interview Evaluation Form</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_not_appr" model="res.groups">
+            <field name="name">Not Approved</field>
+            <field name="category_id" ref="interview_evaluation_category"/>
+            <!--            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>-->
+        </record>
+        <record id="group_approved" model="res.groups">
+            <field name="name">Approved</field>
+            <field name="category_id" ref="interview_evaluation_category"/>
+            <!--            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>-->
+        </record>
+        <record id="group_appr_with_res" model="res.groups">
+            <field name="name">Approved With Reservation</field>
+            <field name="category_id" ref="interview_evaluation_category"/>
+            <!--            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>-->
+        </record>
+
+        <!--        <record id="group_not_appr" model="res.groups">-->
+        <!--            <field name="name">Not Approved</field>-->
+        <!--        </record>-->
+        <!--        <record id="group_approved" model="res.groups">-->
+        <!--            <field name="name">Approved</field>-->
+        <!--        </record>-->
+        <!--        <record id="group_appr_with_res" model="res.groups">-->
+        <!--            <field name="name">Approved With Reservation</field>-->
+        <!--        </record>-->
+    </data>
+
+</odoo>

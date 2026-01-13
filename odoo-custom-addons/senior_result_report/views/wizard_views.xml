@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <record id="senior_results_report_form" model="ir.ui.view">
+            <field name="name">senior_results_report_form</field>
+            <field name="model">senior.result.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Senior Student Result Report">
+                    <group>
+                        <group>
+                            <field name="campus_id"/>
+                            <field name="class_id"/>
+                            <field name="year_id"/>
+                            
+                        </group>
+                        <group>
+                            <field name="section_id"/>
+                            <field name="exam_type"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Generate Report" type="object" name="print_result_report"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="senior_result_report_action">
+            <field name="name">Senior Student Result</field>
+            <field name="res_model">senior.result.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="results_reporting_root"
+                  name="Reporting"
+                  parent="gxs_student_performance.menu_op_performance_root"/>
+
+        <menuitem id="senior_results_report_menu"
+                  name="Senior Student Results"
+                  parent="results_reporting_root"
+                  action="senior_result_report_action"/>
+    </data>
+</odoo>

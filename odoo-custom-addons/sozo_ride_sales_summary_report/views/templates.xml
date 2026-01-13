@@ -1,0 +1,321 @@
+<odoo>
+    <data>
+
+        <template id="ride_sales_summary_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+
+                        <div class="row" height="10px">
+                            <div class="col-1" align="left">
+                                <img t-if="company_logo" t-att-src="company_logo" alt="logo 2" width="84px"
+                                     height="84px" style="margin-top:8px;"/>
+                            </div>
+                            <div class="col-9" align="left" style="margin-top:35px;margin-left:27px;text-align:center">
+                                <strong>
+                                    <h2 t-if="category_name">
+                                        <t t-esc="category_name"/>
+                                        Sales Summary Report
+                                    </h2>
+                                    <h1 t-if="not category_name">All Sales Summary Report</h1>
+                                </strong>
+                            </div>
+                        </div>
+                        <div style="text-align: center; flex-grow: 1;">
+                            <p>Print Date:
+                                <t t-esc="print_date"/>
+                                | Print Time:
+                                <t t-esc="print_time"/>
+                            </p>
+                            <p>From Date:
+                                <t t-esc="date_from"/>
+                                To Date:
+                                <t t-esc="date_to"/>
+                            </p>
+                        </div>
+
+                        <table class="table table-sm table-bordered"
+                               style="width:100%; border-collapse: collapse; font-size:13px;">
+                            <thead style="background-color: #f2f2f2;">
+                                <tr>
+                                    <th style="border: 1px solid #000; padding: 4px;">Sr #</th>
+                                    <th style="border: 1px solid #000; padding: 4px;">Ride Name</th>
+                                    <th style="border: 1px solid #000; padding: 4px;">Category</th>
+                                    <th style="border: 1px solid #000; padding: 4px;">Qty</th>
+                                    <th style="border: 1px solid #000; padding: 4px;">Refund</th>
+                                    <th style="border: 1px solid #000; padding: 4px;">Net Qty</th>
+                                    <th style="border: 1px solid #000; padding: 4px;">Price (Rs.)</th>
+                                    <th style="border: 1px solid #000; padding: 4px;">Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sr" t-value="0"/>
+                                <t t-set="prev_category" t-value="''"/>
+                                <t t-set="category_qty" t-value="0"/>
+                                <t t-set="category_net_qty" t-value="0"/>
+                                <t t-set="category_total" t-value="0"/>
+
+                                <t t-set="qty" t-value="0"/>
+                                <t t-set="total_qty" t-value="0"/>
+                                <t t-set="subtotal" t-value="0"/>
+
+
+                                <t t-if="paid_rides_report_data">
+                                    <t t-foreach="paid_rides_report_data" t-as="line">
+                                        <t t-if="prev_category and prev_category != line['category']">
+                                            <tr style="font-weight: bold;">
+                                                <td colspan="3"
+                                                    style="border: 1px solid #000; padding: 4px; text-align: right;">
+                                                    Subtotal for
+                                                    <t t-esc="prev_category"/>
+                                                </td>
+                                                <td style="border: 1px solid #000; padding: 4px;">
+                                                    <t t-esc="category_qty"/>
+                                                </td>
+                                                <td></td>
+                                                <td style="border: 1px solid #000; padding: 4px;">
+                                                    <t t-esc="category_net_qty"/>
+                                                </td>
+                                                <td></td>
+                                                <td style="border: 1px solid #000; padding: 4px;">
+                                                    <t t-esc="'%.2f' % category_total"/>
+                                                </td>
+                                            </tr>
+
+                                            <t t-set="category_qty" t-value="0"/>
+                                            <t t-set="category_net_qty" t-value="0"/>
+                                            <t t-set="category_total" t-value="0"/>
+                                        </t>
+
+
+                                        <t t-set="sr" t-value="sr + 1"/>
+                                        <t t-set="category_qty" t-value="category_qty + line['qty']"/>
+                                        <t t-set="category_net_qty" t-value="category_net_qty + line['net_qty']"/>
+                                        <t t-set="category_total" t-value="category_total + line['total_amount']"/>
+                                        <t t-set="prev_category" t-value="line['category']"/>
+
+                                        <t t-set="qty" t-value="qty + line['qty']"/>
+                                        <t t-set="total_qty" t-value="total_qty + line['net_qty']"/>
+                                        <t t-set="subtotal" t-value="subtotal + line['total_amount']"/>
+
+                                        <tr>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="sr"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="line['ride_name']"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="line['category']"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="line['qty']"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="line['refund']"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="line['net_qty']"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="line['price']"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="'%.2f' % line['total_amount']"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="category_name">
+                                        <tr style="font-weight: bold;">
+                                            <td colspan="3"
+                                                style="border: 1px solid #000; padding: 4px; text-align: right;">
+                                                Sub Total
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="category_qty"/>
+                                            </td>
+                                            <td></td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="category_net_qty"/>
+                                            </td>
+                                            <td></td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="'%.2f' % category_total"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+
+                                </t>
+                                <t t-if="free_rides_report_data">
+
+                                    <t t-set="free_category_qty" t-value="0"/>
+                                    <t t-set="free_category_net_qty" t-value="0"/>
+                                    <t t-set="free_category_total" t-value="0"/>
+
+
+                                    <t t-foreach="free_rides_report_data" t-as="line">
+                                        <t t-if="prev_category and prev_category != line['category']">
+                                            <tr style="font-weight: bold;">
+                                                <td colspan="3"
+                                                    style="border: 1px solid #000; padding: 4px; text-align: right;">
+                                                    Subtotal for
+                                                    <t t-esc="prev_category"/>
+                                                </td>
+                                                <td style="border: 1px solid #000; padding: 4px;">
+                                                    <t t-esc="category_qty"/>
+                                                </td>
+                                                <td></td>
+                                                <td style="border: 1px solid #000; padding: 4px;">
+                                                    <t t-esc="category_net_qty"/>
+                                                </td>
+                                                <td></td>
+                                                <td style="border: 1px solid #000; padding: 4px;">
+                                                    <t t-esc="'%.2f' % category_total"/>
+                                                </td>
+                                            </tr>
+
+                                            <t t-set="category_qty" t-value="0"/>
+                                            <t t-set="category_net_qty" t-value="0"/>
+                                            <t t-set="category_total" t-value="0"/>
+                                        </t>
+
+
+                                        <t t-set="sr" t-value="sr + 1"/>
+                                        <t t-set="category_qty" t-value="category_qty + line['qty']"/>
+                                        <t t-set="category_net_qty" t-value="category_net_qty + line['net_qty']"/>
+                                        <t t-set="category_total" t-value="category_total + line['total_amount']"/>
+                                        <t t-set="prev_category" t-value="line['category']"/>
+
+                                        <t t-set="free_category_qty" t-value="free_category_qty + line['qty']"/>
+                                        <t t-set="free_category_net_qty"
+                                           t-value="free_category_net_qty + line['net_qty']"/>
+                                        <t t-set="free_category_total"
+                                           t-value="free_category_total + line['total_amount']"/>
+
+                                        <t t-set="qty" t-value="qty + line['qty']"/>
+                                        <t t-set="total_qty" t-value="total_qty + line['net_qty']"/>
+                                        <t t-set="subtotal" t-value="subtotal + line['total_amount']"/>
+
+                                        <tr>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="sr"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="line['ride_name']"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="line['category']"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="line['qty']"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="line['refund']"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="line['net_qty']"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="line['price']"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="'%.2f' % line['total_amount']"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+
+                                    <t t-if="category_name">
+                                        <tr style="font-weight: bold;">
+                                            <td colspan="3"
+                                                style="border: 1px solid #000; padding: 4px; text-align: right;">
+                                                Sub Total
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="free_category_qty"/>
+                                            </td>
+                                            <td></td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="free_category_net_qty"/>
+                                            </td>
+                                            <td></td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="'%.2f' % free_category_total"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+
+
+                                <t t-if="not category_name">
+                                    <t t-if="prev_category">
+                                        <tr style="font-weight: bold;">
+                                            <td colspan="3"
+                                                style="border: 1px solid #000; padding: 4px; text-align: right;">
+                                                Subtotal
+                                                for
+                                                <t t-esc="prev_category"/>
+                                            </td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="category_qty"/>
+                                            </td>
+                                            <td></td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="category_net_qty"/>
+                                            </td>
+                                            <td></td>
+                                            <td style="border: 1px solid #000; padding: 4px;">
+                                                <t t-esc="'%.2f' % category_total"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <tr style="font-weight: bold; background-color: #d0d0d0;">
+                                    <td colspan="3" style="text-align: right; border: 1px solid #000; padding: 4px;">
+                                        Grand Total
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 4px;">
+                                        <t t-esc="qty"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 4px;"></td>
+                                    <td style="border: 1px solid #000; padding: 4px;">
+                                        <t t-esc="total_qty"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 4px;"></td>
+                                    <td style="border: 1px solid #000; padding: 4px;">
+                                        <t t-esc="'%.2f' % subtotal"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="paperformat_ride_sales_summary_report" model="report.paperformat">
+            <field name="name">Ride Sales Summary Format</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">15</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <record id="action_report_ride_sales_summary" model="ir.actions.report">
+            <field name="name">Ride Sales Summary</field>
+            <field name="model">ride.sales.summary.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sozo_ride_sales_summary_report.ride_sales_summary_report_template</field>
+            <field name="report_file">sozo_ride_sales_summary_report.ride_sales_summary_report_template</field>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_ride_sales_summary_report"/>
+        </record>
+
+    </data>
+</odoo>

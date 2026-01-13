@@ -1,0 +1,110 @@
+<odoo>
+    <data>
+        <template id="mid_final_result_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+
+                    <!--                    <t t-foreach="student_data" t-as="student">-->
+                    <div style="font-size: 14pt; margin-bottom: 10px;">
+                        <div class="row"
+                             style="margin-bottom: 15px; text-align: center; border-bottom: 2px solid black; padding-bottom: 10px;">
+                            <div class="col-3">
+                                <img t-att-src="'/senior_result_report/static/src/img/left-logo.png'"
+                                     style="max-width: 100%; height: auto;"/>
+                            </div>
+                            <div class="col-6"
+                                 style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <t t-if="campus">
+                                    <h5 style="font-weight: bold; padding-top: 10px;">Campus:
+                                        <t t-esc="campus"/>
+                                    </h5>
+                                </t>
+                                <t t-if="class">
+                                    <h5 style="font-weight: bold; margin: 0;">
+                                        <t t-esc="class"/>
+                                    </h5>
+                                </t>
+                                <h5 style="font-weight: bold; margin: 0;">Year:
+                                    <t t-esc="year"/>
+                                </h5>
+                                <h5 style="font-weight: bold; margin: 0;">
+                                    <t t-esc="exam_type"/>
+                                </h5>
+                            </div>
+                            <div class="col-3">
+                                <img t-att-src="'/senior_result_report/static/src/img/right-logo.png'"
+                                     style="max-width: 100%; height: auto;"/>
+                            </div>
+                        </div>
+                        <table class="table table-bordered"
+                               style="width:100%; border-collapse: collapse; text-align: center; margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="border: 1px solid black;white-space: nowrap;">Std Name
+                                    </th>
+                                    <t t-foreach="student_data[0]['subjects']" t-as="subject">
+                                        <th colspan="3"
+                                            style="border: 1px solid black; text-align: center; vertical-align: middle; background-color: #d9d9d9;">
+                                            <t t-esc="subject['subject']"/>
+                                        </th>
+                                    </t>
+                                </tr>
+                                <tr>
+                                    <t t-foreach="student_data[0]['subjects']" t-as="subject">
+                                        <th style="border: 1px solid black; white-space: nowrap;">MYE Avg</th>
+                                        <th style="border: 1px solid black; white-space: nowrap;">EoY Avg</th>
+                                        <th style="border: 1px solid black; white-space: nowrap;">Grade</th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="student_data" t-as="student">
+                                    <tr>
+                                        <td style="border: 1px solid black; white-space: nowrap;"
+                                            t-esc="student['name']"/>
+                                        <t t-foreach="student['subjects']" t-as="subject">
+                                            <td style="border: 1px solid black;"
+                                                t-esc="subject['mid_marks']"/>
+                                            <td style="border: 1px solid black;"
+                                                t-esc="subject['final_marks']"/>
+                                            <td style="border: 1px solid black;" t-esc="subject['grade']"/>
+                                        </t>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--                    </t>-->
+                </t>
+            </t>
+        </template>
+
+
+        <record id="paperformat_mid_final_results_report" model="report.paperformat">
+            <field name="name">Senior Students Results Paper Format</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <!--            <field name="page_height">210</field>-->
+            <!--            <field name="page_width">297</field>-->
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">8</field>
+            <field name="margin_right">8</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">150</field>
+        </record>
+
+        <record id="action_mid_final_results_report" model="ir.actions.report">
+            <field name="name">Results Report</field>
+            <field name="model">mid.final.result.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_file">mid_final_result_report.mid_final_result_report_template</field>
+            <field name="report_name">mid_final_result_report.mid_final_result_report_template</field>
+            <field name="paperformat_id" ref="paperformat_mid_final_results_report"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+{
+    'name': "Skans Addtional Tabs",
+    'author': 'GXS',
+    'license': 'AGPL-3',
+    'website': 'http://www.globalxs.co',
+    'description': """Skans Addtional Tabs""",
+    'version': '18.0',
+    'depends': ['hr', 'skans_empl_incriment','skan_employee_bonus'],
+    'data': [
+        'data/rec_sequence.xml',
+        'security/ir.model.access.csv',
+        'views/disciplinary_views.xml',
+        'views/additional_duties.xml',
+        'views/financial_incentive_views.xml',
+        'views/employee_records.xml',
+        ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

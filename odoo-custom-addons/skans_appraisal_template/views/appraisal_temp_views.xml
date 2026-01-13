@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="skans_appraisal_template.list">
+      <field name="name">skans_appraisal_template list</field>
+      <field name="model">skans_appraisal_template.skans_appraisal_template</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </list>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="skans_appraisal_template.action_window">
+      <field name="name">skans_appraisal_template window</field>
+      <field name="res_model">skans_appraisal_template.skans_appraisal_template</field>
+      <field name="view_mode">list,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="skans_appraisal_template.action_server">
+      <field name="name">skans_appraisal_template server</field>
+      <field name="model_id" ref="model_skans_appraisal_template_skans_appraisal_template"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "list,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="skans_appraisal_template" id="skans_appraisal_template.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="skans_appraisal_template.menu_1" parent="skans_appraisal_template.menu_root"/>
+    <menuitem name="Menu 2" id="skans_appraisal_template.menu_2" parent="skans_appraisal_template.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="skans_appraisal_template.menu_1_list" parent="skans_appraisal_template.menu_1"
+              action="skans_appraisal_template.action_window"/>
+    <menuitem name="Server to list" id="skans_appraisal_template" parent="skans_appraisal_template.menu_2"
+              action="skans_appraisal_template.action_server"/>
+-->
+  </data>
+</odoo>

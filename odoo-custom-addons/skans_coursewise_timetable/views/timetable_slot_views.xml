@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+
+        <record id="timetable_slot_views_form" model="ir.ui.view">
+            <field name="name">Timetable Slots</field>
+            <field name="model">op.timetable.slots</field>
+            <field name="arch" type="xml">
+                <form string="TimeTable Slots">
+                    <group>
+                        <group>
+                            <field name="course_id_slot"/>
+                            <field name="duration_time" widget="float_time"/>
+                        </group>
+                        <group>
+                            <field name="starting_time" widget="float_time"/>
+                            <field name="ending_time" widget="float_time"/>
+                            <field name="display_time_field"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="timetable_slot_views_tree" model="ir.ui.view">
+            <field name="name">Timetable Slots</field>
+            <field name="model">op.timetable.slots</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="course_id_slot"/>
+                    <field name="starting_time" widget="float_time"/>
+                    <field name="ending_time" widget="float_time"/>
+                    <field name="duration_time" widget="float_time"/>
+                </list>
+            </field>
+        </record>
+
+
+    <record id="action_op_timetable_slots" model="ir.actions.act_window">
+        <field name="name">Timetable Slots</field>
+        <field name="res_model">op.timetable.slots</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No slots created yet.
+            </p>
+            <p>Use the "Generate" button in the wizard to create time slots!</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_timetable_slots"
+              name="TimeTable Slots"
+              parent="gxs_timetable.menu_op_timetable_config"
+              action="action_op_timetable_slots"/>
+
+
+
+    </data>
+</odoo>

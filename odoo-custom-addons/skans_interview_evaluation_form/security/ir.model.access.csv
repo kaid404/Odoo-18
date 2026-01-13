@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_evaluation_form,evaluation.form,model_evaluation_form,,1,1,1,1
+access_evaluation_form_line,evaluation.form.line,model_evaluation_form_line,,1,1,1,1
+access_interview_form_template_line,interview.form.template.line,model_interview_form_template_line,,1,1,1,1
+access_interview_form_template,interview.form.template,model_interview_form_template,,1,1,1,1
+access_exit_interview_form,exit.interview.form,model_exit_interview_form,,1,1,1,1
+access_exit_interview_form_line,exit.interview.form.line,model_exit_interview_form_line,,1,1,1,1
+

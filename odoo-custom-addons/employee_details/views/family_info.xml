@@ -1,0 +1,71 @@
+<odoo>
+    <data>
+
+        <record id="form_view_child_info" model="ir.ui.view">
+            <field name="name">form_view_child_info</field>
+            <field name="model">hr.child.info</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="child_name"/>
+                        <field name="child_gender"/>
+                        <field name="child_bod"/>
+                        <field name="birth_place"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="list_view_child_info" model="ir.ui.view">
+            <field name="name">list_view_child_info</field>
+            <field name="model">hr.child.info</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="child_name"/>
+                    <field name="child_gender"/>
+                    <field name="child_bod"/>
+                    <field name="birth_place"/>
+                </list>
+            </field>
+        </record>
+
+
+        <record id="view_employee_form_inherit_family_info" model="ir.ui.view">
+            <field name="name">hr.employee.form.family.info</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='hr_settings']" position="after">
+                    <page string="Family Details" name="family_info">
+                        <group string="Spouse Information" colspan="2">
+                            <group>
+                                <field name="sp_name" placeholder="Spouse Name"/>
+                                <field name="sp_dob" placeholder="Date of birth"/>
+                                <field name="sp_cnic" placeholder="CNIC No"/>
+                                <field name="sp_dom" placeholder="Marriage Date"/>
+                                <field name="sp_mp" placeholder="Marriage place"/>
+                            </group>
+                            <group>
+                                <field name="sp_profession" placeholder="Profession"/>
+                                <field name="sp_status"/>
+                                <field name="sp_designation" placeholder="Designation"/>
+                                <field name="sp_employer" placeholder="Name or Descriptions"/>
+                            </group>
+                        </group>
+
+                        <group string="Child Information">
+                            <field name="child_details_ids"
+                                   string="Child Information"
+                                   widget="form"
+                                   context="{'form_view_ref': 'employee_details.form_view_child_info'}"
+                                   options="{'no_create': False, 'no_open': True}"/>
+                        </group>
+
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

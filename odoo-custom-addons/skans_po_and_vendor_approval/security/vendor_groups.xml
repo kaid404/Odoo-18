@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record id="skans_po_and_vendor_approval.department_approval" model="res.groups">
+            <field name="name">Department Approval</field>
+        </record>
+
+        <record id="skans_po_and_vendor_approval.audit_approval" model="res.groups">
+            <field name="name">Audit Approval</field>
+        </record>
+
+        <record id="skans_po_and_vendor_approval.finance_approval" model="res.groups">
+            <field name="name">Finance Approval</field>
+        </record>
+    </data>
+</odoo>

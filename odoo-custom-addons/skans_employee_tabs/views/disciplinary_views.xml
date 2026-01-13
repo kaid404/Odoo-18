@@ -1,0 +1,82 @@
+<odoo>
+    <data>
+
+        <record id="form_view_disciplinary_action_type" model="ir.ui.view">
+            <field name="name">form_view_disciplinary_action_type</field>
+            <field name="model">disciplinary.action</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="disc_action_type_name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="list_view_disciplinary_action_type" model="ir.ui.view">
+            <field name="name">list_view_disciplinary_action_type</field>
+            <field name="model">disciplinary.action</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="disc_action_type_name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_disciplinary_action_type" model="ir.actions.act_window">
+            <field name="name">Disciplinary Action Type</field>
+            <field name="res_model">disciplinary.action</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create Action Type  for Disciplinary Records.</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_discipline_action"
+                  name="Discipline Type"
+                      parent="hr.menu_human_resources_configuration"
+                  action="action_disciplinary_action_type"
+                  sequence="10"/>
+
+
+<!--        DISCIPLINARY PAGE VIEWS NOW-->
+
+<!--        <record id="view_employee_form_custom_disciplinary_records" model="ir.ui.view">-->
+<!--            <field name="name">Disciplinary Records Inherit</field>-->
+<!--            <field name="model">hr.employee</field>-->
+<!--            <field name="inherit_id" ref="hr.view_employee_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//page[@name='hr_settings']" position="after">-->
+<!--                    <page string="Disciplinary Records" name="disciplinary_records">-->
+<!--                        <group>-->
+<!--                            <group>-->
+<!--                                <field name="disc_description"/>-->
+<!--                                <field name="disc_date"/>-->
+<!--                                <field name="disc_place"/>-->
+<!--                                <field name="disc_inquiry_headed_by"/>-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <field name="disc_punishment_type"/>-->
+<!--                                <field name="disc_remarks"/>-->
+<!--                                <field name="disc_documents"/>-->
+<!--                                <field name="disc_action_type"/>-->
+<!--                            </group>-->
+<!--                        </group>-->
+
+
+<!--&lt;!&ndash;                                                <group string="Disciplinary Records">&ndash;&gt;-->
+<!--&lt;!&ndash;                                                    <field name="disc_emp_ids"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                           string="Disciplinary Records"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                           widget="form"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                           context="{'form_view_ref': 'skans_additional_tabs.form_view_disciplinary_records'}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                           options="{'no_create': False, 'no_open': True}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                </group>&ndash;&gt;-->
+
+<!--                    </page>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>
